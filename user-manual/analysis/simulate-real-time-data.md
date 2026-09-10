@@ -1,0 +1,32 @@
+# Simulate real-time data
+
+For algorithm and infrastructure testing can be useful to easily obtain real-time data through the Edge devices without actually require to be connected to real sensor / adapters /  OPC-UA Servers.
+
+The internal real-time data simulation capability allow you to simulate a real-time acquisition of data, replicating some data you already have recorded (or imported via ZIP import) in the system.
+
+### Requirements
+
+To simulate real-time data you need:
+
+* An equipment with some data loaded or recorded in the past.
+* A running instance of a Virtual Edge.
+
+### Run the simulation
+
+Go to the Equipment details panel of the Equipment on which you have the data to simulate and click on "**OPC Simulator**" tab.
+
+On the left, you can choose to simulate a specific **Time Interval**.\
+Choose a time range and a set of fields you want to simulate and click on "**Start simulation**" button.
+
+On the right, you can choose to simulate a specific **Event.**
+
+{% hint style="warning" %}
+The system can run only one simulation at a time. If you start a new simulation, a previous running simulation will be stopped.
+{% endhint %}
+
+### Check the data coming
+
+You can check the data coming in[ ](data-analysis.md)the [Analysis](data-analysis.md) page.
+
+### Stop the simulation
+

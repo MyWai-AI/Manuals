@@ -1,0 +1,20 @@
+# Edge Operations
+
+MYWAI performs Edge operations with the following components:
+
+## MYWAI GDS (available only from version 3.0)
+
+MYWAI Global Discovery Server (GDS) adheres to OPC UA GDS specifications. It is an optional installation capable of managing multiple Edges and OPC UA Servers. MYWAI GDS is designed to oversee security for both Edge devices and OPC UA Servers.
+
+{% content-ref url="gds-installation-v3.0/" %}
+[gds-installation-v3.0](gds-installation-v3.0/)
+{% endcontent-ref %}
+
+## MYWAI Edge
+
+MYWAI Edge connects to the equipment using configured adapters, executes orchestrator flows, and integrates with AI modules for edge AI.
+
+{% content-ref url="edge-installation-v2.1/" %}
+[edge-installation-v2.1](edge-installation-v2.1/)
+{% endcontent-ref %}
+

@@ -1,0 +1,273 @@
+# Python High Level APIs Wrapper
+
+This page describes the higher-level communication provided by the `mywai_python_integration_kit` package for interacting with MyWAI's APIs in Python. This abstraction simplifies the interaction with the MyWAI platform, allowing for efficient management of various operations.
+
+If you are interested in a detailed guide that provides a one-to-one wrap of the platform's APIs, you can refer to the specific documentation available [here](https://app.gitbook.com/o/WqtGWMX8E7E2owWmo3BP/s/S0R26Sb4yf2oFiuISYDZ/~/changes/73/marketplace-tools/python-low-level-apis).
+
+## Initialization
+
+Before you can use the APIs, you need to initialize the client with the correct endpoint and authentication token:
+
+```python
+from mywai_python_integration_kit.apis import initialize_apis
+
+initialize_apis(endpoint="mywai_endpoint_api", auth_token="your_auth_token")
+
+```
+
+## API Usage Examples
+
+The examples cover common tasks such as managing measurements, sensors, equipment, data imports, and more. This document serves as a hands-on guide to help you integrate with the MyWAI platform.
+
+### 1. Managing Measurements (Measures) <a href="#id-1-managing-measurements-measures" id="id-1-managing-measurements-measures"></a>
+
+#### Retrieve All Measures <a href="#retrieve-all-measures" id="retrieve-all-measures"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.measure import get_all_measures
+
+measures = get_all_measures()
+print(measures)
+```
+
+#### Retrieve Measure Types <a href="#retrieve-measure-types" id="retrieve-measure-types"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.measure import get_measure_types
+
+measure_types = get_measure_types()
+print(measure_types)
+```
+
+#### Create a New Measure <a href="#create-a-new-measure" id="create-a-new-measure"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.measure import create_measure
+
+new_measure = {
+                'name': 'Measure', 
+                'id': 0, 
+                'deleted': False, 
+                'configuration': [
+                                {'name': '', 'type': 0, 'id': 0}
+                                ]
+                }
+result = create_measure(new_measure)
+print(result)
+```
+
+#### Remove a Measure by ID <a href="#remove-a-measure-by-id" id="remove-a-measure-by-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.measure import remove_measure_by_id
+
+remove_measure_by_id(id=123)
+```
+
+### 2. Managing Sensors <a href="#id-2-managing-sensors" id="id-2-managing-sensors"></a>
+
+#### Retrieve All Sensors <a href="#retrieve-all-sensors" id="retrieve-all-sensors"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.sensor import get_all_sensors
+
+sensors = get_all_sensors()
+print(sensors)
+```
+
+#### Retrieve Adapter Types <a href="#retrieve-adapter-types" id="retrieve-adapter-types"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.sensor import get_adapters_type
+
+adapter_types = get_adapters_type()
+print(adapter_types)
+```
+
+### 3. Managing Equipment Types <a href="#id-3-managing-equipment-types" id="id-3-managing-equipment-types"></a>
+
+#### Retrieve All Equipment Types <a href="#retrieve-all-equipment-types" id="retrieve-all-equipment-types"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment_type import get_equipment_types
+
+equipment_types = get_equipment_types()
+print(equipment_types)
+```
+
+#### Retrieve Equipment Types Tree Structure <a href="#retrieve-equipment-types-tree-structure" id="retrieve-equipment-types-tree-structure"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment_type import get_equipment_types_tree
+
+equipment_types_tree = get_equipment_types_tree()
+print(equipment_types_tree)
+```
+
+#### Create a New Equipment Type <a href="#create-a-new-equipment-type" id="create-a-new-equipment-type"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment_type import create_new_equipment_type
+
+new_equipment_type = {
+    'id': 0, 'name': 
+    'New Equipment Type', 
+    'schemaName': 'Schema', 
+    'description': '', 
+    'creationDate': '2024-08-30T11:13:27.779814', 
+    'deleted': False, 
+    'isFolder': False, 
+    'isNestedTypeDefinition': False, 
+    'isAbstract': False, 'fields': [], 
+    'equipmentTypeSchema': None, 
+    'equipmentTypeSchemaId': None, 
+    'parentId': None, 
+    'order': 0, 
+    'facets': [], 
+    'uriIcon': '', 
+    'opcImportNodeId': None, 
+    'opcImportNameSpace': None, 
+    'opcNodeClass': None}
+    
+result = create_new_equipment_type(new_equipment_type)
+print(result)
+```
+
+### 4. Managing Equipment <a href="#id-4-managing-equipment" id="id-4-managing-equipment"></a>
+
+#### Retrieve All Equipment <a href="#retrieve-all-equipment" id="retrieve-all-equipment"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import get_equipments
+
+equipments = get_equipments()
+print(equipments)
+```
+
+#### Create New Equipment by Equipment Type ID <a href="#create-new-equipment-by-equipment-type-id" id="create-new-equipment-by-equipment-type-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import create_equipment_by_equipment_type_id
+
+new_equipment = create_equipment_by_equipment_type_id(eq_type_id=1)
+print(new_equipment)
+```
+
+#### Get Equipment Details by ID <a href="#get-equipment-details-by-id" id="get-equipment-details-by-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import get_equipment_by_id
+
+equipment = get_equipment_by_id(eq_id=123)
+print(equipment)
+```
+
+#### Remove Equipment by ID <a href="#remove-equipment-by-id" id="remove-equipment-by-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import remove_equipment_by_id
+
+remove_equipment_by_id(eq_id=123)
+```
+
+#### Edit Equipment Details <a href="#edit-equipment-details" id="edit-equipment-details"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import edit_equipment
+
+updated_equipment = { ... }
+
+result = edit_equipment(updated_equipment)
+print(result)
+```
+
+### 5. Data Import Management <a href="#id-5-data-import-management" id="id-5-data-import-management"></a>
+
+#### Upload Data <a href="#upload-data-to-a-dataset" id="upload-data-to-a-dataset"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.data_import import upload_data
+
+upload_data(import_title="My Data Import", file_path="/path/to/your/file.zip", not_labeled_data=True)
+```
+
+#### Assign Dataset Version by ID <a href="#assign-dataset-version-by-id" id="assign-dataset-version-by-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.data_import import assign_dataset_version_by_id
+
+assign_dataset_version_by_id(dataset_version_id=456, import_id="import_guid", facts_selected=[1, 2, 3], fact_type=1)
+```
+
+#### Retrieve Data Imports for a User <a href="#retrieve-data-imports-for-a-user" id="retrieve-data-imports-for-a-user"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.data_import import get_data_imports
+
+data_imports = get_data_imports(user_id="user_guid")
+print(data_imports)
+```
+
+#### Retrieve Facts by Import ID <a href="#retrieve-facts-by-import-id" id="retrieve-facts-by-import-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.data_import import get_facts_by_import_id
+
+facts = get_facts_by_import_id(import_id="import_guid")
+print(facts)
+```
+
+### 6. Image Handling <a href="#id-6-image-handling" id="id-6-image-handling"></a>
+
+#### Download and Process an Image from Blob Storage <a href="#download-and-process-an-image-from-blob-storage" id="download-and-process-an-image-from-blob-storage"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.image import download_image_from_blob
+
+image = download_image_from_blob(path="path/to/image.png", is_thumb=True)
+image.show()
+```
+
+### Additional Examples <a href="#additional-examples" id="additional-examples"></a>
+
+#### Retrieve All Projects <a href="#retrieve-all-projects" id="retrieve-all-projects"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.project import get_mywai_projects
+
+projects, project_names = get_mywai_projects()
+print(projects)
+print(project_names)
+```
+
+#### Retrieve Equipment with Sensors by ID <a href="#retrieve-equipment-with-sensors-by-id" id="retrieve-equipment-with-sensors-by-id"></a>
+
+```python
+from mywai_python_integration_kit.apis.services.equipment import get_equipment_with_sensor
+
+equipment_with_sensors = get_equipment_with_sensor(eq_id=123)
+print(equipment_with_sensors)
+```
+
+#### Upload Facts to DatasetVersion&#x20;
+
+```python
+from mywai_python_integration_kit.apis.services.dataset_version_apis import (
+    upload_facts_to_dataset_version,
+)
+
+upload_facts_to_dataset_version(
+    user_id=get_user_id(),
+    import_name=import_name,
+    dataset_version_id=dataset_version.id,
+    label_name=label_selected_name,
+    labeled_data=labeled_data,
+    file_path=zip_path,
+    file=zip_file,
+    fact_type=1,
+)
+```
+
+
+
+This comprehensive guide should help you utilize the MyWAI Python Integration Kit effectively for your projects. For more detailed documentation or specific questions, refer to the official documentation or contact support.

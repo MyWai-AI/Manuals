@@ -1,0 +1,38 @@
+# Equipments Data
+
+## Raw Data
+
+Equipment raw data are stored in Measures, and the list of all measures associated with an Equipment falls into two categories:
+
+1. Measures related to the Sensors attached to the Equipment.
+2. Measures related to the Fields associated with the Equipment Type of the Equipment.
+
+The types of data supported are detailed on the [Measures ](../configuration/measures.md)page.
+
+Raw data are continuously gathered (as the Edge is operational via an orchestrator workflow or the "sensors" are manually started). They are efficiently stored among the measure timeline and can be browsed and analyzed via the [Equipment Analysis](../analysis/data-analysis.md) page.
+
+## Events
+
+Events serve as a logical container for Raw Data, defined by specific type boundaries and a subset of an Equipment's measures. They aim to capture specific, time-bound occurrences in the life of the equipment. For instance, an event may represent a period during which the equipment:
+
+* Exhibited a particular behavior or malfunction.
+* Was engaged in a distinct work phase, such as a single Quality Assurance phase for the production of an artifact, or a specific operation that requires monitoring, like a solitary welding task. An Event is characterized by a unique identifier and can encompass both time-series measures and static [data fields](#user-content-fn-1)[^1].
+
+The goal of the Events is to create well defined block of events with the purpose to create **DataSets** to train AI algorithms.
+
+Events can be created:
+
+* Automatically: from the **Edge** side, by a proper configuration of the Orchestrator that manages the start/stop triggers that defines the event boundaries.
+* Manually, by importing them via **ZIP+CSV** files.
+
+## Labels
+
+Labels are used in **supervised learning**, where the goal is to teach the model to predict these labels correctly by providing it with a training dataset that includes both the input features and the correct labels. The model learns from this data and then applies what it has learned to new, unseen data to make accurate predictions.
+
+Labels can be created by:
+
+* Applying labels to Events, for example, via the [Data Repository ](data-repository.md)page.
+* Applying labels by defining a time range on a time-serie, via the [Data Analysis](../analysis/data-analysis.md) page.
+* Applying labels to blob data (images, audios, videos) via the Data Repository page or via the pages of the specific Algorithms that works on this type of data like Object Detection or Anomaly Detection.
+
+[^1]: A data field contains a single data value that is constant among all the event time. A data field is defined in the Equipment Type associated to the equipment.

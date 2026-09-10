@@ -1,0 +1,47 @@
+# Edges
+
+**Edge devices** are physical entities placed within specified Sites or Areas. Their primary function is to facilitate communication with sensors and equipment. Additionally, these devices are equipped with AI algorithms, enabling them to process real-time data and trigger alerts when necessary.
+
+## Installation of an Edge Device
+
+To install the Edge Devices, please follow the instructions reported in the [edge-installation-v2.1](../edge-operations/edge-installation-v2.1/ "mention") chapter.
+
+{% hint style="info" %}
+The network connection between an Edge device and the MYWAI platform is configured on the Edge device itself. In the platform, only the Edge ID needs to be configured.
+{% endhint %}
+
+{% hint style="warning" %}
+Edge devices require internet connectivity to connect to the MYWAI platform. If you have special requirements to run an Edge device without connectivity to the MYWAI platform, please contact us.
+{% endhint %}
+
+## **Edge Devices Management**
+
+**Devices Overview:** Upon accessing the Edge Devices Management Page, users will find a comprehensive list of edge devices that have been installed and integrated with MYWAI. This list provides a snapshot of each device's primary attributes.
+
+For each device, an icon is displayed to indicate the **status** of the Edge device. The status can be one of the following:
+
+* Not started
+* Online
+* Possible problem
+* Offline
+
+**Editing and Deleting:** For every edge device listed, there are options to modify or remove it. This ensures that any changes in the device setup or any decommissioning can be updated swiftly.
+
+**Adding New Devices:** By clicking the "Add new edge device" button, you will begin a guided process to integrate a new Edge device into the platform. You can configure a new Edge device in advance, even if it hasn't been installed at the site yet.
+
+## Edge Device Characteristics
+
+Each edge device in the system should have the following details specified:
+
+* **ID:** A mandatory identifier for the device (provided by MYWAI).
+* **Name:** A user-friendly designation.
+* **Device Type:** The category or nature of the device.
+* **Version Number:** A descriptor indicating the device's version or iteration.
+* **Associated Site and Area:** Locations to which the device is installed.
+* **Provider:** A special field typically left blank, reserved for specific applications in future or unique scenarios.
+
+When setting up or editing an edge device, users must also determine the following relationships:
+
+* **Connected** [**Equipments**](equipments.md)**:** A roster of equipment that communicates through or with this edge device. Only configurations of associated equipments are downloaded to the Edge device.
+* **Authorized** [**Users**](../administration/users-management.md)**:** Identifying individuals who have permissions to interact with or manage this particular device.
+* **Downloadable** [**Flows**](../automation/orchestrator.md)**:** Specified workflows or processes that can be transferred to and run on the device.

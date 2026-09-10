@@ -1,0 +1,16 @@
+# Known limitations
+
+This is a list of some known limitations of the system.
+
+## Platform
+
+* **Events duration**: Events are typically of **short duration**. While long-running events are possible, they may require special attention and some functionality may not be guaranteed. Events with minutes of duration are normal, but hours can be borderline, especially with high sampling rate.
+* **OPC UA Import**: The capability to import equipment OPC UA **NodeSet2** XML structures offers limited support, meaning complex real-world structures might need simplification or could only be partially imported.
+* **Model performance reports**: The availability of training reports document for Models are in charge of the specific Algorithm, and is a feature currently not available for built-in algos. Anyhow it is strongly recommended to implement these reports for custom ones to allow real world scenarios of validation and revision of Models performances. These information are generally easily available and used during algo development phases.
+* **AASX support**: The platform supports exporting and importing Equipment information and data via AASX format, but the export is limited to some Equipment information, documentation and an optional specific Event or Anomaly to be attached in the AASX. The import is limited to Equipment information and documents.
+* **Blockchain configuration**: as soon a Wallet is configured, cannot be removed. It can only be replaced by a new one (created or imported).
+
+## Edge
+
+* **OPC UA data frequency**: OPC UA can be used this high reliability up to sampling interval of 50-100ms, that correspond to 10/20Hz of sampling rate. Higher sampling rate may be achievable with OPC UA but may require special IT considerations, both on OPC UA Server and Edge side.
+* **Maximum number of data points**: the Edge software has been tested to read up to **30** different nodes at the maximum sampling rate of **50ms** each.

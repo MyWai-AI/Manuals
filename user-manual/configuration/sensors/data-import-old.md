@@ -1,0 +1,70 @@
+# Data Import (old)
+
+You can manually import data into a sensor by clicking the "Import" button on the sensor's row. The system supports the import of the following types of data:
+
+* Timeseries (scalar numbers)
+* Image files
+* Video files
+* Audio files
+
+The format of the file to import is a CSV for Timeseries and a ZIP or multiple files for the assets.
+
+## CSV file format
+
+The format of the CSV file depends on the definition of the Measure that is going to be imported.\
+\
+For example, for an _Acceleration_ measure that is made up of 3 scalar values (x, y, z), the CSV must contain 4 columns:
+
+1. **timestamp**: unix epoch format with milliseconds.
+2. **x**: the float value of the acceleration along the x axis.
+3. **y**: the float value of the acceleration along the y axis.
+4. **z**: the float value of the acceleration along the z axis.
+
+Example of the first 8 line of this file:<br>
+
+<figure><img src="../../.gitbook/assets/image (40).png" alt=""><figcaption><p>An example of a CSV file with 3-dimension acceleration data</p></figcaption></figure>
+
+Ensure that the CSV file does not contain a header row, and that the order of columns matches the order of fields defined in the Measure.
+
+Fields must be separated by a comma. Float values must use the dot "." as decimal separator and must not be enclosed in quotes.&#x20;
+
+### Importing more measures with the same file
+
+If you're importing data for multiple measures, ensure that the columns related to different measures are arranged in the order they are selected in the user interface.
+
+### Importing images, audio and video files
+
+When a measure field corresponds to an image, video, or audio file, the CSV file should include the file name of the asset to be imported. In this case, the file to import is a **ZIP archive**, which should contain:
+
+* The CSV files (potentially more than one) in the main folder of the ZIP.
+* All asset files.
+
+Ensure that the paths of the asset files in the CSVs match their relative paths in the ZIP file. For example, if you specify filenames only in the CSV, place the files in the root folder of the ZIP.
+
+## Timestamp management
+
+You can manage timestamps for imported data in three ways:
+
+* Use the timestamp reported in the CSV file (default option).
+* Define a specific start date and time in the import dialog. This value binds with the first record in the CSV file, and timestamps of other records shift accordingly based on the original delta times from the first record.
+* Use the current time as the start date and time. This behaves similarly to option 2 but with the current time as the selected start date and time.
+
+## How to use the Import Dialog
+
+To run an import of data on a Sensor, you must:
+
+1. Give a name for your import in the Title field.
+2. Choose the timestamp policy.
+3. Choose one of more measures you are importing data into.
+4. Provide the CSV or ZIP file in the file upload field.
+
+## Advanced options
+
+### Automatic timestamps for video and audio files
+
+When importing video or audio files that already contain a set starting position in time, the system can automatically link the next media file's timestamp to instantly start after the end of the current one.
+
+
+
+
+

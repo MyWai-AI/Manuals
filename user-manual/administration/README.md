@@ -1,0 +1,3 @@
+# Administration
+
+In this section, we will describe the typical system administration activities, such as managing the Company's information and managing Users and Roles.
