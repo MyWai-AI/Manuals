@@ -1,0 +1,57 @@
+# Equipment Types
+
+## **Understanding Equipment Types**
+
+In the MYWAI platform, the concept of Equipment Types offers a structured approach to **categorize** and represent various **equipment** and their **components**. By defining equipment types, users can achieve a standardized and **hierarchical** representation of equipment structures and their constituent parts.
+
+### **Key Features of Equipment Types**
+
+1. **Hierarchical Nodes:** Equipment Types are structured through a hierarchical set of nodes. These nodes can be visualized as branches and sub-branches that delve deeper into the individual parts and sub-parts of a piece of equipment.
+2. **Fields Association:** Each node in this hierarchy can be associated with specific fields, capturing essential details or attributes of that particular component. Fields enable the capability to be connected to an **OCP UA** server directly to gather data, without the need to attach sensors to the Equipment.
+3. **Simplicity for Basic Equipment:** Not all equipment requires a complex hierarchical structure. For straightforward equipment, an Equipment Type might consist of just the root node.
+
+## **Configuring the Equipment Types**
+
+Once on the **Equipment Types Management** page, you will find tools and options that help manage and define equipment structures with ease.
+
+1. **List of Existing Types:** A comprehensive list displays all the Equipment Types previously defined, offering an overview and quick access for edits or reviews.
+2. **Create a New Type:** To define a new Equipment Type:
+   * Click on the 'Add New Type' button.
+   * Start by defining the root node, and if necessary, expand the structure by adding child nodes.
+   * Associate **fields** as needed for each node. **Fields are the way to map data on Measures for the different Equipments**. Example of fields could be "Mother board temperature", "Source pipe pressure", "XYZ Temperature" etc.
+   * Save the new Equipment Type.
+3. **Add a children Node**: A children node represent a sub-structure of the Equipment Type. To create a children node, click on the + button near the parent node. The data that can be entered are the same as per the root node.
+4. **Edit an Existing Type:** To modify a pre-existing Equipment Type:
+   * Select the Equipment Type from the list.
+   * Click on the 'Edit' button.
+   * Adjust nodes, add or remove child nodes, and modify associated fields as needed.
+   * Save the changes.
+5.  **Clone an Equipment Type:** If you need to create a new Equipment Type similar to an existing one:
+
+    * Choose the desired Equipment Type from the list.
+    * Click on the 'Clone' option.
+    * Modify the cloned type if necessary.
+    * Save it as a new Equipment Type.
+
+    You can also pick a children node of an existing Equipment Type and create a root type from it.
+    You can also use an existing type as a reference from the Add New Type dialog, by selecting the 'Use Existing Equipment Type' checkbox.
+6. **Import structure from OPC UA Standard information model (experimental):** Recognizing the industry's move towards standardized data exchange, MYWAI enables users to import Equipment Types from an OPC standard XML definition. To do so:
+   * Click on the 'Add New Type' button.
+   * Select the checkbox "Import information model", assign a version and a name and browse for the OPC standard XML file.
+   * The system will automatically interpret the structure and represent it as an Equipment Type within MYWAI.
+
+<Warning>
+Please note that our support of the OPC UA NodeSet2 XML standard is currently experimental and some type of nodes can be not imported properly.
+</Warning>
+
+## **Facets**
+
+Facets provide a refined way to understand and categorize equipment. Instead of focusing on the complete hierarchy or all the fields of an Equipment Type, Facets zero in on select fields that capture the most vital and representative aspects of an equipment's state. These tailored subsets encapsulate the essential attributes, offering a quick overview or snapshot of the equipment's condition or configuration.
+
+**Utilizing the Facets Interface:**
+
+1. **Enabling Facet Definition:** Navigate to the desired Equipment Type and find the node with the fields you wish to elevate as Facets.
+2. **Triggering the Edit Mode:** Activate the "Edit Facets Selection" toggle when you're at the appropriate node. This puts the system into a selection mode, allowing you to choose and designate fields as Facets.
+3. **Naming and Adding:** Assign a name to each field you consider significant. After naming them, click on the "Add Facets to Selection" button, confirming your choices and incorporating them into that specific Equipment Type.
+
+By leveraging Facets, users can access a concentrated view of their equipment, honing in on the most pertinent details without being overwhelmed by the entirety of fields and information.

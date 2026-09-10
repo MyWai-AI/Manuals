@@ -1,0 +1,58 @@
+# Custom Algorithms
+
+## **Built-In Algorithms**
+
+Upon accessing the Algorithms platform page, you'll be presented with a list of built-in algorithms that are readily available within MYWAI. This curated list showcases essential details such as the algorithm's name, its description, type, and other crucial characteristics. Use this list as a reference to gauge the native capabilities and to determine which algorithms align best with your requirements.
+
+## **Creating a New Algorithm**
+
+Creating a new algorithm is a complex task that necessitates specialized expertise. You can rely on MYWAI's custom services to develop a personalized algorithm or craft one independently using the [following guidelines](/custom-ai-algorithms/technical-requirements).
+
+## **Connecting the New Algorithm with the Platform**
+
+Once your new algorithm is prepared, you can integrate it into the MYWAI ecosystem by adhering to these steps:
+
+1. **Initiate the Addition Process:** Click on the "Add new algorithm" button. This action will prompt a dialog box to appear, presenting you with fields required to define the new algorithm.
+2. **Name:** Input a distinctive name for your algorithm in the designated field. This entry is mandatory.
+3. **Description:** Populate this field with a concise description that encapsulates the algorithm's functionality and its unique traits. This aids other users in discerning its purpose and method of operation.
+4. **Script Name:** Here, you'll need to denote the specific script name that the algorithm will use during execution. This entry is mandatory.
+5. **Algorithm Type:** From the dropdown menu, select the category your algorithm falls under. The options available are:
+   * Classification
+   * Anomaly Detection
+   * Clustering
+   * AnScore
+   * Object Detection
+6. **Docker Image or ZIP or HTTP(S) endpoint:** Use the provided interface to upload the Docker image or the ZIP file that houses the code integral to your algorithm.
+   Algos can also be hosted by you in your systems. In this case you can just enter the **HTTP(S) endpoint** of your service, without need to upload any Docker image or ZIP file.
+7. **Training Parameters:** Specify the collection of parameters essential for training your algorithm.&#x20;
+8. **Inference Parameters:** Outline the specific parameters your algorithm will employ during the inference phase. This could range from thresholds to input dimensions, contingent on your algorithm's design.
+9. **Complete the Upload:** Once you've furnished all the necessary details in the dialog box, confirm your entries and proceed to upload the algorithm. Upon successful addition, your algorithm will assimilate into the available list, ready for deployment in line with the parameters you've stipulated.
+
+<Warning>
+Prior to its broader integration, it's advisable to test your algorithm in a controlled setup. This preliminary step assures optimal functionality and minimizes potential complications.
+You can use the HTTP(S) Endpoint option to easily test your algos integrated with the platform, by entering your development environment HTTP(S) endpoint.
+</Warning>
+
+## Managing Transformations
+
+The platform allows to apply data transformation steps before and after Algorithm execution.
+
+In the Transformations submenu, you can manage the transformations available in the system.
+
+## **Uploading a New** Transformation
+
+Creating a new transformation is a coding activity that necessitates specialized expertise. You can rely on MYWAI's custom services to develop a personalized transformation.
+
+Once your new transformation is prepared, you can integrate it into the MYWAI ecosystem by adhering to these steps:
+
+1. **Initiate the Addition Process:** Click on the "Add new transformation" button. This action will prompt a dialog box to appear, presenting you with fields required to define the new transformation.
+2. **Name:** Input a distinctive name for your transformation in the designated field. This entry is mandatory.
+3. **Description:** Populate this field with a concise description that encapsulates the transformation's functionality and its unique traits. This aids other users in discerning its purpose and method of operation.
+4. **Script Name:** Here, you'll need to denote the specific script name that the transformation will use during execution. This entry is mandatory.
+5. **Transformation Type:** From the dropdown menu, select the category your transformation falls under. The options available are:
+   * Plottable
+   * Non Plottable
+6. **Docker Image:** Use the provided interface to upload the Docker image that houses the code integral to your transformation.
+7. **Training Parameters:** Specify the collection of parameters related to the transformations required for the training phase.&#x20;
+8. **Inference Parameters:** Outline the specific parameters your algorithm will employ during the inference phase. This could range from thresholds to input dimensions, contingent on your algorithm's design.
+9. **Complete the Upload:** Once you've furnished all the necessary details in the dialog box, confirm your entries and proceed to upload the transformation. Upon successful addition, your transformation will assimilate into the available list, ready for deployment in line with the parameters you've stipulated.

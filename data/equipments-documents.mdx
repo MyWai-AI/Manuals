@@ -1,0 +1,108 @@
+# Equipments Documents
+
+Equipment Documents are standard [**PDF, TXT** or **M**](#user-content-fn-1)[^1]**icrosoft Word** files that provide information about a specific Equipment, such as:
+
+* User manuals
+* Maintenance manuals
+* Security documentation
+* Technical notes
+
+Documents can be accessed in two ways:
+
+1. **Data Repository → Documents tab**
+2. **Equipment Details panel → Documents button** for a specific Equipment
+
+<Warning>
+PDF, TXT, and Microsoft Word files are the officially supported document formats. However, the system allows uploading virtually any type of file as a document.
+
+Files in supported formats are indexed for both RAG functionality and full-text search, can be downloaded, and fully support version history management. Unsupported file types are not indexed for RAG or full-text search and cannot be previewed in the browser, but they can still be stored in the repository, downloaded, and managed through the document version history.
+
+Microsoft Word documents are indexed for RAG and full-text search, but browser preview is not supported for this format. For this reason, using PDF files is strongly recommended to ensure consistent in-browser preview and rendering.
+</Warning>
+
+### Supported Features
+
+The platform allows you to:
+
+1. _Upload_ new documents
+2. _Update_ existing documents with full version history
+3. _Index_ documents into the VectorDB for **RAG (Retrieval-Augmented Generation)** used by Agents
+4. _Preview_ and _download_ documents
+5. Perform _full-text search_ across documents
+6. _Remove_ documents from the system
+
+### Upload a Document
+
+1. Choose one of the following paths:
+   * Go to **Data Repository → Documents**, then click **Import**
+   * Go to an **Equipment Details** page → **Documents** → click the **+** button
+2. In the upload page:
+   * Enter the document metadata (title and description)
+   * Choose the file to upload
+   * Associate the document with an Equipment (if not already preselected)
+
+### Search a Document
+
+In the **Document List** page, you can open the **Filter** panel to refine the displayed documents using the following fields:
+
+* **Title**
+* **Description**
+* **File name**
+* **Equipment**
+* **Content** (full-text search)
+
+#### Supported Filter Operators
+
+For the fields **Title**, **Description**, and **File name**, the following operators are available:
+
+* **Like** – partial match
+* **Equal** – exact match
+* **Not Equal** – exclusion match
+* **Full-text** – indexed full-text search
+
+### View a Document
+
+1. Click the **magnifying glass** icon on a document
+2. The **Document Preview** page opens
+3. If the file format is supported by the browser, a web-based preview is shown
+4. The document can also be downloaded from this page
+
+### Update a Document and Manage Version History
+
+1. Open the **Document Preview** page
+2. In the **bottom-right section**, upload a new version of the document
+3. Select the new version number
+
+#### Version Numbering
+
+Versions follow the format:
+
+```
+major.minor.revision
+```
+
+When uploading a new version, you can choose whether to increment:
+
+* **Major** – breaking or significant changes
+* **Minor** – backward-compatible updates
+* **Revision** – small fixes or corrections
+
+#### Access Version History
+
+1. From the **Document Preview** page, click **History** in the top bar
+2. The full list of document versions is displayed
+3. Only **one version** can be **Active** at a time
+4. You can set the active version directly from the version list
+
+### Run an Agent on Documents
+
+If Agents are installed on your platform:
+
+1. Open the **Equipment Documents** panel
+2. Select one or more documents
+3. Start a chat session with an Agent
+4. The Agent will answer based **only on the selected documents**, using RAG over the indexed content
+
+
+
+[^1]: 

@@ -1,0 +1,99 @@
+# Orchestrator
+
+The **Orchestrator** editor enables the creation of execution **workflows**, specifically designed to manage operations at the **Edge**.
+
+These workflows consist of a series of **Jobs**. Each Job can lead to multiple subsequent jobs, which are triggered upon the completion of the preceding Job, contingent on specific starting conditions.
+
+The very first job is the **starting job**. The trigger associated with the starting job is the one that manages the start of the workflow.
+
+<img src="../.gitbook/assets/file.excalidraw.svg" alt="An example of a workflow with 3 jobs" class="gitbook-drawing">
+
+## Jobs anatomy
+
+Each job is made up 3 different parts:
+
+* Start condition
+* Action
+* Continue condition
+
+<img src="../.gitbook/assets/file.excalidraw (3).svg" alt="Anatomy of a Job" class="gitbook-drawing">
+
+### Start Conditions
+
+The start condition determines the **trigger** for initiating the Job. The system supports the following types of Start Conditions:
+
+* **OPC UA**: a condition on a specific OPC node can be defined, specifying server URL, node ID, condition operator and comparison value. When the condition is met, the Edge starts the Job Action.
+* **MQTT**: the trigger activates when a message with a specific topic name is received by the Edge MQTT server. This trigger mode is designed for integration with other systems that need to be configured to send this message as required.
+* **Model**: when a Job is following an Algorithm execution Job, the Model condition can be defined, so the Job will execute only for a specific condition on the outcome of the Algorithm inference.
+
+### Action
+
+Here the available type of Actions:
+
+* **Algorithm**: runs an Algorithm using a specific trained Model. The system will ask to choose the Equipment, the Sensors and the Measure to be taken in consideration for the data buffering for the Algorithm run.
+* **OPC UA**: write a value on an OPC node.
+* **Cloud**: send an IoT message with a specific topic to the Cloud Platform.
+* **MQTT**: send an IoT message with a specific topic to the Edge MQTT or to an External MQTT server.
+
+The duration of the Algorithm action is contingent on the start condition's duration. Data buffering starts when the start condition is met and continues until the condition no longer holds true. The buffered data is then used as input for the Algorithm inference run.
+
+### Continue Conditions
+
+The Continue Condition is optional and can be defined in a similar way as a Start Condition. The Job will continues to move to the following Jobs when the Continue Condition is met.
+
+## Workflow lifecycle
+
+Currently, only **a single instance of a workflow can run at a time on a single Edge**.
+It is crucial to ensure that the flow execution can complete in time before a new trigger fires and the initial job of the workflow runs again.
+
+A cycle of the workflow can generally fall in these two cases:
+
+1. **Long running**: the workflow is started when the machine is turned on and stopped when is turned off. This is generally related to continuous running machines, like turbines, pumps, laminators.
+   For this case, the Algorithm block executes continuously on time windows of the length configured in the algorithm block itself.
+2. **Event cycle**: the workflow starts on a specific trigger signaling the beginning of a bounded event (e.g. a QA test for a single produced item). In this case, the Algorithm block typically executes a single time, analyzing the full dataset collected during the event window..
+
+## Usage cases
+
+Here some usage examples that show how to use the flow to perform conditional or sequential jobs.
+
+### Dynamic model selection
+
+The initial Job will wait for the process start event, for example with a trigger on an OPC UA node value or waiting for a specific MQTT message.
+
+This initial Job does not have an action useful for the goal (this can be easily achieved by actually sending a random MQTT message or writing a value on an OPC node), but is followed by 2 or more subsequent jobs. These 2 jobs are configured to run a specific algorithm with a specific Model, but have different start condition. Both can read an OCP node value that provides the information about what specific model need to be used. For example, the model to be used may depend on a different configuration of the equipment.
+Only one of the 2 subsequent jobs will run, depending on this equipment configuration.
+
+### Laminator with windowed inference
+
+In this scenario the laminator operates continuously while powered on, and the objective is to monitor process behavior and product quality in near real time. The workflow is started by a machine-running signal, typically obtained from an OPC UA node or an MQTT message indicating that the laminator status has switched to ON. Once started, the workflow remains active for the entire duration of the machine operation and is stopped only when the machine is turned off. No retriggering occurs while the workflow is already running.
+
+During execution, the Algorithm block runs continuously using fixed or sliding time windows. The window length is configured directly in the Algorithm block and defines how much data is accumulated before each inference step. At the end of every window, the algorithm processes the aggregated signals, executes the model inference, and produces results such as KPIs, anomaly scores, or quality indicators.
+
+This approach enables continuous detection of process drifts, abnormal operating conditions, and early signs of quality degradation without waiting for the end of a production batch. The inference results can be consumed by subsequent conditional jobs to raise alarms, write values back to OPC UA nodes, publish messages over MQTT, or trigger other automated actions.
+
+It is mandatory that the inference execution time is shorter than the configured window length to guarantee deterministic behavior. While the laminator is running, only a single instance of the workflow can execute on the Edge. In most laminator use cases the model remains fixed for the entire run, although dynamic model selection based on machine configuration is still possible if required.
+
+## Running workflows on Edge
+
+To initiate workflows, it is necessary to designate a specific **Edge device** on which these workflows will be executed. This selection process is carried out on the Edge management page. Here's how to do it:
+
+1. Navigate to the Edges management page.
+2. Locate the desired Edge device.
+3. Click the 'Edit' button associated with this device.
+4. In the editing interface, you will find an option to associate specific workflows with the device. Populate this list with the workflows you wish to run on the selected Edge device.
+
+<Warning>
+Workflows cannot run on Cloud.
+You can use Routines to automate the run of Algorithms on Cloud.
+</Warning>
+
+## System integration and custom use cases
+
+The Orchestrator can be triggered and integrated via MQTT and OPC UA, enabling the following scenarios:
+
+1. **Custom Triggering**
+   In addition to being triggered by an OPC UA server, the Orchestrator can be activated by custom code that integrates with third-party systems and sends trigger events via MQTT.
+2. **Time-Based Orchestration**
+   An external timer can trigger the Orchestrator through MQTT, allowing it to monitor continuously running devices—such as pumps or turbines—using windowed inferences. This approach eliminates the need for natural event boundaries.
+3. **Output Integration**
+   The output of an algorithm’s inference can be sent to MQTT or an OPC UA server, enabling integration with field devices (e.g., visual or audio signaling systems).

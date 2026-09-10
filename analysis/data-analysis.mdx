@@ -1,0 +1,40 @@
+# Data Analysis
+
+## Load historical data
+
+You can enter the Equipment Analysis page by clicking on the Analysis button in the Equipment details page.
+
+When in the analysis page you can select the list of Sensors or OPC data fields you are interested in. Then, open the **Historical Data** panel.
+
+In the panel, specify the historical period by indicating the examination date and the duration of the period. In this regard, you can also use predefined shortcuts that define which part of the historical time period to analyze.
+
+Once the parameters are configured, you can proceed to visualize the data by using the "**Retrieve data**" button.
+
+After the loading is complete, the results will be displayed in timeline-style graphs. You can zoom in for more detail within the graph by holding down the mouse button to redraw a specific area, or you can refine the execution of data retrieval by reconfiguring the previous parameter settings.
+
+## Understanding Labels
+
+In the context of AI and machine learning, a "**label**" refers to a piece of information or a tag assigned to a data point in a dataset. Labels are crucial for supervised learning, a common machine learning paradigm where models are trained to make predictions or classify data based on input features.
+
+## Create Labels
+
+From the control bar, select the button for creating labels. Then, move to the graph and define the label's boundaries by clicking the mouse. You can load previously created labels using the "Get saved labels" button. Repeat this process if necessary at multiple points.
+
+<Info>
+See also [labels-approval-workflow.md](/analysis/labels-approval-workflow)
+</Info>
+
+## Train the algorithm
+
+Once the labels are generated, proceed with the **training** operation by using the appropriate button in the toolbar.
+
+When opening the dialog, choose the **algorithm** you want to use from the provided options (e.g., "deviations") and one or more labels. Configure the algorithm's parameters if they are available and execute the training using the designated button, assigning the desired name to the model.
+
+After completing the operation, the dialog will close, and the page will display the previous labels selected, grouped into a logical container called a "**tag**."
+If necessary, you can further train the previously selected labels directly using the currently generated tag (see below for tag management).
+
+Once the model is created, you can proceed with inference on historical data by clicking the "**execute**" button on the toolbar. When opening the dialog, select the model, the algorithm, and configure its execution parameters.
+
+<Warning>
+You can only execute a model if it has been trained on a consistent number and type of measurements that match the sensor and measurement selection of the previously configured analysis page.
+</Warning>

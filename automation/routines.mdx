@@ -1,0 +1,46 @@
+# Routines
+
+**Routines** are periodic scheduling of activities that include specific actions such as _starting or stopping sensor_ readings and _running algorithms_ on the recorded data.
+
+## Understanding Routine Scheduling
+
+A routine can be scheduled in a way that allows, for example, defining a routine that "_runs every workday, every 10 minutes from 8 AM to 8 PM_".
+
+These are the fields that defines the run phase:
+
+* **Time start**: the time of the day the routine initiate to operate, optionally starting the sensors.
+* **Time end**: the time of the day the routing end to operate, optionally stopping the sensors.
+* **Interval**: the time interval when, inside the time frame defined with _Time start_ and _Time end_, the routine actually triggers the run of the algorithm. Each time the interval elapses, the routine collects data from the sensor of the previous interval and runs the algorithm with that dataset.
+
+Here is what happens for a Routine configured with the settings in the example above:
+
+1. At 8:00 AM, the routine initiates operation and may start the sensors.
+2. At 8:10 AM, the routine triggers the algorithm with data collected since 8:00 AM.
+3. This process continues every 10 minutes:
+   * 8:20 AM: The routine collects data since 8:10 AM and triggers the algorithm.
+   * 8:30 AM: The routine collects data since 8:20 AM and triggers the algorithm.
+   * ...
+   * 7:50 PM: The routine collects data since 7:40 PM and triggers the algorithm.
+   * 8:00 PM: The routine collects data since 7:50 PM and may stop the sensors as the operation ends.
+
+<Info>
+Keep in mind that Routines run on the platform and not on the Edge side.
+</Info>
+
+## Routine creation
+
+By clicking the 'Add Routine' button in the top right corner, the system will display a popup window where you can:
+
+* Provide a **name** and a **description** for the routine.
+* Optionally associate the routine to a **Site** and an **Area**.
+* The list of **sensors** to associate with the routine.
+* Whether to **start** or **stop** sensors at the launch or termination of the routine.
+* The **algorithm** to run.
+* Scheduling details, including the ability to run the routine:
+  * On specific **weekdays**.
+  * The specific **time frame** on which the Routine starts and when it stops running.
+  * The time **interval** the routine must be repeated inside the start-stop time frame defined above.
+* The **people** to be **notified** upon routine launch or alarm generation.
+
+The selection of a specific Algorithm will may show additional parameters to enter, that includes the trained model to use and eventually other parameters specific for the selected algorithm.
+

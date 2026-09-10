@@ -1,0 +1,242 @@
+# Use case: interact with sensor and gather data
+
+Here an example of the usage of the Platform APIs to:
+
+* Start a stop the data recording for a Sensor
+* Gather timeseries sensor data
+
+## Obtain sensor ID
+
+If you don't know the sensor ID, follow these steps:
+
+1. Perform a GET to the `/api/equipment/getallLight` endpoint to retrieve a list of all equipment. In the response, identify the equipment to which your sensor is attached (for example, by the equipment name) and note the Equipment ID. Alternatively, you can ask the end user to select the relevant equipment.
+2. Next, perform a GET to `/api/sensor/getAllSensorByEquipmentRoot/<equipmentId>`  with the obtained Equipment ID to get a list of all sensors associated with that equipment and find the ID of the sensor you need.
+
+## Gather sensor measures identifier and configuration
+
+Use the `/api/sensor/getSensorInfo/<sensorId>` endpoint (POST) to retrieve the identifiers of the measures associated with the sensor.
+
+Save the sensor configuration found in the `"sensorMeasures"` field, as this will be needed to request the recorded sensor data.
+
+## Start and stop the sensor
+
+To start data acquisition, do a POST on `/api/detections/remote/true`. The payload should include the list of sensor measures you want the platform to collect data from at the Edge.
+
+```json
+{
+    "iotDevice": "MyEdge", # Gather the actual Edge device name from the Equipment info
+    "selectedSensorMeasures": [ 1, 2, 3, 4, 5 ] # Gather the actual sensor measures IDs from the getSensorInfo response
+}
+```
+
+To stop the sensor, use the same call but to the URL: `/api/detections/remote/false`
+
+## Gather the recorded data
+
+To retrieve all recorded data, do a POST to the endpoint `/api/detections/get/<raw>`, where `<raw>` can be set to `"true"` for raw data or `"false"` for a downsampled version suitable for graph visualization.
+
+The payload structure is as follows: the `sensorMeasures` field should contain the sensor configuration obtained from the previous `getSensorInfo` call, and the `from` and `to` fields should specify the desired time interval.
+
+```json
+{
+    "sensorMeasures": [
+        {
+            "sensorMeasureId": 1,
+            "uoM": "ms",
+            "min": -50,
+            "max": 50,
+            "id": 1,
+            "sensorId": 1,
+            "fieldId": null,
+            "type": 0,
+            "measure": {
+                "id": 3,
+                "name": "Velocity",
+                "deleted": false,
+                "configuration": [
+                    {
+                        "id": 5,
+                        "name": "z",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 6,
+                        "name": "y",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 7,
+                        "name": "x",
+                        "type": 3,
+                        "typeName": "Float"
+                    }
+                ]
+            },
+            "milliSecondsFrequency": 500
+        },
+        {
+            "sensorMeasureId": 2,
+            "uoM": "u",
+            "min": -100,
+            "max": 100,
+            "id": 2,
+            "sensorId": 1,
+            "fieldId": null,
+            "type": 0,
+            "measure": {
+                "id": 6,
+                "name": "Quaternion",
+                "deleted": false,
+                "configuration": [
+                    {
+                        "id": 14,
+                        "name": "w",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 15,
+                        "name": "z",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 16,
+                        "name": "y",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 17,
+                        "name": "x",
+                        "type": 3,
+                        "typeName": "Float"
+                    }
+                ]
+            },
+            "milliSecondsFrequency": 500
+        },
+        {
+            "sensorMeasureId": 3,
+            "uoM": "u",
+            "min": -100,
+            "max": 100,
+            "id": 3,
+            "sensorId": 1,
+            "fieldId": null,
+            "type": 0,
+            "measure": {
+                "id": 5,
+                "name": "Magnetometer",
+                "deleted": false,
+                "configuration": [
+                    {
+                        "id": 11,
+                        "name": "z",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 12,
+                        "name": "y",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 13,
+                        "name": "x",
+                        "type": 3,
+                        "typeName": "Float"
+                    }
+                ]
+            },
+            "milliSecondsFrequency": 500
+        },
+        {
+            "sensorMeasureId": 4,
+            "uoM": "g",
+            "min": -50,
+            "max": 50,
+            "id": 4,
+            "sensorId": 1,
+            "fieldId": null,
+            "type": 0,
+            "measure": {
+                "id": 4,
+                "name": "Gravity",
+                "deleted": false,
+                "configuration": [
+                    {
+                        "id": 8,
+                        "name": "z",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 9,
+                        "name": "y",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 10,
+                        "name": "x",
+                        "type": 3,
+                        "typeName": "Float"
+                    }
+                ]
+            },
+            "milliSecondsFrequency": 500
+        },
+        {
+            "sensorMeasureId": 5,
+            "uoM": "ms2",
+            "min": -50,
+            "max": 50,
+            "id": 5,
+            "sensorId": 1,
+            "fieldId": null,
+            "type": 0,
+            "measure": {
+                "id": 1,
+                "name": "Acceleration",
+                "deleted": false,
+                "configuration": [
+                    {
+                        "id": 1,
+                        "name": "x",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 2,
+                        "name": "y",
+                        "type": 3,
+                        "typeName": "Float"
+                    },
+                    {
+                        "id": 3,
+                        "name": "z",
+                        "type": 3,
+                        "typeName": "Float"
+                    }
+                ]
+            },
+            "milliSecondsFrequency": 500
+        }
+    ],
+    "from": "2024-09-16T15:22:00Z",
+    "to": "2024-09-16T15:23:00Z",
+    "trainedDataUsage": null,
+    "interpolate": true
+}
+```
+
+
+Data can be retrieved for any specified time interval, independent of the start/stop calls made previously. The system will provide the recorded data available within the given time range, if it exists.
+
+<Warning>
+Avoid using the `<raw>=true` call for large time ranges, as it may result in an excessive amount of data being returned. Choose appropriate time ranges based on the data frequency to prevent the overall response from becoming too large.
+</Warning>
