@@ -1,4 +1,6 @@
-# Tool development guidelines
+---
+title: "Tool development guidelines"
+---
 
 ## Technical requirements
 
@@ -36,7 +38,6 @@ flowchart LR
     D -- "API Request" --> B
     B -- "API Response" --> D
 
-
 ```
 
 ## Tool metadata
@@ -53,7 +54,7 @@ These are the tool metadata to be provided to the Platform:
 * **dataTypes** (image | video | audio | timeseries | event): an array the type of data the tool is able to manage.
 
 <Warning>
-The webUrl must be an HTTPS endpoint.
+The webUrl must be an HTTPS endpoint.\
 HTTP is supported only for http://localhost or http://127.0.0.1 endpoints. If you need to use HTTP with other urls, please check this [section](/marketplace-tools/tool-development-guidelines#embedding-http-tools-in-an-https-platform).
 </Warning>
 
@@ -164,14 +165,13 @@ fetch(apiEndpoint, options)
 
 ```
 
-
 ### Python High Level APIs Wrapper
 
 In addition to direct calls to the Web APIs, a Python package provided by MyWai can be used to manage all communication with the platform. This package, called `mywai_python_integration_kit`, allows both interaction with the APIs and communication with Mywai's databases. For detailed information on how to work specifically with the APIs within this package, please refer to the dedicated section [here](/marketplace-tools/python-high-level-apis-wrapper).
 
 ### Refresh the authentication token
 
-**TODO**
+<mark style="background-color:yellow;">TODO</mark>
 
 ## **Embedding HTTP Tools in an HTTPS Platform**
 
@@ -179,16 +179,16 @@ Tools exposed over HTTP (and not HTTPS) can only be embedded inside a platform i
 
 To bypass this restriction and securely expose your HTTP tool for embedding, you can use a tunneling service like **NGROK** to expose your service through a secure HTTPS endpoint. Follow these steps:
 
-1. **Install NGROK**
-   Download and install NGROK on the machine that hosts the tool’s HTTP service:
+1. **Install NGROK**\
+   Download and install NGROK on the machine that hosts the tool’s HTTP service:\
    [https://download.ngrok.com/](https://download.ngrok.com/)
-2.  **Log into NGROK**
+2.  **Log into NGROK**\
     Go to the following url [https://dashboard.ngrok.com/get-started/setup/linux](https://dashboard.ngrok.com/get-started/setup/linux) and copy the code that contains the following private information and paste it into your machine's shell:
 
     ```bash
     ngrok config add-authtoken <your-personal-token>
     ```
-3.  **Run NGROK**
+3.  **Run NGROK**\
     Start NGROK by specifying the protocol and the port used by your tool:
 
     ```bash
@@ -196,9 +196,9 @@ To bypass this restriction and securely expose your HTTP tool for embedding, you
     ```
 
     Replace `<port>` with the port number your tool is listening on.
-4. **Retrieve the HTTPS Endpoint**
+4. **Retrieve the HTTPS Endpoint**\
    After running NGROK, it will generate a public HTTPS URL. Copy this URL from the NGROK output.
-5. **Update Your Configuration**
+5. **Update Your Configuration**\
    Use the generated NGROK URL to update your platform configuration file (e.g., `tools.json`) or wherever the tool’s endpoint is defined.
 
 <Warning>
@@ -213,7 +213,7 @@ Each Linux user has their own unique NGROK authentication token. This token is r
 
 ### The Tool web URL cannot be accessed from external machines
 
-Ensure your server is configured to accept requested from the external.
+Ensure your server is configured to accept requested from the external.\
 Here some configuration examples:
 
 #### Streamlit
@@ -250,4 +250,3 @@ File `.streamlit/config.toml`:
 enableCORS = false
 enableXsrfProtection = false
 ```
-

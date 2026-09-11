@@ -1,34 +1,23 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "MYW.AI - User Manual",
   "theme": "mint",
-  "name": "MYWAI User Manual",
-  "description": "MYWAI platform user manual",
   "colors": {
-    "primary": "#0F766E",
-    "light": "#0F766E",
-    "dark": "#14B8A6"
+    "primary": "#0B6BCB",
+    "light": "#3B8DD9",
+    "dark": "#084A8A"
   },
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Documentation",
-        "groups": [
-          {
-            "group": "Welcome",
-            "pages": [
-              "README"
-            ]
-          },
-          {
-            "group": "Access to the platform",
-            "pages": [
-              "access-to-the-platform"
-            ]
-          },
+        "group": "User Manual",
+        "pages": [
+          "index",
+          "access-to-the-platform",
           {
             "group": "Administration",
             "pages": [
-              "administration",
+              "administration/index",
               "administration/tenant-configuration",
               "administration/users-management",
               "administration/roles-management",
@@ -39,12 +28,17 @@
           {
             "group": "Configuration",
             "pages": [
-              "configuration",
+              "configuration/index",
               "configuration/measures",
-              "configuration/sensors",
-              "configuration/sensors/file-system-watcher-adapter",
-              "configuration/sensors/http-api-polling-adapter",
-              "configuration/sensors/data-import-old",
+              {
+                "group": "Sensors",
+                "pages": [
+                  "configuration/sensors/index",
+                  "configuration/sensors/file-system-watcher-adapter",
+                  "configuration/sensors/http-api-polling-adapter",
+                  "configuration/sensors/data-import-old"
+                ]
+              },
               "configuration/equipment-types",
               "configuration/equipments",
               "configuration/gds-v3.0",
@@ -55,7 +49,7 @@
           {
             "group": "Data",
             "pages": [
-              "data",
+              "data/index",
               "data/equipments-data",
               "data/equipments-documents",
               "data/data-repository",
@@ -68,7 +62,7 @@
           {
             "group": "3D Viewer",
             "pages": [
-              "3d-viewer",
+              "3d-viewer/index",
               "3d-viewer/viewer-ui",
               "3d-viewer/compose-a-full-3d-area-scene"
             ]
@@ -76,9 +70,14 @@
           {
             "group": "Analysis",
             "pages": [
-              "analysis",
-              "analysis/algorithms",
-              "analysis/algorithms/custom-algorithms",
+              "analysis/index",
+              {
+                "group": "Algorithms",
+                "pages": [
+                  "analysis/algorithms/index",
+                  "analysis/algorithms/custom-algorithms"
+                ]
+              },
               "analysis/data-analysis",
               "analysis/simulate-real-time-data",
               "analysis/labels-approval-workflow",
@@ -89,7 +88,7 @@
           {
             "group": "Automation",
             "pages": [
-              "automation",
+              "automation/index",
               "automation/routines",
               "automation/orchestrator"
             ]
@@ -97,7 +96,7 @@
           {
             "group": "Reporting",
             "pages": [
-              "reporting",
+              "reporting/index",
               "reporting/anomalies",
               "reporting/reports",
               "reporting/background-jobs",
@@ -107,24 +106,39 @@
           {
             "group": "Edge Operations",
             "pages": [
-              "edge-operations",
-              "edge-operations/gds-installation-v3.0",
-              "edge-operations/gds-installation-v3.0/gds-installation-on-windows",
-              "edge-operations/gds-installation-v3.0/gds-installation-on-windows-with-docker-compose",
-              "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu",
-              "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu-with-docker-compose",
-              "edge-operations/edge-installation-v2.1",
-              "edge-operations/edge-installation-v2.1/installation-on-windows",
-              "edge-operations/edge-installation-v2.1/installation-on-ubuntu",
-              "edge-operations/edge-installation-v2.1/installation-on-raspberry-pi-4",
-              "edge-operations/edge-installation-v2.1/configure-bluetooth-on-linux",
-              "edge-operations/edge-installation-v2.1/reduce-algorithms-container-size",
-              "edge-operations/edge-installation-v3.0",
-              "edge-operations/edge-installation-v3.0/edge-installation-on-windows",
-              "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
-              "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
-              "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
-              "edge-operations/edge-installation-v3.0/advanced-installations",
+              "edge-operations/index",
+              {
+                "group": "GDS Installation (v3.0)",
+                "pages": [
+                  "edge-operations/gds-installation-v3.0/index",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows-with-docker-compose",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu-with-docker-compose"
+                ]
+              },
+              {
+                "group": "Edge Installation (v2.1)",
+                "pages": [
+                  "edge-operations/edge-installation-v2.1/index",
+                  "edge-operations/edge-installation-v2.1/installation-on-windows",
+                  "edge-operations/edge-installation-v2.1/installation-on-ubuntu",
+                  "edge-operations/edge-installation-v2.1/installation-on-raspberry-pi-4",
+                  "edge-operations/edge-installation-v2.1/configure-bluetooth-on-linux",
+                  "edge-operations/edge-installation-v2.1/reduce-algorithms-container-size"
+                ]
+              },
+              {
+                "group": "Edge Installation (v3.0)",
+                "pages": [
+                  "edge-operations/edge-installation-v3.0/index",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
+                  "edge-operations/edge-installation-v3.0/advanced-installations"
+                ]
+              },
               "edge-operations/advanced-docker-hosting-tips",
               "edge-operations/equipment-onboarding-v3.0"
             ]
@@ -132,19 +146,24 @@
           {
             "group": "Custom AI Algorithms",
             "pages": [
-              "custom-ai-algorithms",
+              "custom-ai-algorithms/index",
               "custom-ai-algorithms/technical-requirements",
               "custom-ai-algorithms/prepare-your-algorithm",
               "custom-ai-algorithms/serve-custom-ai-algorithms-locally",
-              "custom-ai-algorithms/packaging-a-custom-ai-algorithm",
-              "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
-              "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
+              {
+                "group": "Packaging a Custom AI Algorithm",
+                "pages": [
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/index",
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
+                ]
+              }
             ]
           },
           {
             "group": "Marketplace Tools",
             "pages": [
-              "marketplace-tools",
+              "marketplace-tools/index",
               "marketplace-tools/tool-development-guidelines",
               "marketplace-tools/platform-apis-usage-examples",
               "marketplace-tools/use-case-interact-with-sensor-and-gather-data",
@@ -152,44 +171,13 @@
               "marketplace-tools/python-high-level-apis-wrapper"
             ]
           },
-          {
-            "group": "Known limitations",
-            "pages": [
-              "known-limitations"
-            ]
-          },
-          {
-            "group": "Appendix 1: Special Adapters",
-            "pages": [
-              "appendix-1-special-adapters"
-            ]
-          },
-          {
-            "group": "Appendix 2: computational needs for AI training and inference",
-            "pages": [
-              "appendix-2-computational-needs-for-ai-training-and-inference"
-            ]
-          },
-          {
-            "group": "Appendix 2: Edge Data Access and MQTT Broker Integration",
-            "pages": [
-              "appendix-2-edge-data-access-and-mqtt-broker-integration"
-            ]
-          },
-          {
-            "group": "Glossary",
-            "pages": [
-              "glossary"
-            ]
-          }
+          "known-limitations",
+          "appendix-1-special-adapters",
+          "appendix-2-computational-needs-for-ai-training-and-inference",
+          "appendix-2-edge-data-access-and-mqtt-broker-integration",
+          "glossary"
         ]
       }
     ]
-  },
-  "seo": {
-    "indexing": "navigable"
-  },
-  "appearance": {
-    "default": "system"
   }
 }

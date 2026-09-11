@@ -1,8 +1,10 @@
-# Advanced installations
+---
+title: "Advanced installations"
+---
 
 ### Connect Edge with a GDS on a different device
 
-By default, the Edge installation automatically searches for a GDS at the IP address 192.168.5.4 on the local Docker network. This is the default IP defined in the docker run command in the [gds-installation-v3.0](/edge-operations/gds-installation-v3.0)section.
+By default, the Edge installation automatically searches for a GDS at the IP address 192.168.5.4 on the local Docker network. This is the default IP defined in the docker run command in the [GDS Installation (v3.0)](/edge-operations/gds-installation-v3.0/index)section.
 
 In a real deployment, each factory subnet typically has one GDS, and multiple Edge instances can connect to that single GDS.
 
@@ -14,7 +16,7 @@ To configure this, specify the actual GDS URL when creating the Edge container b
 
 ### Install an Edge without a GDS
 
-**TODO** richiede altre var di ENV + certificati scaricati da platform
+<mark style="background-color:$warning;">TODO</mark> richiede altre var di ENV + certificati scaricati da platform
 
 ### Expose the Edge MQTT Broker for External Access
 
@@ -47,16 +49,15 @@ In cases where the Edge device operates in stand-alone mode, not connected to th
 1. Download the json configuration file from the Platform: go on the Edges list page, click on the Details button on the Edge you want to manually configure and then click on the Download Edge Configuration button. A .json file will be downloaded with name`edge_config_<edge_id>.json`
 2. Copy the file in the `EdgeStorage`folder on the Edge machine.
 3. Install Mosquitto on the Edge host machine.
-4. Run the following command from the host machine, replacing:
-   `[EdgeId]` with the local IP address of the Edge container
-   `[Config file name]` with the name of the file downloaded from the previous step
-   `[MQTTUsername]` the username to log in into MQTT server. The default value is "edge". The actual value can be found in the Edge appSettings.json file.
-   `[MQTTPassword]` the password to access the MQTT server. The actual value can be found in the Edge appSettings.json file.
-   
+4. Run the following command from the host machine, replacing:\
+   `[EdgeId]` with the local IP address of the Edge container\
+   `[Config file name]` with the name of the file downloaded from the previous step\
+   `[MQTTUsername]` the username to log in into MQTT server. The default value is "edge". The actual value can be found in the Edge appSettings.json file.\
+   `[MQTTPassword]` the password to access the MQTT server. The actual value can be found in the Edge appSettings.json file.\
+   \
    On Windows, the path to be provided in the -m parameter must start with "C:\EdgeStorage\\\[Config file name]".
 
 ```
 mosquitto_pub -h [EdgeIp] -p 8883 -t UpdateConfigurationFromFileSystem -m "/EdgeStorage/[Config file name]" -u [MQTTUsername]-P [MQTTPassword]
 
 ```
-

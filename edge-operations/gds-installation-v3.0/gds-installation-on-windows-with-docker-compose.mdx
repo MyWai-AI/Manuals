@@ -1,4 +1,6 @@
-# GDS Installation on Windows with Docker Compose
+---
+title: "GDS Installation on Windows with Docker Compose"
+---
 
 1\. Create the following empty folder on the C: drive:
 
@@ -20,9 +22,8 @@ docker network create -d bridge --subnet=192.168.5.0/24 mywai
 docker login -u mywai-pull -p <token> productfeatures.azurecr.io
 ```
 
-
 <Warning>
-Contact MYWAI to get the access token for the proper registry.
+Contact MYWAI to get the access token for the proper registry.\
 The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
 </Warning>
 
@@ -40,7 +41,7 @@ MYWAI_GDS_PASSWORD=<value>
 * `MYWAI_GDS_ID`**:** an unique identifier of you choice for your GDS. Only alphanumerical characters, dash and underscore are allowed.
 * `MYWAI_GDS_NAME`**:** a display name for your GDS.
 * `MYWAI_GDS_DESCRIPTION`**:** a textual description of your GDS.
-* `MYWAI_GDS_PASSWORD`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.
+* `MYWAI_GDS_PASSWORD`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.\
   You'll need to configure the same password for the Edge installations.
 
 7. Create a file `docker-compose.yml` in the folder `C:\GDSStorage` with the following content:

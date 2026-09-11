@@ -1,11 +1,13 @@
-# Edge Installation on Ubuntu
+---
+title: "Edge Installation on Ubuntu"
+---
 
 1\. Create the following empty folders on the root:
 
 * /EdgeIO
 * /EdgeStorage
 
-2\. Install **Docker Engine** following the official Docker installation guide for Ubuntu:
+2\. Install **Docker Engine** following the official Docker installation guide for Ubuntu:\
 https://docs.docker.com/engine/install/ubuntu/
 
 <Info>
@@ -32,9 +34,8 @@ sudo docker network create -d bridge --subnet=192.168.5.0/24 mywai
 sudo docker login -u mywai-pull -p <token> productfeatures.azurecr.io
 ```
 
-
 <Warning>
-Contact MYWAI to get the access token for the proper registry.
+Contact MYWAI to get the access token for the proper registry.\
 The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
 </Warning>
 
@@ -47,14 +48,14 @@ sudo docker pull mywaik8sfeature.azurecr.io/edge:latest
 7\. Create & Start the containers:
 
 ```batch
-sudo docker run --name mywai-edge --restart always --network mywai 
---ip 192.168.5.3 
--v /EdgeIO:/EdgeIO 
--v /EdgeStorage:/EdgeStorage 
--v /var/run/docker.sock:/var/run/docker.sock 
--e IotHub__EdgeId=Edge-<edge-id> 
--e IotHub__TenantName=<tenant-name> 
--e GDS__Password=<gds-password> 
+sudo docker run --name mywai-edge --restart always --network mywai \
+--ip 192.168.5.3 \
+-v /EdgeIO:/EdgeIO \
+-v /EdgeStorage:/EdgeStorage \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-e IotHub__EdgeId=Edge-<edge-id> \
+-e IotHub__TenantName=<tenant-name> \
+-e GDS__Password=<gds-password> \
 productfeatures.azurecr.io/edge:latest
 ```
 
@@ -64,4 +65,3 @@ Where:
 * `IotHub__EdgeId`: an alphanumeric name you can choose for your Edge. Must start with "Edge-".
 * `IotHub__TenantName`: is the tenant name of your cloud MYWAI Platform. For example, if your platform is accessible at the url **https://acme.platform.myw.ai**, your tenant name is "acme".
 * `GDS__Password`: the password configured on the GDS.
-

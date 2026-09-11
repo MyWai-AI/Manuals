@@ -1,4 +1,6 @@
-# Installation on Ubuntu
+---
+title: "Installation on Ubuntu"
+---
 
 1.  Create the following folders on the root of your Edge device:
 
@@ -12,8 +14,8 @@
 2. Change permissions of the folders, therefore:
    * `sudo chmod 777 /EdgeIO`
    * `sudo chmod 777 /EdgeStorage`
-3. Login in the MYWAI platform, go to the Edges pages and find the Edge you want to install. If you have no Edges listed in the page, create a new Edge and give it a proper name.
-   On the Edge line, click on the "Edge Device Details" button (*[Screenshot unavailable in the GitBook export]*) on the right, then click on **Download Edge.env** and **Download Algo.env** buttons.
+3. Login in the MYWAI platform, go to the Edges pages and find the Edge you want to install. If you have no Edges listed in the page, create a new Edge and give it a proper name.\
+   On the Edge line, click on the "Edge Device Details" button (*(Edge Device Details)*) on the right, then click on **Download Edge.env** and **Download Algo.env** buttons.
 4. Save the downloaded file in the `/EdgeStorage` folder. If the edge device is not your computer or an external machine you can use scp or FileZilla to copy the file to the root of your user directory to then move it to the `/EdgeStorage` folder.
 5. Download and install **Docker** throught the **APT** repository ([https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)).
 6. Check that the `docker`group exists:
@@ -101,5 +103,4 @@ sudo systemctl enable containerd.service
 
 See section **Configure automatic updates**.
 
-[installation-on-windows.md](/edge-operations/edge-installation-v2.1/installation-on-windows)
-
+<Card title="Installation on Windows" href="/edge-operations/edge-installation-v2.1/installation-on-windows" />

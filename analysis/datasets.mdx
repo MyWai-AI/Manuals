@@ -1,14 +1,16 @@
-# DataSets
+---
+title: "DataSets"
+---
 
 DataSets provide a way to group collections of events or discrete assets (such as images, audio recordings, videos, or time series) for the purpose of training supervised or unsupervised AI algorithms.
 
-To create a DataSet, you must first set up a dedicated Project. A single Project can contain multiple DataSets, each of which is versioned to track changes over time.&#x20;
+To create a DataSet, you must first set up a dedicated Project. A single Project can contain multiple DataSets, each of which is versioned to track changes over time. 
 
 A DataSet is defined by its **Name**, **Description**, the **Fact Type** of the items it contains (Event, Image, Audio, Video, or Time Series), and whether it is **Supervised** (requiring each item to have a label) or not.
 
-![](/assets/image-4-.png)
+![](/images/image-4.png)
 
-When a DataSet is initially created, a default version (version 0) is automatically generated. You can then populate this version through the **Data Repository** by selecting items and clicking **Assign to DataSet**.&#x20;
+When a DataSet is initially created, a default version (version 0) is automatically generated. You can then populate this version through the **Data Repository** by selecting items and clicking **Assign to DataSet**. 
 
 Once the DataSet version is ready, it can be used to run **training experiments** with a **compatible** algorithm. For Events—whose formats can vary significantly—a custom algorithm is often required.
 

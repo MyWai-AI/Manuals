@@ -1,8 +1,6 @@
 ---
-description: Creating a simple Custom Algorithm
+title: "Prepare your Algorithm"
 ---
-
-# Prepare your Algorithm
 
 This section will show how to perform the setup of a simple custom algorithm.
 
@@ -33,7 +31,7 @@ The code can be structured as desired, with an indefinite number of modules and 
 
 ### Creating the model file
 
-Every custom algorithm must have a "**\*\_model.py**" file. This file contains the implemented custom model class. The class name is the '**Unique Algorithm ID'** and its static variables will be used for the automatic generation of configuration files.&#x20;
+Every custom algorithm must have a "**\*\_model.py**" file. This file contains the implemented custom model class. The class name is the '**Unique Algorithm ID'** and its static variables will be used for the automatic generation of configuration files. 
 
 The class that handles this model must be an inheritance of the **MywAIModel** class or a further subclass of it (e.g. **AnomalyDetectionModel**).
 
@@ -144,10 +142,8 @@ from mywai_python_backend.data.image_roi import MyWaiRoi
 from mywai_python_backend.data.images_data import ImagesData
 from mywai_python_backend.utils.utils import create_current_time_stamp
 
-
 def train(data: ImagesData, algo_params: dict):
     return dict(model=None), []
-
 
 def inference(
     training_results: dict,
@@ -160,7 +156,6 @@ def inference(
         width=50,
         height=50,
     )
-
 
 def create_inference_json_output(
     input_payload: dict, inference_output, inference_data: ImagesData

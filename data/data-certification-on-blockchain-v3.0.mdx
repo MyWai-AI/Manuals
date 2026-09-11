@@ -1,21 +1,23 @@
-# Data Certification on Blockchain (v3.0)
+---
+title: "Data Certification on Blockchain (v3.0)"
+---
 
-The MYWAI platform allows users to **manually certify data** on the IOTA Blockchain to guarantee **integrity, traceability, and non-repudiation** of AI-generated outputs.
+The MYWAI platform allows users to **manually certify data** on the IOTA Blockchain to guarantee **integrity, traceability, and non-repudiation** of AI-generated outputs.\
 Two types of entities can be certified: **Event** and **Anomaly**.
 
 In order to certify data, ensure to configure you IOTA Network as described in the Configuration / Blockchain page.
 
 ### **Manual Certification Process**
 
-Certification is **initiated manually by the user** from within the platform interface.
+Certification is **initiated manually by the user** from within the platform interface.\
 The process includes the following steps:
 
 1.  **Select Entity for Certification**
 
-    From the _Events_ or _Anomalies_ section, select the item you wish to certify and click on the ![](<../.gitbook/assets/image (18).png>) button.
-    A modal dialog is shown asking for the selection on the data hashing mechanism. At the moment  only IPFS is available.<br>
+    From the _Events_ or _Anomalies_ section, select the item you wish to certify and click on the ![](/images/image-18.png) button.\
+    A modal dialog is shown asking for the selection on the data hashing mechanism. At the moment  only IPFS is available.<br />
 
-    ![](/assets/image-19-.png)
+    ![](/images/image-19.png)
 2. **Generate AASX Package**
    * When clicking on **Execute** button, the system starts a background job that serializes the selected entity into an **AASX file** (Asset Administration Shell Package) compliant with the **IEC 63278** standard.
    * This package includes metadata, timestamps, measurement data, and references to the AI model involved.

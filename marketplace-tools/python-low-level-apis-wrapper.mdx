@@ -1,16 +1,14 @@
-# Python Low Level APIs Wrapper
+---
+title: "Python Low Level APIs Wrapper"
+---
 
 In this guide, we will show how to use the Python wrapper for the MYWAI platform APIs. This wrapper allows for making API calls in a simple and intuitive way at a low level.
 
-
-
-For this task, we used the library **pyswaggerapiwrap**, which you can find on [GitHub ](https://github.com/KlajdiBeqiraj/pyswaggerapiwrap)or [PyPI](https://pypi.org/project/pyswaggerapiwrap/).&#x20;
+For this task, we used the library **pyswaggerapiwrap**, which you can find on [GitHub ](https://github.com/KlajdiBeqiraj/pyswaggerapiwrap)or [PyPI](https://pypi.org/project/pyswaggerapiwrap/). 
 
 Python Version
 
 The version of Python used for the package is Python 3.9.7, but there are no specific constraints on the Python version.
-
-
 
 ### Installation
 
@@ -22,7 +20,7 @@ pip install pyswaggerapiwrap
 
 ### Complete Tutorial
 
-For a complete tutorial of PySwaggerAPIWrap, please refer to the notebook available at this link: [Tutorial](https://github.com/KlajdiBeqiraj/PySwaggerAPIWrap/blob/main/notebooks/pyswaggerapi_tutorial.ipynb).&#x20;
+For a complete tutorial of PySwaggerAPIWrap, please refer to the notebook available at this link: [Tutorial](https://github.com/KlajdiBeqiraj/PySwaggerAPIWrap/blob/main/notebooks/pyswaggerapi_tutorial.ipynb). 
 
 For the complete guide on Mywai, everything can be found in the file test\_low\_level\_apis.ipynb within the Algorithms package.
 
@@ -48,9 +46,7 @@ Using this class, we can retrieve a pandas DataFrame containing all the informat
 routes_dict = http_client.get_routes_df(swagger_route="swagger/v1/swagger.json")
 ```
 
-
-
-![](/assets/image-21-.png)
+![](/images/image-21.png)
 
 Additional API's
 
@@ -124,13 +120,11 @@ We can use the **filter method** to filter our APIs in several ways:
 2. **By route\_pattern**: This allows us to retrieve all APIs that contain the specified string within their route.
 3. **By method**: We can filter by HTTP methods such as GET and POST.
 
-
-
 ```python
 api_filter.filter(api_type="Dataset", route_pattern="/Dataset/get/DatasetsPagedByProjectId/")
 ```
 
-![](/assets/image-22-.png)
+![](/images/image-22.png)
 
 #### Api as attributes
 
@@ -237,7 +231,6 @@ print(results)
    'factType': 0,
    'datasetVersions': []}}]
 
-
 ```
 
 ## Save and reload the status
@@ -277,8 +270,6 @@ new_api_filter, new_http_client = load_status(file_path)
 
 To provide a more concrete example, let's show how to download all the facts of a DatasetVersion.
 
-
-
 1. Get Blob storage dict from the specific API
 
 ```python
@@ -306,7 +297,7 @@ config_manager = ConfigurationManager(
 )
 ```
 
-3. Get all facts by DatasetVersionId&#x20;
+3. Get all facts by DatasetVersionId 
 
 ```python
 get_facts_with_version_id_api = api_filter.get_additional_api(key="getFactsWithVersionID")
@@ -324,4 +315,4 @@ facts_obj = parse_facts(data["items"])
 facts_obj.download(config_manager)
 ```
 
-![](/assets/image-23-.png)
+![](/images/image-23.png)

@@ -1,4 +1,6 @@
-# GDS Installation on Windows
+---
+title: "GDS Installation on Windows"
+---
 
 1\. Create the following empty folder on the C: drive:
 
@@ -20,9 +22,8 @@ docker network create -d bridge --subnet=192.168.5.0/24 mywai
 docker login -u mywai-pull -p <token> productfeatures.azurecr.io
 ```
 
-
 <Warning>
-Contact MYWAI to get the access token for the proper registry.
+Contact MYWAI to get the access token for the proper registry.\
 The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
 </Warning>
 
@@ -38,7 +39,7 @@ docker pull productfeatures.azurecr.io/gds:latest
 * `IotHub__gdsId`**:** an unique identifier of you choice for your GDS. Only alphanumerical characters, dash and underscore are allowed.
 * `GDS__gdsName`**:** a display name for your GDS.
 * `GDS__gdsDescription`**:** a textual description of your GDS.
-* `GDS__password`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.
+* `GDS__password`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.\
   You'll need to configure the same password for the Edge installations
 
 ```batch

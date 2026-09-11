@@ -1,4 +1,6 @@
-# Data Import (old)
+---
+title: "Data Import (old)"
+---
 
 You can manually import data into a sensor by clicking the "Import" button on the sensor's row. The system supports the import of the following types of data:
 
@@ -11,8 +13,8 @@ The format of the file to import is a CSV for Timeseries and a ZIP or multiple f
 
 ## CSV file format
 
-The format of the CSV file depends on the definition of the Measure that is going to be imported.
-
+The format of the CSV file depends on the definition of the Measure that is going to be imported.\
+\
 For example, for an _Acceleration_ measure that is made up of 3 scalar values (x, y, z), the CSV must contain 4 columns:
 
 1. **timestamp**: unix epoch format with milliseconds.
@@ -20,13 +22,13 @@ For example, for an _Acceleration_ measure that is made up of 3 scalar values (x
 3. **y**: the float value of the acceleration along the y axis.
 4. **z**: the float value of the acceleration along the z axis.
 
-Example of the first 8 line of this file:<br>
+Example of the first 8 line of this file:<br />
 
-![An example of a CSV file with 3-dimension acceleration data](/assets/image-40-.png)
+![](/images/image-40.png)
 
-Ensure that the CSV file does not contain a header row, and that the order of columns matches the order of fields defined in the Measure.
+*An example of a CSV file with 3-dimension acceleration data*Ensure that the CSV file does not contain a header row, and that the order of columns matches the order of fields defined in the Measure.
 
-Fields must be separated by a comma. Float values must use the dot "." as decimal separator and must not be enclosed in quotes.&#x20;
+Fields must be separated by a comma. Float values must use the dot "." as decimal separator and must not be enclosed in quotes. 
 
 ### Importing more measures with the same file
 
@@ -63,8 +65,3 @@ To run an import of data on a Sensor, you must:
 ### Automatic timestamps for video and audio files
 
 When importing video or audio files that already contain a set starting position in time, the system can automatically link the next media file's timestamp to instantly start after the end of the current one.
-
-
-
-
-

@@ -1,11 +1,13 @@
-# Edge Installation on Ubuntu with Docker Compose
+---
+title: "Edge Installation on Ubuntu with Docker Compose"
+---
 
 1\. Create the following empty folders on the root:
 
 * /EdgeIO
 * /EdgeStorage
 
-2\. Install **Docker Engine** following the official Docker installation guide for Ubuntu:
+2\. Install **Docker Engine** following the official Docker installation guide for Ubuntu:\
 https://docs.docker.com/engine/install/ubuntu/
 
 <Info>
@@ -32,9 +34,8 @@ sudo docker network create -d bridge --subnet=192.168.5.0/24 mywai
 sudo docker login -u mywai-pull -p <token> productfeatures.azurecr.io
 ```
 
-
 <Warning>
-Contact MYWAI to get the access token for the proper registry.
+Contact MYWAI to get the access token for the proper registry.\
 The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
 </Warning>
 
@@ -77,7 +78,6 @@ networks:
     external: true
 ```
 
-
 <Info>
 192.168.5.3 is the predefined internal IP address for the Edge. You need to change it in case you are installing for some reasons more Edges on the same Docker.
 </Info>
@@ -87,4 +87,3 @@ networks:
 ```shellscript
 docker compose up -d
 ```
-

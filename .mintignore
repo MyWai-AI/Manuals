@@ -1,0 +1,6 @@
+# Original GitBook export (kept as migration backup)
+user-manual/
+gitbook-docs.yaml
+
+# Conversion tooling
+scripts/

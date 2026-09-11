@@ -1,8 +1,10 @@
-# Python High Level APIs Wrapper
+---
+title: "Python High Level APIs Wrapper"
+---
 
 This page describes the higher-level communication provided by the `mywai_python_integration_kit` package for interacting with MyWAI's APIs in Python. This abstraction simplifies the interaction with the MyWAI platform, allowing for efficient management of various operations.
 
-If you are interested in a detailed guide that provides a one-to-one wrap of the platform's APIs, you can refer to the specific documentation available [here](https://app.gitbook.com/o/WqtGWMX8E7E2owWmo3BP/s/S0R26Sb4yf2oFiuISYDZ/~/changes/73/marketplace-tools/python-low-level-apis).
+If you are interested in a detailed guide that provides a one-to-one wrap of the platform's APIs, you can refer to the specific documentation available [here](/marketplace-tools/python-low-level-apis-wrapper).
 
 ## Initialization
 
@@ -249,7 +251,7 @@ equipment_with_sensors = get_equipment_with_sensor(eq_id=123)
 print(equipment_with_sensors)
 ```
 
-#### Upload Facts to DatasetVersion&#x20;
+#### Upload Facts to DatasetVersion 
 
 ```python
 from mywai_python_integration_kit.apis.services.dataset_version_apis import (
@@ -267,7 +269,5 @@ upload_facts_to_dataset_version(
     fact_type=1,
 )
 ```
-
-
 
 This comprehensive guide should help you utilize the MyWAI Python Integration Kit effectively for your projects. For more detailed documentation or specific questions, refer to the official documentation or contact support.

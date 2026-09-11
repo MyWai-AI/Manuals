@@ -1,0 +1,117 @@
+---
+title: "Algorithms"
+---
+
+The MYWAI Algorithms Environment provides a set of ready-to-use algorithms that can be executed directly from the MYWAI Platform.\
+These algorithms cover the most common analytical needs such as anomaly detection, classification, clustering, dimensionality reduction, generative modelling and object detection.
+
+Each algorithm is delivered within the MYWAI Algorithms Docker Environment and becomes immediately available in the platform once the service is running.
+
+Alongside built-in algorithms, MYWAI also allows the creation, registration and execution of **custom algorithms**, using the same SDK, structure and integration process used for product algorithms. This ensures a unified approach to designing, deploying and maintaining analytical models inside the MYWAI ecosystem.
+
+***
+
+### Algorithm Categories
+
+Built-in (product) and custom algorithms are organized into the following categories:
+
+* Anomaly Detection
+* Classification
+* Clustering
+* Dimensionality Reduction
+* Generative Models
+* Object Detection / Pattern Recognition
+
+Each algorithm belongs to exactly one category and specifies the type of data it processes (time series or images).
+
+### Built-in Algorithms Included with the Product
+
+The list below highlights all algorithms that are bundled with the MYWAI Algorithms Environment.
+
+#### Anomaly Detection
+
+| Name                                        | Data Type   | Description                                                          |
+| ------------------------------------------- | ----------- | -------------------------------------------------------------------- |
+| Anomaly Detection with DTW Clustering       | Time Series | DTW-based clustering used to detect deviations from normal patterns. |
+| Patchcore Anomaly Detection \[Images]       | Images      | Visual anomaly detection using PatchCore embeddings.                 |
+| Anomaly Detection with RBFN for Time Series | Time Series | Time-series anomaly detection using RBF networks.                    |
+| RBFN Anomaly Detection Model \[Images]      | Images      | Image anomaly detection based on RBFN scoring.                       |
+
+***
+
+#### Classification
+
+| Name                                        | Data Type   | Description                                                        |
+| ------------------------------------------- | ----------- | ------------------------------------------------------------------ |
+| Inception V3 Classification Model \[Images] | Images      | Deep-learning classifier for general-purpose image categorisation. |
+| Neuro Board Classification \[Time Series]   | Time Series | Neural model for classifying multi-sensor temporal data.           |
+| Random Forest Classification \[Time Series] | Time Series | Traditional machine-learning classifier for time-series patterns.  |
+| ResNet50 Classification Model \[Images]     | Images      | Image classification using the ResNet50 architecture.              |
+
+***
+
+#### Clustering
+
+| Name                           | Data Type   | Description                                             |
+| ------------------------------ | ----------- | ------------------------------------------------------- |
+| Dtw Agglomerative Clustering   | Time Series | Agglomerative clustering based on Dynamic Time Warping. |
+| RBF Clustering for Time Series | Time Series | Clustering using Radial Basis Function metrics.         |
+
+***
+
+#### Dimensionality Reduction
+
+| Name                                 | Data Type   | Description                                                 |
+| ------------------------------------ | ----------- | ----------------------------------------------------------- |
+| Independent Component Analysis (ICA) | Time Series | Decomposition of mixed signals into independent components. |
+| PCA (Principal Component Analysis)   | Time Series | Dimensionality reduction preserving variance information.   |
+
+***
+
+#### Generative Models
+
+| Name                               | Data Type | Description                                                    |
+| ---------------------------------- | --------- | -------------------------------------------------------------- |
+| Pix2Pix Generative Model \[Images] | Images    | Image-to-image generative model for synthetic transformations. |
+
+***
+
+#### Object Detection / Pattern Recognition
+
+| Name                                     | Data Type | Description                                |
+| ---------------------------------------- | --------- | ------------------------------------------ |
+| Yolo-v8 Object Detection Model \[Images] | Images    | Object and pattern detection using YOLOv8. |
+
+***
+
+## Product Algorithms and Custom Algorithms
+
+The MYWAI Platform supports two types of algorithms:
+
+### 1. Built-in Product Algorithms
+
+These are the models listed above, already packaged within the MYWAI Algorithms Environment.\
+No installation or configuration is required to use them.
+
+### 2. Custom Algorithms
+
+Users or MYWAI technical teams can develop custom algorithms tailored to specific business requirements.\
+Custom algorithms:
+
+* follow the **same structural format** as product algorithms,
+* use the **same SDK and integration framework**,
+* are registered inside the platform with the same metadata (name, description, script, category, parameters),
+* and are executed by the same runtime used for product algorithms.
+
+Once registered, a custom algorithm appears in the MYWAI Platform exactly like any product algorithm.\
+It can be executed, monitored, and managed with the **same workflow**.
+
+This unified approach ensures that internal, partner, and customer-specific models behave consistently and integrate seamlessly within the platform’s ecosystem.
+
+## How Algorithms Are Used in the Platform
+
+All algorithms—both built-in and custom—are accessible from the “Algorithms” section of the MYWAI Platform.\
+From there, they can be:
+
+* selected for data analysis and inference,
+* configured with their training and inference parameters,
