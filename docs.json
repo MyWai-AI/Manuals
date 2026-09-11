@@ -1,0 +1,183 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "MYW.AI - User Manual",
+  "theme": "mint",
+  "colors": {
+    "primary": "#0B6BCB",
+    "light": "#3B8DD9",
+    "dark": "#084A8A"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "User Manual",
+        "pages": [
+          "index",
+          "access-to-the-platform",
+          {
+            "group": "Administration",
+            "pages": [
+              "administration/index",
+              "administration/tenant-configuration",
+              "administration/users-management",
+              "administration/roles-management",
+              "administration/custom-fields",
+              "administration/audit-trails"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/index",
+              "configuration/measures",
+              {
+                "group": "Sensors",
+                "pages": [
+                  "configuration/sensors/index",
+                  "configuration/sensors/file-system-watcher-adapter",
+                  "configuration/sensors/http-api-polling-adapter",
+                  "configuration/sensors/data-import-old"
+                ]
+              },
+              "configuration/equipment-types",
+              "configuration/equipments",
+              "configuration/gds-v3.0",
+              "configuration/edges",
+              "configuration/blockchain-v3.0"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "data/index",
+              "data/equipments-data",
+              "data/equipments-documents",
+              "data/data-repository",
+              "data/data-import",
+              "data/data-export-v3.0",
+              "data/data-certification-on-blockchain-v3.0",
+              "data/certificates-v3.0"
+            ]
+          },
+          {
+            "group": "3D Viewer",
+            "pages": [
+              "3d-viewer/index",
+              "3d-viewer/viewer-ui",
+              "3d-viewer/compose-a-full-3d-area-scene"
+            ]
+          },
+          {
+            "group": "Analysis",
+            "pages": [
+              "analysis/index",
+              {
+                "group": "Algorithms",
+                "pages": [
+                  "analysis/algorithms/index",
+                  "analysis/algorithms/custom-algorithms"
+                ]
+              },
+              "analysis/data-analysis",
+              "analysis/simulate-real-time-data",
+              "analysis/labels-approval-workflow",
+              "analysis/datasets",
+              "analysis/dataset-version-approval-workflow"
+            ]
+          },
+          {
+            "group": "Automation",
+            "pages": [
+              "automation/index",
+              "automation/routines",
+              "automation/orchestrator"
+            ]
+          },
+          {
+            "group": "Reporting",
+            "pages": [
+              "reporting/index",
+              "reporting/anomalies",
+              "reporting/reports",
+              "reporting/background-jobs",
+              "reporting/certifications"
+            ]
+          },
+          {
+            "group": "Edge Operations",
+            "pages": [
+              "edge-operations/index",
+              {
+                "group": "GDS Installation (v3.0)",
+                "pages": [
+                  "edge-operations/gds-installation-v3.0/index",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows-with-docker-compose",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu",
+                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu-with-docker-compose"
+                ]
+              },
+              {
+                "group": "Edge Installation (v2.1)",
+                "pages": [
+                  "edge-operations/edge-installation-v2.1/index",
+                  "edge-operations/edge-installation-v2.1/installation-on-windows",
+                  "edge-operations/edge-installation-v2.1/installation-on-ubuntu",
+                  "edge-operations/edge-installation-v2.1/installation-on-raspberry-pi-4",
+                  "edge-operations/edge-installation-v2.1/configure-bluetooth-on-linux",
+                  "edge-operations/edge-installation-v2.1/reduce-algorithms-container-size"
+                ]
+              },
+              {
+                "group": "Edge Installation (v3.0)",
+                "pages": [
+                  "edge-operations/edge-installation-v3.0/index",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
+                  "edge-operations/edge-installation-v3.0/advanced-installations"
+                ]
+              },
+              "edge-operations/advanced-docker-hosting-tips",
+              "edge-operations/equipment-onboarding-v3.0"
+            ]
+          },
+          {
+            "group": "Custom AI Algorithms",
+            "pages": [
+              "custom-ai-algorithms/index",
+              "custom-ai-algorithms/technical-requirements",
+              "custom-ai-algorithms/prepare-your-algorithm",
+              "custom-ai-algorithms/serve-custom-ai-algorithms-locally",
+              {
+                "group": "Packaging a Custom AI Algorithm",
+                "pages": [
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/index",
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
+                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Marketplace Tools",
+            "pages": [
+              "marketplace-tools/index",
+              "marketplace-tools/tool-development-guidelines",
+              "marketplace-tools/platform-apis-usage-examples",
+              "marketplace-tools/use-case-interact-with-sensor-and-gather-data",
+              "marketplace-tools/python-low-level-apis-wrapper",
+              "marketplace-tools/python-high-level-apis-wrapper"
+            ]
+          },
+          "known-limitations",
+          "appendix-1-special-adapters",
+          "appendix-2-computational-needs-for-ai-training-and-inference",
+          "appendix-2-edge-data-access-and-mqtt-broker-integration",
+          "glossary"
+        ]
+      }
+    ]
+  }
+}

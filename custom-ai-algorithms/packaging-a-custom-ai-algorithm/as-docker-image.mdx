@@ -1,0 +1,109 @@
+---
+title: "As Docker Image"
+---
+
+Your custom algorithm can be loaded into the MYWAI platform in the form of a docker image. 
+
+The basic image, dependencies and general structure of the **Dockerfile** are to be defined according to the individual application case.
+
+The only mandatory constraints are:
+
+1. To expose a RestFull API to handle the payload sent by the MYWAI platform or edge and to return appropriate responses.
+
+For a simplified approach to the deployment of customised docked algorithms, it is advisable to follow the instructions in the '**Prepare your algorithm**' section, to which you can make all the necessary changes.
+
+A Dockerfile (**Dockerfile\_dev**) that can be used as an excellent starting point to build the Docker image for a custom algorithm is provided. This must be customised in a way that is consistent with the needs of the algorithm currently being developed.
+
+```docker
+# Start with NVIDIA CUDA as the base image to support GPU functionalities
+FROM nvidia/cuda:11.2.2-base-ubuntu20.04
+
+# Install Miniconda
+ENV MINICONDA_VERSION latest
+ENV CONDA_DIR /opt/conda
+ENV PATH $CONDA_DIR/bin:$PATH
+
+# Set the timezone environment variable
+ENV TZ=Europe/Rome
+
+# Set noninteractive mode for apt-get and Conda
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Install Miniconda, system dependencies, and ensure necessary libraries are present
+# Combine system updates, installations, and cleanup to reduce layer size
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    libgl1 \
+    build-essential \
+    libglib2.0-0 \
+    && wget https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -O /tmp/miniconda.sh \
+    && bash /tmp/miniconda.sh -b -p $CONDA_DIR \
+    && rm /tmp/miniconda.sh \
+    && conda update -n base -c defaults conda \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# Create the working directory
+WORKDIR /mywai
+
+# Create a Conda environment with Python 3.9
+RUN conda create -n mywai_env python=3.9 -y
+
+# Make RUN commands use the new environment
+SHELL ["conda", "run", "-n", "mywai_env", "/bin/bash", "-c"]
+
+# Copy the application files to the container
+COPY . .
+
+# After installing Python packages, use Conda and pip to clean up
+RUN pip install --no-cache-dir  mywai_python_backend-0.0.1-py3-none-any.whl \
+    && conda clean -a \
+    && pip install --no-cache-dir -r ./requirements.txt
+
+# Configure the application
+RUN python -c "from mywai_python_backend.utils.config_handler import generate_models_config_and_clear; generate_models_config_and_clear()"
+
+# Expose the necessary ports
+EXPOSE 5000
+
+# Gunicorn based WSGI, make sure to activate the conda environment before running gunicorn
+CMD ["conda", "run", "-n", "mywai_env", "gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "mywai_algo_app.flask_app.flask_app:mywai_algo_app", "--max-requests", "1", "--timeout", "604800"]
+
+```
+
+1. **Base Image**: It starts with `nvidia/cuda:11.2.2-base-ubuntu20.04` as the base image. This choice is made to support GPU functionalities by leveraging NVIDIA's CUDA toolkit, ensuring the software can utilize GPU acceleration. The specific version of CUDA is 11.2.2, and the operating system is Ubuntu 20.04.
+2. **Environment Setup**: Several environment variables are set up for Miniconda installation and configuration:
+   * `MINICONDA_VERSION` is set to `latest`, indicating that the latest version of Miniconda will be installed.
+   * `CONDA_DIR` is the directory where Miniconda will be installed (`/opt/conda`).
+   * `PATH` is updated to include the Miniconda binary directory, ensuring that the Conda command is available system-wide.
+   * `TZ` is set to `Europe/Rome`, specifying the timezone for the container.
+3. **Installation of Miniconda and Dependencies**:
+   * The Dockerfile uses `apt-get` to update system packages and install necessary dependencies such as `wget`, `libgl1`, `build-essential`, and `libglib2.0-0`.
+   * It then downloads and installs Miniconda from Anaconda's official repository. After installation, the base Conda environment is updated.
+   * The `DEBIAN_FRONTEND` argument is set to `noninteractive` to automate and streamline the installation process without manual inputs.
+4. **Working Directory**: A working directory named `/mywai` is created inside the container. This directory is where the application files will be copied to and where most of the subsequent commands will be executed.
+5. **Conda Environment**: A new Conda environment named `mywai_env` is created with Python 3.9. This environment is dedicated to the application, ensuring isolation from other Python environments and packages.
+6. **Application Files**: The application files are copied into the container. This includes all necessary files located in the build context (the directory from which the Docker build command is run).
+7. **Python Package Installation**:
+   * The application's Python backend package (`mywai_python_backend-0.0.1-py3-none-any.whl`) is installed using `pip`.
+   * Additional Python packages required by the application are installed from a `requirements.txt` file.
+8. **Port Exposure**: Port 5000 is exposed for network access, indicating that the application serves HTTP requests on this port.
+9. **Startup Command**: The container is configured to start a Gunicorn server when it runs. Gunicorn is used as the WSGI HTTP server to serve the Flask application. The command specifies the use of 4 worker processes (`-w 4`), binds to all network interfaces on port 5000 (`-b 0.0.0.0:5000`), and includes configurations for maximum requests (`--max-requests 1`) and timeout (`--timeout 604800` seconds, or 7 days). The Conda environment `mywai_env` is activated before starting Gunicorn.
+
+To **build** the docker image:
+
+```sh
+(py397) docker build -t custom_algo --file Dockerfile_dev .
+```
+
+You can **run** the service by running the following command:
+
+```sh
+(py397) docker run -p 5000:5000 -p 8888:8888 -p 6006:6006 algo_service
+```
+
+You can **debug** your service by running the following command:
+
+```sh
+(py397) docker run -it --entrypoint /bin/bash algo_service
+```

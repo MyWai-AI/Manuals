@@ -1,0 +1,106 @@
+---
+title: "Installation on Ubuntu"
+---
+
+1.  Create the following folders on the root of your Edge device:
+
+    * /EdgeIO:
+
+    `sudo mkdir /EdgeIO`
+
+    * /EdgeStorage
+
+    `sudo mkdir /EdgeStorage`
+2. Change permissions of the folders, therefore:
+   * `sudo chmod 777 /EdgeIO`
+   * `sudo chmod 777 /EdgeStorage`
+3. Login in the MYWAI platform, go to the Edges pages and find the Edge you want to install. If you have no Edges listed in the page, create a new Edge and give it a proper name.\
+   On the Edge line, click on the "Edge Device Details" button (*(Edge Device Details)*) on the right, then click on **Download Edge.env** and **Download Algo.env** buttons.
+4. Save the downloaded file in the `/EdgeStorage` folder. If the edge device is not your computer or an external machine you can use scp or FileZilla to copy the file to the root of your user directory to then move it to the `/EdgeStorage` folder.
+5. Download and install **Docker** throught the **APT** repository ([https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)).
+6. Check that the `docker`group exists:
+
+```bash
+getent group docker
+```
+
+7. Add the current user to the `docker`group:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+8. Apply the group change:
+
+```bash
+newgrp docker
+```
+
+9. Check that the user has the permissions to use `docker` without the `sudo` command:
+
+```bash
+docker ps -a
+```
+
+10. If a `Permission denied` error is shown please perform the following, else skip to step 11:
+
+```bash
+ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+ sudo chmod g+rwx "$HOME/.docker" -info
+```
+
+11. Go to `/EdgeStorage` directory:
+
+```bash
+cd /EdgeStorage
+```
+
+12. Create the _mywai_ network:
+
+```bash
+docker network create -d bridge --subnet=192.168.5.0/24 mywai
+```
+
+13. Login into _mywai_ docker registry:
+
+```bash
+docker login -u mywai-pull -p <token> mywai.azurecr.io
+```
+
+<Warning>
+Contact MYWAI to get the access token for the proper registry.
+</Warning>
+
+14. Download the latest version of the docker images:
+
+```bash
+docker pull mywai.azurecr.io/edge:latest
+
+docker pull mywai.azurecr.io/algo:latest
+```
+
+15. Create & Start Containers:
+
+```bash
+docker run --name mywai-edge --restart always --network mywai --ip 192.168.5.3 --env-file ./Edge.env -p 1883:1883 -p 8023:8023 -v /EdgeIO:/EdgeIO -v /EdgeStorage:/EdgeStorage -v /var/run/docker.sock:/var/run/docker.sock mywai.azurecr.io/edge:latest 
+
+docker run --name mywai-algo --restart always --network mywai --ip 192.168.5.2 --env-file ./Algo.env -p 5005:5005 -p 8022:8022 -v /EdgeIO:/EdgeIO -v /EdgeStorage:/EdgeStorage mywai.azurecr.io/algo:latest
+```
+
+<Info>
+On Ubuntu, Docker and containerd are typically installed as system services and should automatically start at boot. If they don't, you can enable them manually with these commands:
+
+```bash
+sudo systemctl enable docker.service
+```
+
+```bash
+sudo systemctl enable containerd.service
+```
+</Info>
+
+## Configure automatic updates
+
+See section **Configure automatic updates**.
+
+<Card title="Installation on Windows" href="/edge-operations/edge-installation-v2.1/installation-on-windows" />

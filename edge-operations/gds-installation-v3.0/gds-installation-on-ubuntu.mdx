@@ -1,0 +1,67 @@
+---
+title: "GDS Installation on Ubuntu"
+---
+
+1. Create the following empty folder on the root:
+   * /GDSStorage
+2. Install **Docker Engine** following the official Docker installation guide for Ubuntu:\
+   https://docs.docker.com/engine/install/ubuntu/
+
+<Info>
+Optionally consider to apply post-install settings for your Docker: [https://docs.docker.com/engine/install/linux-postinstall](https://docs.docker.com/engine/install/linux-postinstall). If you choose to use Docker as non-root user, omit "sudo" in all the following commands of this procedure.
+</Info>
+
+3. After installation, ensure Docker is running:
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+4\. Create the `mywai` Docker network (if not already created by other MYWAI containers):
+
+```bash
+sudo docker network create -d bridge --subnet=192.168.5.0/24 mywai
+```
+
+5\. Log in to the MYWAI Docker registry:
+
+```bash
+sudo docker login productfeatures.azurecr.io -u mywai-pull -p <token>
+```
+
+<Warning>
+Contact MYWAI to get the access token for the proper registry.\
+The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
+</Warning>
+
+6\. Pull the latest version of the GDS image:
+
+```bash
+sudo docker pull productfeatures.azurecr.io/gds:latest
+```
+
+7\. Create & Start the container, setting in the command line these environment variables:
+
+* `IotHub__server`**:** the IP address or hostname of the IotHub service of the MYWAI Platform to be attached with.
+* `IotHub__gdsId`**:** an unique identifier of you choice for your GDS. Only alphanumerical characters, dash and underscore are allowed.
+* `GDS__gdsName`**:** a display name for your GDS.
+* `GDS__gdsDescription`**:** a textual description of your GDS.
+* `GDS__password`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.\
+  You'll need to configure the same password for the Edge installations.
+
+```bash
+sudo docker run --name mywai-gds \
+  --restart always \
+  --network mywai \
+  --ip 192.168.5.4 \
+  -p 8023:8023 \
+  -p 58810:58810 \
+  -v /GDSStorage:/GDSStorage \
+  -e IotHub__server=<mywai-iothub-host> \
+  -e IotHub__gdsId=<my-gds-id> \
+  -e GDS__gdsName="<my-gds-name>" \
+  -e GDS__gdsDescription="<my-gds-description>" \
+  -e GDS__password="<my-gds-password>" \
+  productfeatures.azurecr.io/gds:latest
+```

@@ -1,0 +1,85 @@
+---
+title: "GDS Installation on Windows with Docker Compose"
+---
+
+1\. Create the following empty folder on the C: drive:
+
+* C:\GDSStorage
+
+2\. Download and install **Docker Desktop** ([https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/))
+
+3\. Open a **Command Prompt**
+
+4\. Create the _mywai_ network (if not yet created installing the Edge and Algo containers):
+
+```shellscript
+docker network create -d bridge --subnet=192.168.5.0/24 mywai
+```
+
+5\. Login into _mywai_ docker registry:
+
+```shellscript
+docker login -u mywai-pull -p <token> productfeatures.azurecr.io
+```
+
+<Warning>
+Contact MYWAI to get the access token for the proper registry.\
+The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
+</Warning>
+
+6\. Create a file `.env` in the folder `C:\GDSStorage` where you will define the following environment variables as described below:
+
+```
+MYWAI_IOTHUB_SERVER=<value>
+MYWAI_GDS_ID=<value>
+MYWAI_GDS_NAME=<value>
+MYWAI_GDS_DESCRIPTION=<value>
+MYWAI_GDS_PASSWORD=<value>
+```
+
+* `MYWAI_IOTHUB_SERVER`**:** the IP address or hostname of the IotHub service of the MYWAI Platform to be attached with.
+* `MYWAI_GDS_ID`**:** an unique identifier of you choice for your GDS. Only alphanumerical characters, dash and underscore are allowed.
+* `MYWAI_GDS_NAME`**:** a display name for your GDS.
+* `MYWAI_GDS_DESCRIPTION`**:** a textual description of your GDS.
+* `MYWAI_GDS_PASSWORD`**:** a random password of your choice to secure the GDS access for application registrations. This security is used only to reduce the access for external registration requests of new Edges or Equipments, and is not used for normal operations.\
+  You'll need to configure the same password for the Edge installations.
+
+7. Create a file `docker-compose.yml` in the folder `C:\GDSStorage` with the following content:
+
+```yaml
+name: mywai
+
+services:
+  mywai-gds:
+    image: productfeatures.azurecr.io/gds:latest
+    container_name: mywai-gds
+    restart: always
+    networks:
+      mywai:
+        ipv4_address: 192.168.5.4
+    ports:
+      - "8023:8023"
+      - "58810:58810"
+    volumes:
+      - C:\GDSStorage:/GDSStorage
+    environment:
+      IotHub__server: ${MYWAI_IOTHUB_SERVER}
+      IotHub__gdsId: ${MYWAI_GDS_ID}
+      GDS__gdsName: ${MYWAI_GDS_NAME}
+      GDS__gdsDescription: ${MYWAI_GDS_DESCRIPTION}
+      GDS__password: ${MYWAI_GDS_PASSWORD}
+
+networks:
+  mywai:
+    external: true
+```
+
+<Info>
+192.168.5.4 is the default internal IP address of the GDS. Edge nodes automatically attempt to discover a local GDS at this address. If you change it, you must also configure any local Edge to explicitly specify the GDS address it should connect to. See [this section](/edge-operations/edge-installation-v3.0/advanced-installations#connect-edge-with-a-gds-on-a-different-device) for the details.
+</Info>
+
+8. Run the following command from the folder `C:\GDSStorage`:
+
+```shellscript
+docker compose up -d
+```
