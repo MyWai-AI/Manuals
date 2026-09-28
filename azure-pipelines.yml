@@ -1,0 +1,60 @@
+# User Manual release (dev only): version gate → build/push WIP on mywaidev
+# → official -dev tag → release manifest. Stage/prod promotion is handled elsewhere.
+#
+# All pipeline logic lives in the shared pipeline-templates repo (see `extends` below).
+# Template pin: refs/tags/v1.5.0 — same tag as the Embedding-Service pipeline.
+#
+# Fat OCI (linux/amd64 + linux/arm64) via `platforms` on the template. Do not set
+# platform: or build.platforms in docker-compose.yml — that would override the
+# pipeline source of truth.
+#
+# The image needs no build secrets (public npm registry only).
+#
+# REQUIRED secret variable in Azure DevOps (Pipeline → Edit → Variables → keep secret):
+#   acrDevPassword — docker login password for mywaidev
+# Do NOT commit ACR passwords into git.
+#
+# The image is consumed only by the fully local MYWAI flavor
+# (deploy/platform/docker-compose.sso.yaml), which takes the tag from
+# USER_MANUAL_VERSION in its .env. It is not part of the platform release manifest.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none
+
+# Default until Init overrides with: {platformVersion} - {commit subject}
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+# Queue-time toggle, passed through to the template below.
+parameters:
+  - name: forceRebuild
+    displayName: Force rebuild (ignore path diff / reuse)
+    type: boolean
+    default: false
+
+pool:
+  name: Default
+  demands:
+    - Agent.OS -equals Linux
+    - Agent.OSArchitecture -equals X64
+
+resources:
+  repositories:
+    - repository: templates            # alias MUST be `templates`
+      type: git
+      name: MYWAI/pipeline-templates
+      ref: refs/tags/v1.5.0
+
+extends:
+  template: templates/pipelines/release-dev.yml@templates
+  parameters:
+    projectName: usermanual
+    imageNames: user-manual
+    dockerComposeFile: docker-compose.yml
+    displayNamePrefix: Manual
+    forceRebuild: ${{ parameters.forceRebuild }}
+    platforms: linux/amd64,linux/arm64
+    buildTimeoutInMinutes: 60

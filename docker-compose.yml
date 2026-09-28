@@ -1,0 +1,16 @@
+# Build definition used by azure-pipelines.yml (the shared release template runs
+# `docker compose build` on this file and pushes every image it declares).
+#
+# The site is served at the root of the container port. On the fully local MYWAI
+# platform (docker-compose.sso.yaml) the port is published on the LAN IP and the
+# platform Help button opens it. Standalone: http://localhost:${USER_MANUAL_HOST_PORT:-3000}/
+services:
+  user-manual:
+    image: user-manual
+    build:
+      context: .
+      dockerfile: holocron_converter/Dockerfile
+    container_name: user-manual
+    ports:
+      - "${USER_MANUAL_HOST_PORT:-3000}:3000"
+    restart: always
