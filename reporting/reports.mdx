@@ -1,51 +1,136 @@
 ---
 title: "Reports"
+description: "Build a dashboard of widgets, bind them to a map or an image, and publish the report on the homepage."
 ---
 
-The Reports section allows to configure **Widgets** and **Reports**, that are a sort of Dashboard of widgets.
+A report is a dashboard. You give it a title, place widgets on a grid, and optionally set a map or an image as the background. Each widget reads live data from one equipment, from every equipment of a type, from edges, from a 3D area, or from HTML you write yourself.
 
-### **Widgets**
+Open **Reports** from the main menu. The list shows the title, the author, the last edit date, and the roles that see the report on the homepage.
 
-Widgets are of tswo main types:
+Creating, editing, and deleting a report requires the permission to manage reports. Users without that permission still see a report when it is published on the homepage for their role.
 
-#### **Real-time data**
+## Create or edit a report
 
-Charts for **displaying real-time Equipments data**.
+Click **Add new report**. To change an existing one, use the pencil on its row. Both actions open the same full-screen editor.
 
-* Can be **Line chart**, **Bar chart** or **Gauge**
-* Works for a specific **Equipment Type**
-* Can filter items on **Sites** and **Areas**
-* Can show only specific **Measures**
-* Visibility can be associated to specific **Roles** only
+Type a **Title** and a **Description** in the bar at the top. The title is required: **Save** stays disabled until it is filled. **Cancel** closes the editor and discards changes that were not saved.
 
-#### Anomalies
+The page under the bar is a grid. Drag a widget to move it and drag its corner to resize it. Positions are stored with the report when you save.
 
-List of **recent** [**anomalies**](/reporting/anomalies) **detected**.
+## Add a widget
 
-* Works for a specific **Equipment Type**
-* Can filter items on **Sites** and **Areas**
-* Can show only specific **Measures**
-* Visibility can be associated to specific **Roles** only
+Click **Add widget**. A new tile appears on the grid. Select it to open the **Configuration** drawer on the right.
 
-To create a Widget, access the Reports page and click on "Add New Widget" button, then follow the wizard to fill all the required information.
+Every widget has a **Title** and a **Description**. The title is what readers see on the tile. The rest of the drawer depends on **Base configuration**.
 
-### Report (Dashboard)
+### Equipment
 
-Reports represent a collection of Widgets. In a Report you can insert any widget you defined and place and resize it in the available page space.
+Use this when the widget follows one asset.
 
-When inserting a Widget in a Report, you can define:
+Choose the equipment, then the sensors, the custom fields, and the measures you want to plot. Each list offers **Select all**. Sensors and custom fields stay disabled until an equipment is selected. Measures come from that equipment.
 
-* A custom **title**, different from the Widget title
-* The data visualization **refresh period**
-* The **time range** of real-time data to show (i.e. last 10 minutes)
+If the selected measures are images, the widget shows the image stream and the chart controls stay hidden. For numeric measures, choose a **Chart type**: Line, Bar, Scatter, Gauge, Pie, or Scorecard.
 
-<Warning>
-Gauge type widgets will always show the last value recorded, even if it was in the past. The timestamp associated to the value is displayed.
-</Warning>
+**Gauge** adds **Gauge per riga**, the number of gauges placed on each row before the next row starts.
 
-A Report can be shown:
+**Scorecard** shows one aggregated number for a time window.
 
-* From the **Reports list page**, clicking on "Show report" ![](/images/image-2.png) button on the Report row.
-* Attached in the **platform home page**. You can attach the report to the homepage by clicking the "Homepage" ![](/images/image-3.png)
+- **Window (seconds)** is how far back the value is computed. The allowed range is 1 second to 24 hours.
+- **Aggregation** is Min, Max, Avg, or Last.
+- **Threshold background colors** paints the card from rules you define. Each rule is a lower bound (**From (≥)**) and a color. Decimal values accept either `.` or `,`. Rules are checked from the highest threshold downward, and the first match where the value is greater than or equal to the threshold is applied. When the card shows more than one number, the background follows the first numeric row.
 
-button on the Report row and optionally choose the Roles ot the users that should be able to see the report.
+### Equipment type
+
+Use this when the same chart should cover every asset of one type.
+
+Choose the equipment type and the measures. The drawer shows how many assets share that type. Chart type, scorecard, and image behavior are the same as for a single equipment.
+
+While the report is open, a filter button appears when at least one widget uses an equipment type. Open **Equipment filter** and pick one asset in the tree. The equipment-type widgets then show that asset only. Clear the selection to return to the whole type.
+
+### Edge
+
+Use this to list edge devices and their connection state.
+
+Select one or more edges, or **Select all**. **Enable detail navigation** lets a reader open the edge from the widget.
+
+### Area scenarios
+
+The menu entry is labelled **Area scenarious**.
+
+The tenant name is shown and cannot be changed here. Choose a **Site** and then an **Area**. The widget embeds the 3D viewer for that area. The area list stays empty until a site is selected.
+
+### Custom HTML
+
+Paste the markup in **Custom HTML**. The widget renders that content inside the tile. Use it for a static notice, a legend, or a link. It does not query measures.
+
+### Equipment info
+
+This base type appears only after the dashboard has a map or image background and **Lock on map** or **Lock on image** is turned on for the widget.
+
+Choose an optional **Site** and **Area**. **Show available** lists the equipment in that site and area. Leave both empty to list every equipment. Turn **Show available** off to pin the widget to one **Equipment**.
+
+On the map or image, the lock area shows the equipment-type icon when every listed asset shares one type, with a count badge when there is more than one. Mixed types use the standard pin. A click opens the equipment list; from there, the magnifying glass opens the equipment side panel.
+
+## Chart types
+
+Line, bar, and scatter plot the selected measures over the recent time window. Pie compares the current values. Gauge draws one dial per measure. Scorecard reduces the window to a single figure, as described above.
+
+Image measures skip the chart and show the pictures instead.
+
+## Background
+
+Click **Add background** to open **Background configuration**. This is the page behind the widgets, not a widget itself.
+
+**Site** and **Area** are optional. On a map they are used to center the view. You can still pick a point by hand.
+
+**Background type** is one of:
+
+- **None** leaves the plain grid.
+- **Image** asks you to upload a picture. **Image zoom (%)** sets the starting scale. On the dashboard, drag to pan and use the mouse wheel to zoom. **Reset view** restores the starting framing.
+- **Google Maps** asks for a **Map type** (Roadmap, Satellite, Hybrid, or Terrain) and an **Initial zoom**. Selecting a site or an area centers the map. A click on the mini map sets the center yourself. Latitude and longitude of the current center are shown under the mini map.
+
+**Show fullscreen** is available for an image or a map. The grid then fills the area under the page header, and widgets stay inside that frame while you pan or zoom.
+
+Click **Apply background** to keep the change in the editor. It is stored with the report when you click **Save**.
+
+## Lock a widget to a place
+
+Locking is available only when the background is an image or a map. Open the widget configuration and turn on **Lock on image** or **Lock on map**.
+
+**Lock area** lets you create a new area or reuse one already drawn on this report. Several widgets can share the same area. Changing the name or the shape updates every widget that uses that area.
+
+**Area name** is the label of the area. A new area receives a generated name such as `circle-` or `polygon-` plus a timestamp. You can replace it.
+
+**Lock shape** is **Circle** or **Polygon**.
+
+- For a circle, start the selection and click the center on the background. On a map the radius is in meters. On an image the radius is a percentage of the image width. The center is shown as latitude and longitude on a map, and as percentages on an image.
+- For a polygon, click each vertex. At least three vertices are required before the shape can be closed. **Edit polygon** moves existing vertices. **Cancel** and **Cancel edit** abandon the drawing in progress.
+
+**Lock color** is the color of the area outline, of the connector line, and of the chip in the minimized dock.
+
+Close the configuration drawer before you draw or edit a polygon, otherwise the page overlay intercepts the clicks.
+
+Saving the widget stores the lock. Saving the report stores it for everyone who opens the dashboard.
+
+## Read a report
+
+On the report row, the magnifying glass opens **Show report**. The grid is the one you saved. Title and description appear above it.
+
+On a map or image background you can still drag a widget, using the handle along the top of the tile. That move lasts only for the current viewing session. Closing the report restores the saved layout.
+
+Each widget on that background can be minimized or expanded. Minimized widgets sit in a dock at the bottom of the background. The dock lists the ones whose lock area intersects the current view. **Show all** lists every minimized widget. Double-click a dock chip to zoom the background so that lock area fills the view. Double-click the area itself on the map or image to do the same.
+
+The toolbar at the top of a locked background has two switches.
+
+- **Hide widgets** minimizes every widget.
+- **Show pins & lines** draws the area outlines and the curve from each widget (or from its dock chip) to the center of its circle or to the centroid of its polygon.
+
+On the homepage, the magnifying glass in that toolbar opens the same report in a full-screen dialog. **Close** on that dialog returns to the homepage. While the dialog is open, the dock and the lock toolbar of the page underneath stay hidden.
+
+## Homepage
+
+The home icon on a report row opens **Homepage Report Visualization**. Select the roles that should see this report on the home page, then click **Save**. The **Homepage Roles** column lists those roles. Click the home icon again to change them.
+
+The homepage shows one tab per report assigned to the signed-in user's role. The author of a report can remove it from the homepage with the close icon on its tab. That does not delete the report from the Reports list.
+
+Which block appears on the home page, and in which order, is set on the company: see [Tenant configuration](/administration/tenant-configuration).
