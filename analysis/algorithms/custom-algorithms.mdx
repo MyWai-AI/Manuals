@@ -2,59 +2,76 @@
 title: "Custom Algorithms"
 ---
 
-## **Built-In Algorithms**
+Custom algorithms are not typed into the platform one by one. You register an **algorithm service** that is already running, and the platform reads the algorithms that service publishes.
 
-Upon accessing the Algorithms platform page, you'll be presented with a list of built-in algorithms that are readily available within MYWAI. This curated list showcases essential details such as the algorithm's name, its description, type, and other crucial characteristics. Use this list as a reference to gauge the native capabilities and to determine which algorithms align best with your requirements.
+How to build that service is described in [Custom AI Algorithms](/custom-ai-algorithms/index). This page covers how to add it on **Algorithms Management**.
 
-## **Creating a New Algorithm**
+Open **Algorithms** from the Analysis menu. The page title is **Algorithms Management**. Two tabs split the catalog:
 
-Creating a new algorithm is a complex task that necessitates specialized expertise. You can rely on MYWAI's custom services to develop a personalized algorithm or craft one independently using the [following guidelines](/custom-ai-algorithms/index).
+* **Product Algos** — algorithms shipped with the platform.
+* **Custom Algos** — algorithms published by the services you register.
 
-## **Connecting the New Algorithm with the Platform**
+**Filter by Algorithm Type** and **Filter by Data Type** narrow the list. **Show inactive algorithms** includes entries that are not currently available. A green dot means the algorithm is available. A red dot means it is not. The eye opens **View algorithm**.
 
-Once your new algorithm is prepared, you can integrate it into the MYWAI ecosystem by adhering to these steps:
+**Manage Services** and **Update Algorithms** require the **Manage algorithms** permission. **MLflow** opens the tracking UI when it is configured for the tenant.
 
-1. **Initiate the Addition Process:** Click on the "Add new algorithm" button. This action will prompt a dialog box to appear, presenting you with fields required to define the new algorithm.
-2. **Name:** Input a distinctive name for your algorithm in the designated field. This entry is mandatory.
-3. **Description:** Populate this field with a concise description that encapsulates the algorithm's functionality and its unique traits. This aids other users in discerning its purpose and method of operation.
-4. **Script Name:** Here, you'll need to denote the specific script name that the algorithm will use during execution. This entry is mandatory.
-5. **Algorithm Type:** From the dropdown menu, select the category your algorithm falls under. The options available are:
-   * Classification
-   * Anomaly Detection
-   * Clustering
-   * AnScore
-   * Object Detection
-6. **Docker Image or ZIP or HTTP(S) endpoint:** Use the provided interface to upload the Docker image or the ZIP file that houses the code integral to your algorithm.\
-   Algos can also be hosted by you in your systems. In this case you can just enter the **HTTP(S) endpoint** of your service, without need to upload any Docker image or ZIP file.
-7. **Training Parameters:** Specify the collection of parameters essential for training your algorithm. 
-8. **Inference Parameters:** Outline the specific parameters your algorithm will employ during the inference phase. This could range from thresholds to input dimensions, contingent on your algorithm's design.
-9. **Complete the Upload:** Once you've furnished all the necessary details in the dialog box, confirm your entries and proceed to upload the algorithm. Upon successful addition, your algorithm will assimilate into the available list, ready for deployment in line with the parameters you've stipulated.
+## Add a custom algorithm service
+
+**Manage Services** opens **Edit Algorithm Services**. The list on the left contains only the custom services. The built-in product service is not shown here.
+
+1. Click **Add Service**. A new row is selected. Its **HTTP(S) Endpoint** starts as the placeholder `HTTP Endpoint`. Replace that placeholder with the base URL the platform can call, for example `https://algo.example.com`.
+2. Leave the service running before you save. The platform calls it from the server, so an address that opens in your browser can still fail if the platform cannot reach it.
+3. Fill the registry fields only when this image must be deployed to Edge devices. They are not required to register a service that you already host.
+4. Click **Save**.
+
+The endpoint must expose two discovery routes, appended to the base URL:
+
+* **`/algorithms/details`** — the catalog of algorithms on that service.
+* **`/algorithms/{algorithmId}`** — the detail of one algorithm.
+
+**Save** reads `/algorithms/details` before it stores the service. The window stays open and shows the reason when:
+
+* the endpoint is empty,
+* the service does not answer,
+* the response is not a catalog,
+* an algorithm **name** or **tag** is already registered by another service, including the product catalog.
+
+Algorithms marked as system in the SDK are shared by every service. They are not treated as duplicates.
+
+When the save succeeds, the window closes and **Update Algorithms** runs immediately. The algorithms from the new service appear on **Custom Algos**. Press **Update Algorithms** again later to refresh the lists from every registered service.
+
+<Info>
+Each entry in the catalog supplies the name, tag, description, category, data type, and parameters shown on the Algorithms page and in the [training](/analysis/training) window. You do not re-enter those fields in **Edit Algorithm Services**.
+</Info>
+
+## Registry and deploy to Edge
+
+The lower part of the service form is the container registry used when the same service is sent to an Edge:
+
+* **Docker Image Name**
+* **Docker Image Tag** — `latest` if you leave it empty
+* **Azure Registry Name**
+* **Azure Registry Username**
+* **Azure Registry Password**
+
+A password already stored is kept when the field is left blank. Type a new value only when you want to replace it.
+
+**Verify Registry Configuration** checks that the platform can read that image with those credentials. A green check means the registry is valid. A red alert shows the error.
+
+**Deploy to Edges** runs that check first. If it fails, the deploy does not start. If it succeeds, choose the Edge devices that should receive the service.
+
+The **Docker image file** field on this form is not available. Register the service by its HTTP endpoint. Use the registry fields when the image itself must be pulled onto an Edge.
+
+## Change or remove a service
+
+Select the service in the list, change its fields, and click **Save**.
+
+**Remove Service** strikes the row through. The deletion is applied only when you click **Save**. Closing the window without saving leaves the service in place.
 
 <Warning>
-Prior to its broader integration, it's advisable to test your algorithm in a controlled setup. This preliminary step assures optimal functionality and minimizes potential complications.\
-You can use the HTTP(S) Endpoint option to easily test your algos integrated with the platform, by entering your development environment HTTP(S) endpoint.
+Test the service against the platform before you rely on it. Point **HTTP(S) Endpoint** at your development address, save, and confirm the algorithms on **Custom Algos** before you deploy the image to an Edge.
 </Warning>
 
-## Managing Transformations
+## Transformations
 
-The platform allows to apply data transformation steps before and after Algorithm execution.
-
-In the Transformations submenu, you can manage the transformations available in the system.
-
-## **Uploading a New** Transformation
-
-Creating a new transformation is a coding activity that necessitates specialized expertise. You can rely on MYWAI's custom services to develop a personalized transformation.
-
-Once your new transformation is prepared, you can integrate it into the MYWAI ecosystem by adhering to these steps:
-
-1. **Initiate the Addition Process:** Click on the "Add new transformation" button. This action will prompt a dialog box to appear, presenting you with fields required to define the new transformation.
-2. **Name:** Input a distinctive name for your transformation in the designated field. This entry is mandatory.
-3. **Description:** Populate this field with a concise description that encapsulates the transformation's functionality and its unique traits. This aids other users in discerning its purpose and method of operation.
-4. **Script Name:** Here, you'll need to denote the specific script name that the transformation will use during execution. This entry is mandatory.
-5. **Transformation Type:** From the dropdown menu, select the category your transformation falls under. The options available are:
-   * Plottable
-   * Non Plottable
-6. **Docker Image:** Use the provided interface to upload the Docker image that houses the code integral to your transformation.
-7. **Training Parameters:** Specify the collection of parameters related to the transformations required for the training phase. 
-8. **Inference Parameters:** Outline the specific parameters your algorithm will employ during the inference phase. This could range from thresholds to input dimensions, contingent on your algorithm's design.
-9. **Complete the Upload:** Once you've furnished all the necessary details in the dialog box, confirm your entries and proceed to upload the transformation. Upon successful addition, your transformation will assimilate into the available list, ready for deployment in line with the parameters you've stipulated.
+**Transformations**, under Algorithms, lists the transformation steps available in the platform. They are published by the same kind of algorithm service. The old **Add new transformation** upload is not on this page.

@@ -98,18 +98,17 @@ Custom algorithms:
 
 * follow the **same structural format** as product algorithms,
 * use the **same SDK and integration framework**,
-* are registered inside the platform with the same metadata (name, description, script, category, parameters),
+* are published by an **algorithm service** you register on the platform (name, description, tag, category, parameters come from that service),
 * and are executed by the same runtime used for product algorithms.
 
-Once registered, a custom algorithm appears in the MYWAI Platform exactly like any product algorithm.
-It can be executed, monitored, and managed with the **same workflow**.
-
-This unified approach ensures that internal, partner, and customer-specific models behave consistently and integrate seamlessly within the platform’s ecosystem.
+Once the service is saved, its algorithms appear on the **Custom Algos** tab and follow the same training and execution workflow as product algorithms. The registration steps are in [Custom Algorithms](/analysis/algorithms/custom-algorithms).
 
 ## How Algorithms Are Used in the Platform
 
-All algorithms—both built-in and custom—are accessible from the “Algorithms” section of the MYWAI Platform.
-From there, they can be:
+**Algorithms Management** lists every algorithm the platform knows about.
 
-* selected for data analysis and inference,
-* configured with their training and inference parameters,
+* **Product Algos** and **Custom Algos** split the built-in catalog from the services you added.
+* **Manage Services** registers, edits, or removes a custom algorithm service.
+* **Update Algorithms** reloads the catalog from those services.
+* **View algorithm** opens the definition of one row.
+* The same algorithms are then selected in [Training](/analysis/training) and in data analysis.
