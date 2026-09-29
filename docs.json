@@ -43,6 +43,7 @@
               "configuration/equipments",
               "configuration/gds-v3.0",
               "configuration/edges",
+              "configuration/iothub",
               "configuration/blockchain-v3.0"
             ]
           },

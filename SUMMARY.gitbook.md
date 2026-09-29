@@ -18,6 +18,7 @@
   * [Equipments](configuration/equipments.md)
   * [GDS (v3.0)](configuration/gds-v3.0.md)
   * [Edges](configuration/edges.md)
+  * [IoTHub](configuration/iothub.md)
   * [Blockchain (v3.0)](configuration/blockchain-v3.0.md)
 * [Data](data/README.md)
   * [Equipments Data](data/equipments-data.md)
