@@ -69,7 +69,7 @@ In the list you can:
 
 If exactly one tag is pinned when you create a label, the new label is added to that tag automatically. If more than one tag is pinned, **Add to pinned tag** asks for the label name and the tag. **Skip** keeps the label on its own.
 
-The menu also has **Train**, which opens training for that label or tag. The full training dialog is described below.
+The menu also has **Train**, which opens training for that label or tag. The steps of that window are described in [Training](/analysis/training).
 
 ## Create an event (fact)
 
@@ -107,11 +107,9 @@ Open **Details** on an event. **View Labelled Fact** shows the fact date and whe
 
 ## Train the algorithm
 
-Once the labels are generated, proceed with the **training** operation by using the appropriate button in the toolbar.
+Once the labels are generated, open **Train** from the row menu of a label or tag in **Edit mode**. The window walks through data selection, the algorithm service, data preparation, the split, the algorithm, the evaluation metrics, and a summary before the run starts. Each step is described in [Training](/analysis/training).
 
-When opening the dialog, choose the **algorithm** you want to use from the provided options (e.g., "deviations") and one or more labels. Configure the algorithm's parameters if they are available and execute the training using the designated button, assigning the desired name to the model.
-
-After completing the operation, the dialog will close. The labels you trained stay grouped under their tag in **Edit mode**. You can train that tag again from its row menu.
+After the run completes, the labels you trained stay grouped under their tag in **Edit mode**. You can train that tag again from its row menu.
 
 Once the model is created, you can proceed with inference on historical data by clicking the "**execute**" button on the toolbar. When opening the dialog, select the model, the algorithm, and configure its execution parameters.
 

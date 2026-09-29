@@ -12,7 +12,7 @@ A DataSet is defined by its **Name**, **Description**, the **Fact Type** of the 
 
 When a DataSet is initially created, a default version (version 0) is automatically generated. You can then populate this version through the **Data Repository** by selecting items and clicking **Assign to DataSet**. 
 
-Once the DataSet version is ready, it can be used to run **training experiments** with a **compatible** algorithm. For Events—whose formats can vary significantly—a custom algorithm is often required.
+Once the DataSet version is ready, open **Train Version** on that version to run a training experiment with a compatible algorithm. The window is the same one described in [Training](/analysis/training), starting from the algorithm service because the version is already the data. For Events—whose formats can vary significantly—a custom algorithm is often required.
 
 As soon as you use a specific version of a DataSet for training, and as long as the resulting model remains on the platform (i.e., is not deleted), that version becomes **read-only**. To continue updating the DataSet, you must create a new version.
 

@@ -35,6 +35,7 @@
   * [Algorithms](analysis/algorithms/README.md)
     * [Custom Algorithms](analysis/algorithms/custom-algorithms.md)
   * [Data Analysis](analysis/data-analysis.md)
+  * [Training](analysis/training.md)
   * [Simulate real-time data](analysis/simulate-real-time-data.md)
   * [Labels approval workflow](analysis/labels-approval-workflow.md)
   * [DataSets](analysis/datasets.md)

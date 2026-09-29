@@ -80,6 +80,7 @@
                 ]
               },
               "analysis/data-analysis",
+              "analysis/training",
               "analysis/simulate-real-time-data",
               "analysis/labels-approval-workflow",
               "analysis/datasets",
