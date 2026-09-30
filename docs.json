@@ -120,17 +120,6 @@
                 ]
               },
               {
-                "group": "Edge Installation (v2.1)",
-                "pages": [
-                  "edge-operations/edge-installation-v2.1/index",
-                  "edge-operations/edge-installation-v2.1/installation-on-windows",
-                  "edge-operations/edge-installation-v2.1/installation-on-ubuntu",
-                  "edge-operations/edge-installation-v2.1/installation-on-raspberry-pi-4",
-                  "edge-operations/edge-installation-v2.1/configure-bluetooth-on-linux",
-                  "edge-operations/edge-installation-v2.1/reduce-algorithms-container-size"
-                ]
-              },
-              {
                 "group": "Edge Installation (v3.0)",
                 "pages": [
                   "edge-operations/edge-installation-v3.0/index",
