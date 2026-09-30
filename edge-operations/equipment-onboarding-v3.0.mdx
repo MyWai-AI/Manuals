@@ -1,5 +1,5 @@
 ---
-title: "Equipment onboarding (v3.0)"
+title: "Equipment onboarding"
 ---
 
 The security of the connection between the Edge and the OPC-UA equipment can be configured in different ways, depending on:
@@ -58,7 +58,7 @@ If the GDS is running on the same device as the command line tool, use:
 * `localhost` as `address`
 * `58810` as `port`
 
-For the `password` field, set the same value you wrote in `GDS_PASSWORD` when you installed the Edge.\
+For the `password` field, set the same password choosed during the GDS installation.\
 If not set, the default password is "demo".
 
 Set `useTPM` to `true` if you intended to store the private key only inside the TPM (Trusted Platform Module) chip, if available, inside the current device. You can use this option only when running the command line only directly on the OPCUA Server device of your equipment.
