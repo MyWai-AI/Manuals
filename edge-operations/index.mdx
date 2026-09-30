@@ -2,16 +2,14 @@
 title: "Edge Operations"
 ---
 
-MYWAI performs Edge operations with the following components:
-
-## MYWAI GDS (available only from version 3.0)
-
-MYWAI Global Discovery Server (GDS) adheres to OPC UA GDS specifications. It is an optional installation capable of managing multiple Edges and OPC UA Servers. MYWAI GDS is designed to oversee security for both Edge devices and OPC UA Servers.
-
-<Card title="GDS Installation (v3.0)" href="/edge-operations/gds-installation-v3.0/index" />
+MYWAI performs Edge operations with the Edge software installed on the company site.
 
 ## MYWAI Edge
 
 MYWAI Edge connects to the equipment using configured adapters, executes orchestrator flows, and integrates with AI modules for edge AI.
 
-<Card title="Edge Installation (v3.0) with ORAS" href="/edge-operations/edge-installation-v3.0/index" />
+The same installation also starts the **GDS** (Global Discovery Server) on that machine. You do not install the GDS as a separate product.
+
+The GDS is the OPC UA service that registers applications and provides the certificates they use to connect securely. In MYWAI it covers the Edge and the OPC UA servers of the equipment. When the Edge package starts, two containers run together: the Edge and the GDS. After they are running, accept the GDS on the platform so it can receive its certificate. The details are in [Edge Installation](/edge-operations/edge-installation-v3.0/index).
+
+<Card title="Edge Installation" href="/edge-operations/edge-installation-v3.0/index" />

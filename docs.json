@@ -110,17 +110,7 @@
             "pages": [
               "edge-operations/index",
               {
-                "group": "GDS Installation (v3.0)",
-                "pages": [
-                  "edge-operations/gds-installation-v3.0/index",
-                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows",
-                  "edge-operations/gds-installation-v3.0/gds-installation-on-windows-with-docker-compose",
-                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu",
-                  "edge-operations/gds-installation-v3.0/gds-installation-on-ubuntu-with-docker-compose"
-                ]
-              },
-              {
-                "group": "Edge Installation (v3.0)",
+                "group": "Edge Installation",
                 "pages": [
                   "edge-operations/edge-installation-v3.0/index",
                   "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",

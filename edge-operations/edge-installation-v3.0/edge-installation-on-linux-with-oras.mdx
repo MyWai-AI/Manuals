@@ -1,8 +1,10 @@
 ---
-title: "Edge Installation on Linux with ORAS"
+title: "Edge Installation on Linux"
 ---
 
-Use this procedure to install MYWAI Edge and the GDS on Ubuntu 22.04 (64-bit). ORAS is the tool that downloads the installation package for the version MYWAI gave you. You prepare the machine, sign in to the registry, fill in one configuration file, and start the package. The script inside the package downloads the Edge and GDS containers and starts them.
+Use this procedure to install MYWAI Edge on Ubuntu 22.04 (64-bit). ORAS is the tool that downloads the installation package for the version MYWAI gave you. You prepare the machine, sign in to the registry, fill in one configuration file, and start the package.
+
+The same package also starts the **GDS** (Global Discovery Server) on this machine. The GDS is the OPC UA service that issues the certificates for the Edge and for the equipment. You do not install it separately: the start script runs the Edge container and the GDS container together. What the GDS does, and what you accept on the platform afterwards, is described in [Edge Installation](/edge-operations/edge-installation-v3.0/index#the-gds).
 
 You need from MYWAI:
 

@@ -2,21 +2,9 @@
 title: "Advanced installations"
 ---
 
-### Connect Edge with a GDS on a different device
+### GDS on the same machine
 
-By default, the Edge installation automatically searches for a GDS at the IP address 192.168.5.4 on the local Docker network. This is the default IP defined in the docker run command in the [GDS Installation (v3.0)](/edge-operations/gds-installation-v3.0/index)section.
-
-In a real deployment, each factory subnet typically has one GDS, and multiple Edge instances can connect to that single GDS.
-
-To configure this, specify the actual GDS URL when creating the Edge container by adding the following environment variable:
-
-```bash
--e GDS__Url="opc.tcp://<GDS-IP>:58810/GlobalDiscoveryServer"
-```
-
-### Install an Edge without a GDS
-
-<mark style="background-color:$warning;">TODO</mark> richiede altre var di ENV + certificati scaricati da platform
+The current Edge package starts the GDS together with the Edge. Inside the installation the Edge reaches that GDS at `opc.tcp://gds:58810/GlobalDiscoveryServer`. You set the GDS ID and the GDS password in `edge.env` while you [install the Edge](/edge-operations/edge-installation-v3.0/index#the-gds).
 
 ### Expose the Edge MQTT Broker for External Access
 

@@ -1,8 +1,10 @@
 ---
-title: "Edge Installation on Windows with ORAS"
+title: "Edge Installation on Windows"
 ---
 
-Use this procedure to install MYWAI Edge and the GDS on a Windows 10 or 11 PC. ORAS is the tool that downloads the installation package for the version MYWAI gave you. You prepare the PC, sign in to the registry, fill in one configuration file, and start the package. The script inside the package downloads the Edge and GDS containers and starts them.
+Use this procedure to install MYWAI Edge on a Windows 10 or 11 PC. ORAS is the tool that downloads the installation package for the version MYWAI gave you. You prepare the PC, sign in to the registry, fill in one configuration file, and start the package.
+
+The same package also starts the **GDS** (Global Discovery Server) on this PC. The GDS is the OPC UA service that issues the certificates for the Edge and for the equipment. You do not install it separately: the start script runs the Edge container and the GDS container together. What the GDS does, and what you accept on the platform afterwards, is described in [Edge Installation](/edge-operations/edge-installation-v3.0/index#the-gds).
 
 You need from MYWAI:
 
