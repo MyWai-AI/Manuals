@@ -23,9 +23,9 @@ Only the fully local (`full`/`sso`) flavor bundles the manual. The `external-sso
 
 ## Status
 
-Both repos have `features/user-manual` committed locally (Manuals `024ba52`, `bdbc8d1`, `f8705ee`; MYWAI `7870c29f4`, `08fc60a47`). Not pushed, no PR.
+Both repos have `features/user-manual` committed locally (Manuals `024ba52`, `bdbc8d1`, `f8705ee`, `4499327`; MYWAI `7870c29f4`, `08fc60a47`, plus a merge of `master` at `409d5d784`). Not pushed, no PR.
 
-Verified locally: `docker compose build --no-cache` + `up` for the Holocron site (home and two content pages return HTTP 200). The `--profile full` gating was verified with `docker compose config` against a dummy `.env`, for all four combinations (each flavor, with/without the profile, plus a simulated `docker-compose.release.yml` override) — `user-manual` is absent by default on both flavors, present only on `full` with `--profile full`.
+Verified locally: `docker compose build --no-cache` + `up` for the Holocron site (home and two content pages return HTTP 200). The `--profile full` gating was verified with `docker compose config --services`, checking the actual exit code (not just grepping stdout — an early pass used a grep that silently swallowed an unrelated pre-existing failure from `PATH_TO_PUBLIC_CERTS`/`PATH_TO_CERTS` being unset in the dummy `.env`; fixed by setting them). Re-run clean after merging `master`, all four combinations exit 0 except the deliberate misuse case: `user-manual` absent on `external-sso` (with or without `--profile full` — passing the profile there is not something anything in this repo does, and it fails loudly with "has neither an image nor a build context specified" since `docker-compose.sso.yaml` is what supplies the rest of the definition), absent on `full` without the flag, present on `full` with `--profile full`.
 
 ## Open points (start here)
 
