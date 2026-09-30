@@ -44,6 +44,7 @@
               "configuration/gds-v3.0",
               "configuration/edges",
               "configuration/iothub",
+              "configuration/offline-maps",
               "configuration/blockchain-v3.0"
             ]
           },

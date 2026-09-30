@@ -1,0 +1,108 @@
+---
+title: "Offline maps"
+---
+
+When the platform runs with **offline maps**, the map and the address search do not download data from the internet. Each one reads a folder on the platform machine:
+
+| What you update | Folder | What you put there |
+| --- | --- | --- |
+| Map tiles | `MAPS_DATA_DIR` | One or more `.pmtiles` files |
+| Address search index | `PHOTON_DATA_DIR` | A finished Photon index (`photon_data/node_1/`) |
+
+The two folders are independent. A new tile file does not update the search, and a new search index does not change the map drawing.
+
+You do not rebuild the platform images. Copy the new data into the folder, then restart the container that reads it.
+
+Typical folders:
+
+* Windows: `C:\mywai\maps-data` and `C:\mywai\photon-data`
+* Linux: `/opt/mywai/maps-data` and `/opt/mywai/photon-data`
+
+Docker Desktop on Windows must be allowed to share the drive that contains these folders.
+
+`<PLATFORM_NAME>` below is the short name of this platform (the same value used in the platform configuration).
+
+## Add or replace map tiles
+
+The map on screen reads the file named **`italy.pmtiles`** inside `MAPS_DATA_DIR`. To show a new or updated area, replace that file and keep the name `italy.pmtiles`.
+
+Prepare the file on a computer that has internet access, then copy it to the platform machine.
+
+1. Install the [PMTiles command line tool](https://docs.protomaps.com/pmtiles/cli).
+2. Open the [Protomaps builds](https://maps.protomaps.com/builds/) page and note a recent build date, for example `20251229`.
+3. Extract the area you need. The bounding box is `min longitude, min latitude, max longitude, max latitude`.
+
+```powershell
+pmtiles extract https://build.protomaps.com/20251229.pmtiles italy.pmtiles --bbox=6.6,36.6,18.6,47.1
+```
+
+4. Copy the file into `MAPS_DATA_DIR`, over the previous `italy.pmtiles`.
+
+```powershell
+Copy-Item .\italy.pmtiles C:\mywai\maps-data\italy.pmtiles
+```
+
+```bash
+cp ./italy.pmtiles /opt/mywai/maps-data/italy.pmtiles
+```
+
+5. Restart the platform API container so it reads the new file:
+
+```text
+docker restart webapi-container-<PLATFORM_NAME>
+```
+
+Reload the map in the browser. If `italy.pmtiles` is missing, the map reports that local map tiles are missing.
+
+### Keep another tile file in the same folder
+
+You can copy extra `.pmtiles` files next to `italy.pmtiles`, for example `alps.pmtiles`. Restart `webapi-container-<PLATFORM_NAME>` after the copy.
+
+The map on screen still uses `italy.pmtiles`. An extra file stays in the folder as another tile pack. It does not replace the map until you save it under the name `italy.pmtiles`.
+
+Satellite imagery is not used in offline mode. The map stays on the local vector tiles.
+
+## Add or replace the address search index
+
+Address search uses a Photon index that is already built. The platform does not download a region when it starts. To cover another area, or to refresh the search data, replace the whole index folder.
+
+The folder must contain:
+
+```text
+photon_data/
+  node_1/
+```
+
+There is no single file to drop in. Copy the directory produced by the import.
+
+1. Build the index on a machine that can read the Photon dump, or copy `photon_data/` from an installation where search already works.
+2. On the platform machine, stop Photon so the files are not in use:
+
+```text
+docker stop photon-<PLATFORM_NAME>
+```
+
+3. Replace the contents of `PHOTON_DATA_DIR` with the new index. Keep a copy of the previous `photon_data` folder until the new search answers correctly.
+
+```powershell
+Copy-Item -Recurse -Force .\photon_data C:\mywai\photon-data\photon_data
+```
+
+```bash
+cp -a ./photon_data/. /opt/mywai/photon-data/photon_data/
+```
+
+4. Remove a leftover file named `.photon-import-in-progress` if the import was interrupted. Photon can delete a partial index when that marker is present.
+5. Start Photon again:
+
+```text
+docker start photon-<PLATFORM_NAME>
+```
+
+6. Check the search from the platform machine. A useful answer contains a non-empty `features` list:
+
+```text
+http://localhost:2322/api/?q=milano&limit=2
+```
+
+Then search for the same place from the map in the platform.
