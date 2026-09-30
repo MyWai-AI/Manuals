@@ -6,7 +6,7 @@ Use this procedure to install MYWAI Edge and the GDS on Ubuntu 22.04 (64-bit). O
 
 You need from MYWAI:
 
-* the **version** to install, for example `3.1.30` or `3.1.30-dev`
+* the **version** to install, for example `3.1.30` 
 * the **registry username** and **token**
 * the **platform hostname**, the host in the platform address without `https://` (if the platform is `https://acme.platform.myw.ai`, the hostname is `acme.platform.myw.ai`)
 * the **Edge ID** already created on the platform
@@ -57,24 +57,10 @@ On an ARM64 machine, download `oras_${VERSION}_linux_arm64.tar.gz` instead of th
 
 ## 3. Sign in to the registry
 
-The registry depends on the version suffix:
-
-| Version | Registry |
-| --- | --- |
-| ends with `-dev` | `mywaidev.azurecr.io` |
-| ends with `-stage` | `mywaistage.azurecr.io` |
-| any other version | `mywaiprod.azurecr.io` |
-
-Replace the registry, username and token with the values MYWAI gave you:
+Use docker command to login to registry:
 
 ```bash
-sudo docker login <registry> -u <username> -p <token>
-```
-
-Example for a production version:
-
-```bash
-sudo docker login mywaiprod.azurecr.io -u <username> -p <token>
+sudo docker login -u mywai-pull -p <token> mywaiprod.azurecr.io
 ```
 
 A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
@@ -104,25 +90,13 @@ Use a GDS data folder that belongs only to this GDS ID. A folder already used by
 
 ## 5. Download the package
 
-Replace `<version>` and `<registry>` (the same registry you used at login):
+Replace `<version> (with value 3.1.60)`
 
 ```bash
-oras pull <registry>/edge-deploy:<version> --output /opt/mywai/releases/<version>
-```
-
-Example:
-
-```bash
-oras pull mywaiprod.azurecr.io/edge-deploy:3.1.30 --output /opt/mywai/releases/3.1.30
+oras pull mywaiprod.azurecr.io/edge-deploy:<version> --output /opt/mywai/releases/<version>
 ```
 
 This creates `/opt/mywai/releases/<version>/edge/`. That folder contains the configuration template and the start script. You use it in the next steps. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
-
-To see which versions exist:
-
-```bash
-oras repo tags <registry>/edge-deploy
-```
 
 ## 6. Create `edge.env`
 
@@ -177,7 +151,7 @@ bash /opt/mywai/releases/<version>/edge/scripts/update.sh <version> --root /opt/
 
 You pass:
 
-* the version — the same version you downloaded
+* the version — the same version you downloaded (3.1.60)
 * `--root /opt/mywai` — the folder that contains `edge.env`
 * `--up` — start the containers after the check
 

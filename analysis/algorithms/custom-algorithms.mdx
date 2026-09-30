@@ -19,22 +19,27 @@ Open **Algorithms** from the Analysis menu. The page title is **Algorithms Manag
 
 **Manage Services** opens **Edit Algorithm Services**. The list on the left contains only the custom services. The built-in product service is not shown here.
 
+<img
+  src="/images/image-50.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="dark:hidden"
+/>
+<img
+  src="/images/image-50-dark.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="hidden dark:block"
+/>
+
 1. Click **Add Service**. A new row is selected. Its **HTTP(S) Endpoint** starts as the placeholder `HTTP Endpoint`. Replace that placeholder with the base URL the platform can call, for example `https://algo.example.com`.
 2. Leave the service running before you save. The platform calls it from the server, so an address that opens in your browser can still fail if the platform cannot reach it.
 3. Fill the registry fields only when this image must be deployed to Edge devices. They are not required to register a service that you already host.
 4. Click **Save**.
-
-The endpoint must expose two discovery routes, appended to the base URL:
-
-* **`/algorithms/details`** — the catalog of algorithms on that service.
-* **`/algorithms/{algorithmId}`** — the detail of one algorithm.
-
-**Save** reads `/algorithms/details` before it stores the service. The window stays open and shows the reason when:
-
-* the endpoint is empty,
-* the service does not answer,
-* the response is not a catalog,
-* an algorithm **name** or **tag** is already registered by another service, including the product catalog.
 
 Algorithms marked as system in the SDK are shared by every service. They are not treated as duplicates.
 
