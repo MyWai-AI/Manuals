@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "platformVersionPrefix": "1.0",
+  "notes": "Single source for the version line. Version = {platformVersionPrefix}.{N}[-{env}] -> 1.0.3-dev / 1.0.3-stage / 1.0.3. Patch N is NOT a CI counter: it is the highest complete tag already on mywaidev + 1, so failed runs retry the same N until PublishDevTags succeeds. To open a new line (e.g. 1.1) edit platformVersionPrefix here and nowhere else."
+}

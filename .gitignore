@@ -1,1 +1,4 @@
-﻿Manual.code-workspace
+Manual.code-workspace
+node_modules/
+dist/
+holocron_converter/public/

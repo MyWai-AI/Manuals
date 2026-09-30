@@ -1,0 +1,21 @@
+{
+  "name": "holocron_converter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Builds the docs in the parent folder into a self-hosted site with Holocron",
+  "type": "module",
+  "scripts": {
+    "prepare-assets": "node prepare-assets.mjs",
+    "predev": "npm run prepare-assets",
+    "dev": "vite",
+    "prebuild": "npm run prepare-assets",
+    "build": "vite build",
+    "start": "node ../dist/rsc/index.js"
+  },
+  "dependencies": {
+    "@holocron.so/vite": "^0.36.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vite": "^8.3.0"
+  }
+}
