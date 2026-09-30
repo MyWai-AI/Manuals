@@ -1,0 +1,118 @@
+---
+title: "Data Analysis"
+---
+
+## Load historical data
+
+You can enter the Equipment Analysis page by clicking on the Analysis button in the Equipment details page.
+
+When in the analysis page you can select the list of Sensors or OPC data fields you are interested in. Then, open the **Historical Data** panel.
+
+In the panel, specify the historical period by indicating the examination date and the duration of the period. In this regard, you can also use predefined shortcuts that define which part of the historical time period to analyze.
+
+Once the parameters are configured, you can proceed to visualize the data by using the "**Retrieve data**" button.
+
+After the loading is complete, the results will be displayed in timeline-style graphs. You can zoom in for more detail within the graph by holding down the mouse button to redraw a specific area, or you can refine the execution of data retrieval by reconfiguring the previous parameter settings.
+
+## Understanding Labels
+
+A **label** is a time interval you mark on the historical chart. It names a stretch of the selected measures so that a model can be trained on examples of the same kind. A label is not the measurement itself: the points stay where they are, and the label only records the start, the end, the title, and the color.
+
+Several labels of the same kind can later be grouped under one **tag** (a root). Training and the approval workflow use tags, not loose labels.
+
+<Info>
+See also [Labels approval workflow](/3.2/analysis/labels-approval-workflow)
+</Info>
+
+## Create a label
+
+**Create label** is on the chart toolbar. It is available when your role can manage labels, historical data is already on the chart, and the selection is not a camera or other media-only measure. The button is also disabled while clustering is running.
+
+Click **Create label**. The bar under the toolbar turns red and reads **LABELING MODE ON**. Click once on the chart to set the start of the interval. A guide line stays on that time. Click a second time to set the end. The two clicks are read along the time axis, including gaps where the series has no points. The order of the clicks does not matter: the earlier time is the start.
+
+<img
+  src="/images/image-49.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="dark:hidden"
+/>
+<img
+  src="/images/image-49-dark.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="hidden dark:block"
+/>
+
+After the second click the label is saved with the default name **my label** and a color, and it appears in the **Edit mode** drawer on the right. Labeling mode stays on, so you can mark another interval immediately. Click **Create label** again, or **Cancel** on the banner after the first click, to leave the mode.
+
+If ten or more measures are selected, the page asks you to confirm before labeling starts. The operation can take a long time.
+
+When a transformation has already been applied to the chart, the banner also offers **Use the transformation information on the label**. Turn it on if the example should keep that transformation.
+
+### Edit mode
+
+Open the drawer on the right of the chart. The heading is **Edit mode**.
+
+**Get saved labels** loads labels that were saved earlier for this analysis and draws them on the chart. **Clean Labels** (the broom on the toolbar) removes those drawings from the chart. It does not delete the labels.
+
+In the list you can:
+
+- Change the **Label name**.
+- Show or hide the band on the chart with the tag icon.
+- Change the color, delete the label, or **Promote to root** from the menu on the row. Promote to root turns the label into a tag, marked **(R)**, which can collect other labels as samples.
+- Pin a tag so it stays at the top of the list. The pin is kept for you on this equipment. Expand a tag to see its child labels, their time range, and to show or delete each one.
+- **Add to root** on a label that is not yet a tag, when at least one tag is pinned. Choose the tag in **Add to pinned tag**.
+
+If exactly one tag is pinned when you create a label, the new label is added to that tag automatically. If more than one tag is pinned, **Add to pinned tag** asks for the label name and the tag. **Skip** keeps the label on its own.
+
+The menu also has **Train**, which opens training for that label or tag. The steps of that window are described in [Training](/3.2/analysis/training).
+
+## Create an event (fact)
+
+An **event** on this page is a **fact**: one record that ties the selected measures, on the selected sensors and OPC fields, to a time interval of the equipment. The rows in that interval are stamped with the fact. Later you can label the fact, open it from **EVENTS**, or use it in a dataset.
+
+**Create event** is the folder button on the same toolbar. It is shown when your role can manage labels. Saving the fact also requires permission to manage quality control.
+
+Click **Create event**. The banner reads **EVENT CREATION MODE ON**. Click the start time on the chart, then the end time. A guide line marks the first click until you place the second. **Cancel** on the banner drops the first click. Click **Create event** again to leave the mode before you finish.
+
+The fact is created for the equipment you are analyzing and for the sensors, custom fields, and measures currently selected. Its **Id** starts as `Event`. The fact date is the start of the interval you drew.
+
+The interval cannot overlap data that already belongs to another fact. If it does, creation stops and the page reports that some data is already linked to a fact. Choose another range, or remove the existing fact first.
+
+With ten or more measures selected, the page asks you to confirm before event mode starts.
+
+### After the event is created
+
+In **Edit mode**, events created in this session are listed under the labels. The **Id** field is the fact serial number. Change it and click the pencil (**Edit Id**) to store the new identifier.
+
+The chart draws a colored band on the interval. The same color is used on the pencil of that event.
+
+### Events lists
+
+Two lists show facts of type event.
+
+**Datasets Events**, inside the raw-data area, lists events that fall in the time window currently loaded on the chart. The counter above the table is the number of those events. The eye on a row (**Highlight on graph**) draws or removes that interval on the chart. An eye on the table header highlights every row. **Details** opens **View Labelled Fact**. **Delete** removes the fact. The switch **Apply BlobStorage, TimeScale and Anagraphic delete** also removes the stored measurements and files of that fact. Leave the switch off to remove only the fact record and keep the data. A fact marked as origin is locked and cannot be deleted from here.
+
+**EVENTS**, the panel under the chart, lists the events of this equipment, not only the ones inside the current window. Columns are Preview, Id, Fact Date, Record Creation, Type, Equipment, and Label. **Not Labelled** means no label has been applied yet. **New Import** uploads events from a file instead of drawing them on the chart.
+
+### Label a fact
+
+Open **Details** on an event. **View Labelled Fact** shows the fact date and when the record was created.
+
+**Items** lists the measures and files that belong to the fact. **Labels** lists the tags already applied. **Add new Label** chooses a **Label to Apply** from your tags and saves it on the fact. A labelling can be removed from the same list. An origin fact cannot receive or lose a labelling here.
+
+## Train the algorithm
+
+Once the labels are generated, open **Train** from the row menu of a label or tag in **Edit mode**. The window walks through data selection, the algorithm service, data preparation, the split, the algorithm, the evaluation metrics, and a summary before the run starts. Each step is described in [Training](/3.2/analysis/training).
+
+After the run completes, the labels you trained stay grouped under their tag in **Edit mode**. You can train that tag again from its row menu.
+
+Once the model is created, you can proceed with inference on historical data by clicking the "**execute**" button on the toolbar. When opening the dialog, select the model, the algorithm, and configure its execution parameters.
+
+<Warning>
+You can only execute a model if it has been trained on a consistent number and type of measurements that match the sensor and measurement selection of the previously configured analysis page.
+</Warning>

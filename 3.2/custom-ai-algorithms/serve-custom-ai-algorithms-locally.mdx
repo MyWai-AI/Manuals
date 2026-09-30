@@ -1,0 +1,25 @@
+---
+title: "Serve Custom AI Algorithms locally"
+---
+
+You can easily serve your custom algorithm locally, by running the following commands from the root folder of your algorithm **File Structure**. It is possible to change the port and/or host as required.
+
+On Unix OS:
+
+```sh
+(py397) python -c "from mywai_python_backend.utils.config_handler import generate_models_config_and_clear; generate_models_config_and_clear()"
+(py397) !gunicorn -w 4 -b 0.0.0.0:2222 'mywai_algo_app.flask_app.flask_app:mywai_algo_app' --max-requests 1
+```
+
+On Windows:
+
+```sh
+(py397) python -c "from mywai_python_backend.utils.config_handler import generate_models_config_and_clear; generate_models_config_and_clear()"
+(py397) python -c "from mywai_algo_app.flask_app.flask_app import mywai_algo_app; from waitress import serve; serve(mywai_algo_app, host='0.0.0.0', port=2222)"
+```
+
+You can test the deployment with an http GET request like:
+
+```sh
+curl -i http://localhost:2222/hello_world
+```

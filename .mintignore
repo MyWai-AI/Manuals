@@ -4,3 +4,8 @@ gitbook-docs.yaml
 
 # Conversion tooling
 scripts/
+
+# Leftover table of contents, not a published page
+SUMMARY.mdx
+SUMMARY.gitbook.md
+MIGRATION-REPORT.md

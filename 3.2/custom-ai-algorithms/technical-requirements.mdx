@@ -1,0 +1,43 @@
+---
+title: "Technical requirements"
+---
+
+This section of the documentation will show how to run the development environment setup for developing custom algorithms.
+
+## Supported Operating Systems
+
+MYWAI's custom algorithmic development is currently tested for the following operating systems:
+
+* Windows 10/11
+* MacOS (Sonoma 14.2.1 and later)
+* Ubuntu 20.04 LTS
+
+## System Requirements
+
+> The files indicated as **optional** refer only to the dockerised version of the algorithm.
+
+* Conda (One of the following: Anaconda, Miniconda, Miniforge)
+* Docker \[Optional]
+
+## Getting Started
+
+Create a **conda environment** using one the supported python versions:
+
+* Python >= 3.9.7
+
+```shell
+conda create -n py397 python==3.9.7
+conda activate py397
+```
+
+Mywai provides a dedicated library, called "**mywai\_python\_backend"**, to facilitate integration between platform/edge and custom code. 
+
+This library is provided by the developers of MYWAI in the form of the Python Wheel: 
+
+* mywai\_python\_backend-X.Y.Z-py3-none-any.whl
+
+This library can be easily installed in your conda environment by running:
+
+```sh
+(my_conda_env) pip install mywai_python_backend-0.0.1-py3-none-any.whl
+```

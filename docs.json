@@ -8,138 +8,142 @@
     "dark": "#084A8A"
   },
   "navigation": {
-    "groups": [
+    "versions": [
+      {
+        "version": "3.2",
+        "tag": "In progress",
+        "groups": [
       {
         "group": "User Manual",
         "pages": [
-          "index",
-          "access-to-the-platform",
+          "3.2/index",
+          "3.2/access-to-the-platform",
           {
             "group": "Administration",
             "pages": [
-              "administration/index",
-              "administration/tenant-configuration",
-              "administration/users-management",
-              "administration/roles-management",
-              "administration/custom-fields",
-              "administration/audit-trails"
+              "3.2/administration/index",
+              "3.2/administration/tenant-configuration",
+              "3.2/administration/users-management",
+              "3.2/administration/roles-management",
+              "3.2/administration/custom-fields",
+              "3.2/administration/audit-trails"
             ]
           },
           {
             "group": "Configuration",
             "pages": [
-              "configuration/index",
-              "configuration/measures",
+              "3.2/configuration/index",
+              "3.2/configuration/measures",
               {
                 "group": "Sensors",
                 "pages": [
-                  "configuration/sensors/index",
-                  "configuration/sensors/file-system-watcher-adapter",
-                  "configuration/sensors/http-api-polling-adapter",
-                  "configuration/sensors/data-import-old"
+                  "3.2/configuration/sensors/index",
+                  "3.2/configuration/sensors/file-system-watcher-adapter",
+                  "3.2/configuration/sensors/http-api-polling-adapter",
+                  "3.2/configuration/sensors/data-import-old"
                 ]
               },
-              "configuration/equipment-types",
-              "configuration/equipments",
-              "configuration/gds-v3.0",
-              "configuration/edges",
-              "configuration/iothub",
-              "configuration/offline-maps",
-              "configuration/blockchain-v3.0"
+              "3.2/configuration/equipment-types",
+              "3.2/configuration/equipments",
+              "3.2/configuration/gds-v3.0",
+              "3.2/configuration/edges",
+              "3.2/configuration/iothub",
+              "3.2/configuration/offline-maps",
+              "3.2/configuration/blockchain-v3.0"
             ]
           },
           {
             "group": "Data",
             "pages": [
-              "data/index",
-              "data/equipments-data",
-              "data/equipments-documents",
-              "data/data-repository",
-              "data/data-import",
-              "data/data-export-v3.0",
-              "data/data-certification-on-blockchain-v3.0",
-              "data/certificates-v3.0"
+              "3.2/data/index",
+              "3.2/data/equipments-data",
+              "3.2/data/equipments-documents",
+              "3.2/data/data-repository",
+              "3.2/data/data-import",
+              "3.2/data/data-export-v3.0",
+              "3.2/data/data-certification-on-blockchain-v3.0",
+              "3.2/data/certificates-v3.0"
             ]
           },
           {
             "group": "3D Viewer",
             "pages": [
-              "3d-viewer/index",
-              "3d-viewer/viewer-ui",
-              "3d-viewer/compose-a-full-3d-area-scene"
+              "3.2/3d-viewer/index",
+              "3.2/3d-viewer/viewer-ui",
+              "3.2/3d-viewer/compose-a-full-3d-area-scene"
             ]
           },
           {
             "group": "Analysis",
             "pages": [
-              "analysis/index",
+              "3.2/analysis/index",
               {
                 "group": "Algorithms",
                 "pages": [
-                  "analysis/algorithms/index",
-                  "analysis/algorithms/custom-algorithms"
+                  "3.2/analysis/algorithms/index",
+                  "3.2/analysis/algorithms/custom-algorithms"
                 ]
               },
-              "analysis/data-analysis",
-              "analysis/training",
-              "analysis/simulate-real-time-data",
-              "analysis/labels-approval-workflow",
-              "analysis/datasets",
-              "analysis/dataset-version-approval-workflow"
+              "3.2/analysis/data-analysis",
+              "3.2/analysis/training",
+              "3.2/analysis/simulate-real-time-data",
+              "3.2/analysis/labels-approval-workflow",
+              "3.2/analysis/datasets",
+              "3.2/analysis/dataset-version-approval-workflow"
             ]
           },
           {
             "group": "Automation",
             "pages": [
-              "automation/index",
-              "automation/routines",
-              "automation/orchestrator"
+              "3.2/automation/index",
+              "3.2/automation/routines",
+              "3.2/automation/orchestrator"
             ]
           },
           {
             "group": "Reporting",
             "pages": [
-              "reporting/index",
-              "reporting/anomalies",
-              "reporting/reports",
-              "reporting/background-jobs",
-              "reporting/certifications"
+              "3.2/reporting/index",
+              "3.2/reporting/anomalies",
+              "3.2/reporting/reports",
+              "3.2/reporting/background-jobs",
+              "3.2/reporting/certifications"
             ]
           },
           {
             "group": "Edge Operations",
             "pages": [
-              "edge-operations/index",
+              "3.2/edge-operations/index",
               {
                 "group": "Edge Installation",
                 "pages": [
-                  "edge-operations/edge-installation-v3.0/index",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
-                  "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
-                  "edge-operations/edge-installation-v3.0/advanced-installations"
+                  "3.2/edge-operations/edge-installation-v3.0/index",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
+                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
+                  "3.2/edge-operations/edge-installation-v3.0/advanced-installations"
                 ]
               },
-              "edge-operations/advanced-docker-hosting-tips",
-              "edge-operations/equipment-onboarding-v3.0"
+              "3.2/edge-operations/advanced-docker-hosting-tips",
+              "3.2/edge-operations/equipment-onboarding-v3.0"
             ]
           },
           {
             "group": "Custom AI Algorithms",
             "pages": [
-              "custom-ai-algorithms/index",
-              "custom-ai-algorithms/technical-requirements",
-              "custom-ai-algorithms/prepare-your-algorithm",
-              "custom-ai-algorithms/serve-custom-ai-algorithms-locally",
+              "3.2/custom-ai-algorithms/index",
+              "3.2/custom-ai-algorithms/technical-requirements",
+              "3.2/custom-ai-algorithms/prepare-your-algorithm",
+              "3.2/custom-ai-algorithms/serve-custom-ai-algorithms-locally",
               {
                 "group": "Packaging a Custom AI Algorithm",
                 "pages": [
-                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/index",
-                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
-                  "custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
+                  "3.2/custom-ai-algorithms/packaging-a-custom-ai-algorithm/index",
+                  "3.2/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
+                  "3.2/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
                 ]
               }
             ]
@@ -147,21 +151,262 @@
           {
             "group": "Marketplace Tools",
             "pages": [
-              "marketplace-tools/index",
-              "marketplace-tools/tool-development-guidelines",
-              "marketplace-tools/platform-apis-usage-examples",
-              "marketplace-tools/use-case-interact-with-sensor-and-gather-data",
-              "marketplace-tools/python-low-level-apis-wrapper",
-              "marketplace-tools/python-high-level-apis-wrapper"
+              "3.2/marketplace-tools/index",
+              "3.2/marketplace-tools/tool-development-guidelines",
+              "3.2/marketplace-tools/platform-apis-usage-examples",
+              "3.2/marketplace-tools/use-case-interact-with-sensor-and-gather-data",
+              "3.2/marketplace-tools/python-low-level-apis-wrapper",
+              "3.2/marketplace-tools/python-high-level-apis-wrapper"
             ]
           },
-          "known-limitations",
-          "appendix-1-special-adapters",
-          "appendix-2-computational-needs-for-ai-training-and-inference",
-          "appendix-2-edge-data-access-and-mqtt-broker-integration",
-          "glossary"
+          "3.2/known-limitations",
+          "3.2/appendix-1-special-adapters",
+          "3.2/appendix-2-computational-needs-for-ai-training-and-inference",
+          "3.2/appendix-2-edge-data-access-and-mqtt-broker-integration",
+          "3.2/glossary"
         ]
       }
     ]
-  }
+      },
+      {
+        "version": "3.1",
+        "default": true,
+        "groups": [
+      {
+        "group": "User Manual",
+        "pages": [
+          "3.1/index",
+          "3.1/access-to-the-platform",
+          {
+            "group": "Administration",
+            "pages": [
+              "3.1/administration/index",
+              "3.1/administration/tenant-configuration",
+              "3.1/administration/users-management",
+              "3.1/administration/roles-management",
+              "3.1/administration/custom-fields",
+              "3.1/administration/audit-trails"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "3.1/configuration/index",
+              "3.1/configuration/measures",
+              {
+                "group": "Sensors",
+                "pages": [
+                  "3.1/configuration/sensors/index",
+                  "3.1/configuration/sensors/file-system-watcher-adapter",
+                  "3.1/configuration/sensors/http-api-polling-adapter",
+                  "3.1/configuration/sensors/data-import-old"
+                ]
+              },
+              "3.1/configuration/equipment-types",
+              "3.1/configuration/equipments",
+              "3.1/configuration/gds-v3.0",
+              "3.1/configuration/edges",
+              "3.1/configuration/iothub",
+              "3.1/configuration/offline-maps",
+              "3.1/configuration/blockchain-v3.0"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "3.1/data/index",
+              "3.1/data/equipments-data",
+              "3.1/data/equipments-documents",
+              "3.1/data/data-repository",
+              "3.1/data/data-import",
+              "3.1/data/data-export-v3.0",
+              "3.1/data/data-certification-on-blockchain-v3.0",
+              "3.1/data/certificates-v3.0"
+            ]
+          },
+          {
+            "group": "3D Viewer",
+            "pages": [
+              "3.1/3d-viewer/index",
+              "3.1/3d-viewer/viewer-ui",
+              "3.1/3d-viewer/compose-a-full-3d-area-scene"
+            ]
+          },
+          {
+            "group": "Analysis",
+            "pages": [
+              "3.1/analysis/index",
+              {
+                "group": "Algorithms",
+                "pages": [
+                  "3.1/analysis/algorithms/index",
+                  "3.1/analysis/algorithms/custom-algorithms"
+                ]
+              },
+              "3.1/analysis/data-analysis",
+              "3.1/analysis/training",
+              "3.1/analysis/simulate-real-time-data",
+              "3.1/analysis/labels-approval-workflow",
+              "3.1/analysis/datasets",
+              "3.1/analysis/dataset-version-approval-workflow"
+            ]
+          },
+          {
+            "group": "Automation",
+            "pages": [
+              "3.1/automation/index",
+              "3.1/automation/routines",
+              "3.1/automation/orchestrator"
+            ]
+          },
+          {
+            "group": "Reporting",
+            "pages": [
+              "3.1/reporting/index",
+              "3.1/reporting/anomalies",
+              "3.1/reporting/reports",
+              "3.1/reporting/background-jobs",
+              "3.1/reporting/certifications"
+            ]
+          },
+          {
+            "group": "Edge Operations",
+            "pages": [
+              "3.1/edge-operations/index",
+              {
+                "group": "Edge Installation",
+                "pages": [
+                  "3.1/edge-operations/edge-installation-v3.0/index",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
+                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
+                  "3.1/edge-operations/edge-installation-v3.0/advanced-installations"
+                ]
+              },
+              "3.1/edge-operations/advanced-docker-hosting-tips",
+              "3.1/edge-operations/equipment-onboarding-v3.0"
+            ]
+          },
+          {
+            "group": "Custom AI Algorithms",
+            "pages": [
+              "3.1/custom-ai-algorithms/index",
+              "3.1/custom-ai-algorithms/technical-requirements",
+              "3.1/custom-ai-algorithms/prepare-your-algorithm",
+              "3.1/custom-ai-algorithms/serve-custom-ai-algorithms-locally",
+              {
+                "group": "Packaging a Custom AI Algorithm",
+                "pages": [
+                  "3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/index",
+                  "3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package",
+                  "3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Marketplace Tools",
+            "pages": [
+              "3.1/marketplace-tools/index",
+              "3.1/marketplace-tools/tool-development-guidelines",
+              "3.1/marketplace-tools/platform-apis-usage-examples",
+              "3.1/marketplace-tools/use-case-interact-with-sensor-and-gather-data",
+              "3.1/marketplace-tools/python-low-level-apis-wrapper",
+              "3.1/marketplace-tools/python-high-level-apis-wrapper"
+            ]
+          },
+          "3.1/known-limitations",
+          "3.1/appendix-1-special-adapters",
+          "3.1/appendix-2-computational-needs-for-ai-training-and-inference",
+          "3.1/appendix-2-edge-data-access-and-mqtt-broker-integration",
+          "3.1/glossary"
+        ]
+      }
+    ]
+      }
+    ]
+  },
+  "redirects": [
+    { "source": "/index", "destination": "/3.1/index" },
+    { "source": "/access-to-the-platform", "destination": "/3.1/access-to-the-platform" },
+    { "source": "/administration/index", "destination": "/3.1/administration/index" },
+    { "source": "/administration/tenant-configuration", "destination": "/3.1/administration/tenant-configuration" },
+    { "source": "/administration/users-management", "destination": "/3.1/administration/users-management" },
+    { "source": "/administration/roles-management", "destination": "/3.1/administration/roles-management" },
+    { "source": "/administration/custom-fields", "destination": "/3.1/administration/custom-fields" },
+    { "source": "/administration/audit-trails", "destination": "/3.1/administration/audit-trails" },
+    { "source": "/configuration/index", "destination": "/3.1/configuration/index" },
+    { "source": "/configuration/measures", "destination": "/3.1/configuration/measures" },
+    { "source": "/configuration/sensors/index", "destination": "/3.1/configuration/sensors/index" },
+    { "source": "/configuration/sensors/file-system-watcher-adapter", "destination": "/3.1/configuration/sensors/file-system-watcher-adapter" },
+    { "source": "/configuration/sensors/http-api-polling-adapter", "destination": "/3.1/configuration/sensors/http-api-polling-adapter" },
+    { "source": "/configuration/sensors/data-import-old", "destination": "/3.1/configuration/sensors/data-import-old" },
+    { "source": "/configuration/equipment-types", "destination": "/3.1/configuration/equipment-types" },
+    { "source": "/configuration/equipments", "destination": "/3.1/configuration/equipments" },
+    { "source": "/configuration/gds-v3.0", "destination": "/3.1/configuration/gds-v3.0" },
+    { "source": "/configuration/edges", "destination": "/3.1/configuration/edges" },
+    { "source": "/configuration/iothub", "destination": "/3.1/configuration/iothub" },
+    { "source": "/configuration/offline-maps", "destination": "/3.1/configuration/offline-maps" },
+    { "source": "/configuration/blockchain-v3.0", "destination": "/3.1/configuration/blockchain-v3.0" },
+    { "source": "/data/index", "destination": "/3.1/data/index" },
+    { "source": "/data/equipments-data", "destination": "/3.1/data/equipments-data" },
+    { "source": "/data/equipments-documents", "destination": "/3.1/data/equipments-documents" },
+    { "source": "/data/data-repository", "destination": "/3.1/data/data-repository" },
+    { "source": "/data/data-import", "destination": "/3.1/data/data-import" },
+    { "source": "/data/data-export-v3.0", "destination": "/3.1/data/data-export-v3.0" },
+    { "source": "/data/data-certification-on-blockchain-v3.0", "destination": "/3.1/data/data-certification-on-blockchain-v3.0" },
+    { "source": "/data/certificates-v3.0", "destination": "/3.1/data/certificates-v3.0" },
+    { "source": "/3d-viewer/index", "destination": "/3.1/3d-viewer/index" },
+    { "source": "/3d-viewer/viewer-ui", "destination": "/3.1/3d-viewer/viewer-ui" },
+    { "source": "/3d-viewer/compose-a-full-3d-area-scene", "destination": "/3.1/3d-viewer/compose-a-full-3d-area-scene" },
+    { "source": "/analysis/index", "destination": "/3.1/analysis/index" },
+    { "source": "/analysis/algorithms/index", "destination": "/3.1/analysis/algorithms/index" },
+    { "source": "/analysis/algorithms/custom-algorithms", "destination": "/3.1/analysis/algorithms/custom-algorithms" },
+    { "source": "/analysis/data-analysis", "destination": "/3.1/analysis/data-analysis" },
+    { "source": "/analysis/training", "destination": "/3.1/analysis/training" },
+    { "source": "/analysis/simulate-real-time-data", "destination": "/3.1/analysis/simulate-real-time-data" },
+    { "source": "/analysis/labels-approval-workflow", "destination": "/3.1/analysis/labels-approval-workflow" },
+    { "source": "/analysis/datasets", "destination": "/3.1/analysis/datasets" },
+    { "source": "/analysis/dataset-version-approval-workflow", "destination": "/3.1/analysis/dataset-version-approval-workflow" },
+    { "source": "/automation/index", "destination": "/3.1/automation/index" },
+    { "source": "/automation/routines", "destination": "/3.1/automation/routines" },
+    { "source": "/automation/orchestrator", "destination": "/3.1/automation/orchestrator" },
+    { "source": "/reporting/index", "destination": "/3.1/reporting/index" },
+    { "source": "/reporting/anomalies", "destination": "/3.1/reporting/anomalies" },
+    { "source": "/reporting/reports", "destination": "/3.1/reporting/reports" },
+    { "source": "/reporting/background-jobs", "destination": "/3.1/reporting/background-jobs" },
+    { "source": "/reporting/certifications", "destination": "/3.1/reporting/certifications" },
+    { "source": "/edge-operations/index", "destination": "/3.1/edge-operations/index" },
+    { "source": "/edge-operations/edge-installation-v3.0/index", "destination": "/3.1/edge-operations/edge-installation-v3.0/index" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-windows", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu" },
+    { "source": "/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose", "destination": "/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose" },
+    { "source": "/edge-operations/edge-installation-v3.0/advanced-installations", "destination": "/3.1/edge-operations/edge-installation-v3.0/advanced-installations" },
+    { "source": "/edge-operations/advanced-docker-hosting-tips", "destination": "/3.1/edge-operations/advanced-docker-hosting-tips" },
+    { "source": "/edge-operations/equipment-onboarding-v3.0", "destination": "/3.1/edge-operations/equipment-onboarding-v3.0" },
+    { "source": "/custom-ai-algorithms/index", "destination": "/3.1/custom-ai-algorithms/index" },
+    { "source": "/custom-ai-algorithms/technical-requirements", "destination": "/3.1/custom-ai-algorithms/technical-requirements" },
+    { "source": "/custom-ai-algorithms/prepare-your-algorithm", "destination": "/3.1/custom-ai-algorithms/prepare-your-algorithm" },
+    { "source": "/custom-ai-algorithms/serve-custom-ai-algorithms-locally", "destination": "/3.1/custom-ai-algorithms/serve-custom-ai-algorithms-locally" },
+    { "source": "/custom-ai-algorithms/packaging-a-custom-ai-algorithm/index", "destination": "/3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/index" },
+    { "source": "/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package", "destination": "/3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-.zip-package" },
+    { "source": "/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image", "destination": "/3.1/custom-ai-algorithms/packaging-a-custom-ai-algorithm/as-docker-image" },
+    { "source": "/marketplace-tools/index", "destination": "/3.1/marketplace-tools/index" },
+    { "source": "/marketplace-tools/tool-development-guidelines", "destination": "/3.1/marketplace-tools/tool-development-guidelines" },
+    { "source": "/marketplace-tools/platform-apis-usage-examples", "destination": "/3.1/marketplace-tools/platform-apis-usage-examples" },
+    { "source": "/marketplace-tools/use-case-interact-with-sensor-and-gather-data", "destination": "/3.1/marketplace-tools/use-case-interact-with-sensor-and-gather-data" },
+    { "source": "/marketplace-tools/python-low-level-apis-wrapper", "destination": "/3.1/marketplace-tools/python-low-level-apis-wrapper" },
+    { "source": "/marketplace-tools/python-high-level-apis-wrapper", "destination": "/3.1/marketplace-tools/python-high-level-apis-wrapper" },
+    { "source": "/known-limitations", "destination": "/3.1/known-limitations" },
+    { "source": "/appendix-1-special-adapters", "destination": "/3.1/appendix-1-special-adapters" },
+    { "source": "/appendix-2-computational-needs-for-ai-training-and-inference", "destination": "/3.1/appendix-2-computational-needs-for-ai-training-and-inference" },
+    { "source": "/appendix-2-edge-data-access-and-mqtt-broker-integration", "destination": "/3.1/appendix-2-edge-data-access-and-mqtt-broker-integration" },
+    { "source": "/glossary", "destination": "/3.1/glossary" }
+  ]
 }

@@ -29,12 +29,23 @@ mint broken-links   # controlla i link interni
 
 Ferma il server di anteprima con `Ctrl+C`.
 
+## Versioni
+
+Il sito ha due versioni nello stesso branch, selezionabili dal menu Mintlify:
+
+| Cartella | Versione | Ruolo |
+|----------|----------|--------|
+| `3.1/` | 3.1 | Manuale pubblicato. È la versione di default. |
+| `3.2/` | 3.2 | Manuale in lavorazione. Le modifiche della prossima release vanno qui. |
+
+Le immagini restano in `images/` e `assets/`, condivise dalle due versioni. Un link interno a una pagina usa il prefisso della versione, per esempio `/3.2/configuration/offline-maps`.
+
 ## Struttura del progetto
 
 | Path | Descrizione |
 |------|-------------|
-| `docs.json` | Configurazione Mintlify (navigazione, tema, colori) |
-| `*.mdx` | Pagine del manuale |
+| `docs.json` | Configurazione Mintlify (versioni, navigazione, tema, colori) |
+| `3.1/`, `3.2/` | Pagine del manuale per ciascuna versione |
 | `images/` | Immagini e asset |
 | `.mintignore` | Esclude dal build il backup GitBook e gli script |
 | `user-manual/` | Export originale GitBook (backup) |

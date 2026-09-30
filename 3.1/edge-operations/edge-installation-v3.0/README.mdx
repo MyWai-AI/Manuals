@@ -1,0 +1,49 @@
+# Edge Installation
+
+The MYWAI Edge device runs in the company sites together with equipments, sensors and OPC servers to:
+
+* Collect data
+* Run AI Algorithms
+* Trigger outcomes and alarms
+* Execute orchestration flows
+
+## The GDS
+
+**GDS** means **Global Discovery Server**. It is the OPC UA service, defined by the OPC Foundation, that registers OPC UA applications and gives them the certificates they need to trust each other. More about the standard: [OPC UA GDS](https://reference.opcfoundation.org/GDS/v105/docs/6).
+
+In MYWAI the GDS handles the certificates of:
+
+* the Edge, so it can connect to the platform and to the equipment
+* the OPC UA servers of the equipment onboarded through MYWAI
+
+The GDS is part of the Edge package. You do not download it on its own and you do not follow a separate installation. The start script runs two containers on the same machine:
+
+* **edge** — collects data, runs algorithms and flows
+* **gds** — issues and stores the OPC UA certificates for that machine
+
+In `edge.env` you choose a **GDS ID** (unique for this machine) and a **GDS password**. The Edge uses that password to talk to the GDS. Keep the password: equipment onboarding asks for the same value.
+
+When the containers are running, the GDS appears in the platform [GDS list](/3.1/configuration/gds-v3.0) as a join request. Accept it. The platform then sends the signed GDS certificate, and the Edge asks that GDS for its own certificate.
+
+## System Requirements
+
+MYWAY Edge runs on:
+
+* Microsoft Windows devices: Windows 10 or 11.
+* Linux devices with Ubuntu 22.04.
+* Raspberry PI 4
+
+Install the current release with ORAS. ORAS downloads the Edge and GDS package for the version MYWAI gave you. You create the folders, fill in `edge.env`, and run the start script. The script starts both containers.
+
+* [Windows 10 or 11](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras)
+* [Linux (Ubuntu 22.04)](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras)
+
+## Previous installation procedures
+
+These procedures pull a single Edge image and start it with `docker run` or a compose file you write by hand:
+
+* [Windows 10 or 11](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows)
+* [Windows with Docker Compose](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose)
+* [Ubuntu 22.04](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu)
+* [Ubuntu with Docker Compose](/3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose)
+

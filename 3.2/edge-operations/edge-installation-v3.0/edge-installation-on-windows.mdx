@@ -1,0 +1,56 @@
+---
+title: "Edge Installation on Windows"
+---
+
+1\. Create the following empty folders on the C: drive:
+
+* C:\EdgeIO
+* C:\EdgeStorage
+
+2\. Download, install and run **Docker Desktop** ([https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/))
+
+3\. Open a **command prompt**.
+
+4\. If not already created installing a GDS, create the _mywai_ network:
+
+```batch
+docker network create -d bridge --subnet=192.168.5.0/24 mywai
+```
+
+5\. Login into _mywaik8sfeature_ docker registry:
+
+```batch
+docker login -u mywai-pull -p <token> productfeatures.azurecr.io
+```
+
+<Warning>
+Contact MYWAI to get the access token for the proper registry.\
+The registry mywaik8sfeature.azurecr.io provides a more stable version of the Edge but not the very last one available. If you need the more up-to-date version, ask MYWAI for the access to the mywaik8snextdev.azurecr.io registry.
+</Warning>
+
+6\. Download the latest version of the Edge image:
+
+```batch
+docker pull productfeatures.azurecr.io/edge:latest
+```
+
+7\. Create & Start the containers:
+
+```batch
+docker run -d --name mywai-edge --restart always --network mywai ^
+--ip 192.168.5.3 ^
+-v C:\EdgeIO:/EdgeIO ^
+-v C:\EdgeStorage:/EdgeStorage ^
+-v /var/run/docker.sock:/var/run/docker.sock ^
+-e IotHub__EdgeId=Edge-<edge-id> ^
+-e IotHub__TenantName=<tenant-name> ^
+-e GDS__Password=<gds-password> ^
+productfeatures.azurecr.io/edge:latest
+```
+
+Where:
+
+* `192.168.5.3`: the IP address to be assigned to the Edge container. You need to change it in case you are installing for some reasons more Edges on the same Docker.
+* `IotHub__EdgeId`: an alphanumeric name you can choose for your Edge. Must start with "Edge-".
+* `IotHub__TenantName`: is the tenant name of your cloud MYWAI Platform. For example, if your platform is accessible at the url **https://acme.platform.myw.ai**, your tenant name is "acme".
+* `GDS__Password`: the password configured on the GDS.

@@ -1,0 +1,59 @@
+---
+title: "Data Certification on Blockchain (v3.0)"
+---
+
+The MYWAI platform allows users to **manually certify data** on the IOTA Blockchain to guarantee **integrity, traceability, and non-repudiation** of AI-generated outputs.\
+Two types of entities can be certified: **Event** and **Anomaly**.
+
+In order to certify data, ensure to configure you IOTA Network as described in the Configuration / Blockchain page.
+
+### **Manual Certification Process**
+
+Certification is **initiated manually by the user** from within the platform interface.\
+The process includes the following steps:
+
+1.  **Select Entity for Certification**
+
+    From the _Events_ or _Anomalies_ section, select the item you wish to certify and click on the ![](/images/image-18.png) button.\
+    A modal dialog is shown asking for the selection on the data hashing mechanism. At the moment  only IPFS is available.<br />
+
+    ![](/images/image-19.png)
+2. **Generate AASX Package**
+   * When clicking on **Execute** button, the system starts a background job that serializes the selected entity into an **AASX file** (Asset Administration Shell Package) compliant with the **IEC 63278** standard.
+   * This package includes metadata, timestamps, measurement data, and references to the AI model involved.
+3. **Store on IPFS**
+   * The AASX file is uploaded to **IPFS (InterPlanetary File System)**.
+   * IPFS returns a **Content Identifier (CID)**, which is a cryptographic hash uniquely representing the stored file.
+4. **Certify on IOTA**
+   * The IPFS CID is recorded in an **IOTA transaction**, together with minimal metadata:
+     * Entity type (Event or Anomaly)
+     * Entity ID
+     * Timestamp
+   * The transaction is **digitally signed** with the user’s active wallet (created or imported from mnemonic).
+   * Once submitted, it is permanently stored on the chosen IOTA network (Testnet or Mainnet).
+
+### **Certification Result**
+
+After successful certification, the platform provides:
+
+* **IPFS CID:** direct link to retrieve the AASX file from IPFS.
+* **IOTA Transaction ID:** link to view the transaction on the IOTA Explorer.
+
+Both references remain associated with the certified entity for future verification.
+
+### **Verification and Transparency**
+
+External parties can independently verify the certification by:
+
+1. Downloading the **AASX file** from IPFS using its CID.
+2. Recomputing its **hash** to confirm data integrity.
+3. Checking the **IOTA transaction** on the public ledger to validate that the hash matches the original record.
+
+This provides full **auditability and public verifiability** of certified data.
+
+### **Benefits**
+
+* **Data integrity:** tamper-proof verification via IOTA ledger.
+* **Transparency:** certification visible and verifiable through IOTA Explorer.
+* **Standards compliance:** AASX ensures interoperability within Industry 4.0 frameworks.
+* **Decentralized assurance:** IPFS and IOTA provide distributed, fault-tolerant data preservation.

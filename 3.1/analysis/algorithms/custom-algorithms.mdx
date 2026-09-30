@@ -1,0 +1,82 @@
+---
+title: "Custom Algorithms"
+---
+
+Custom algorithms are not typed into the platform one by one. You register an **algorithm service** that is already running, and the platform reads the algorithms that service publishes.
+
+How to build that service is described in [Custom AI Algorithms](/3.1/custom-ai-algorithms/index). This page covers how to add it on **Algorithms Management**.
+
+Open **Algorithms** from the Analysis menu. The page title is **Algorithms Management**. Two tabs split the catalog:
+
+* **Product Algos** — algorithms shipped with the platform.
+* **Custom Algos** — algorithms published by the services you register.
+
+**Filter by Algorithm Type** and **Filter by Data Type** narrow the list. **Show inactive algorithms** includes entries that are not currently available. A green dot means the algorithm is available. A red dot means it is not. The eye opens **View algorithm**.
+
+**Manage Services** and **Update Algorithms** require the **Manage algorithms** permission. **MLflow** opens the tracking UI when it is configured for the tenant.
+
+## Add a custom algorithm service
+
+**Manage Services** opens **Edit Algorithm Services**. The list on the left contains only the custom services. The built-in product service is not shown here.
+
+<img
+  src="/images/image-50.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="dark:hidden"
+/>
+<img
+  src="/images/image-50-dark.png"
+  alt="Image"
+  title="Image"
+  lightAlt="Image"
+  darkAlt="Image"
+  className="hidden dark:block"
+/>
+
+1. Click **Add Service**. A new row is selected. Its **HTTP(S) Endpoint** starts as the placeholder `HTTP Endpoint`. Replace that placeholder with the base URL the platform can call, for example `https://algo.example.com`.
+2. Leave the service running before you save. The platform calls it from the server, so an address that opens in your browser can still fail if the platform cannot reach it.
+3. Fill the registry fields only when this image must be deployed to Edge devices. They are not required to register a service that you already host.
+4. Click **Save**.
+
+Algorithms marked as system in the SDK are shared by every service. They are not treated as duplicates.
+
+When the save succeeds, the window closes and **Update Algorithms** runs immediately. The algorithms from the new service appear on **Custom Algos**. Press **Update Algorithms** again later to refresh the lists from every registered service.
+
+<Info>
+Each entry in the catalog supplies the name, tag, description, category, data type, and parameters shown on the Algorithms page and in the [training](/3.1/analysis/training) window. You do not re-enter those fields in **Edit Algorithm Services**.
+</Info>
+
+## Registry and deploy to Edge
+
+The lower part of the service form is the container registry used when the same service is sent to an Edge:
+
+* **Docker Image Name**
+* **Docker Image Tag** — `latest` if you leave it empty
+* **Azure Registry Name**
+* **Azure Registry Username**
+* **Azure Registry Password**
+
+A password already stored is kept when the field is left blank. Type a new value only when you want to replace it.
+
+**Verify Registry Configuration** checks that the platform can read that image with those credentials. A green check means the registry is valid. A red alert shows the error.
+
+**Deploy to Edges** runs that check first. If it fails, the deploy does not start. If it succeeds, choose the Edge devices that should receive the service.
+
+The **Docker image file** field on this form is not available. Register the service by its HTTP endpoint. Use the registry fields when the image itself must be pulled onto an Edge.
+
+## Change or remove a service
+
+Select the service in the list, change its fields, and click **Save**.
+
+**Remove Service** strikes the row through. The deletion is applied only when you click **Save**. Closing the window without saving leaves the service in place.
+
+<Warning>
+Test the service against the platform before you rely on it. Point **HTTP(S) Endpoint** at your development address, save, and confirm the algorithms on **Custom Algos** before you deploy the image to an Edge.
+</Warning>
+
+## Transformations
+
+**Transformations**, under Algorithms, lists the transformation steps available in the platform. They are published by the same kind of algorithm service. The old **Add new transformation** upload is not on this page.

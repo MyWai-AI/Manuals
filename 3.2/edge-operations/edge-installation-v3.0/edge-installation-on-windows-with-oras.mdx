@@ -1,0 +1,167 @@
+---
+title: "Edge Installation on Windows"
+---
+
+Use this procedure to install MYWAI Edge on a Windows 10 or 11 PC. ORAS is the tool that downloads the installation package for the version MYWAI gave you. You prepare the PC, sign in to the registry, fill in one configuration file, and start the package.
+
+The same package also starts the **GDS** (Global Discovery Server) on this PC. The GDS is the OPC UA service that issues the certificates for the Edge and for the equipment. You do not install it separately: the start script runs the Edge container and the GDS container together. What the GDS does, and what you accept on the platform afterwards, is described in [Edge Installation](/3.2/edge-operations/edge-installation-v3.0/index#the-gds).
+
+You need from MYWAI:
+
+* the **version** to install, for example `3.1.30` or `3.1.30-dev`
+* the **registry username** and **token**
+* the **platform hostname**, the host in the platform address without `https://` (if the platform is `https://acme.platform.myw.ai`, the hostname is `acme.platform.myw.ai`)
+* the **Edge ID** already created on the platform
+* a **GDS ID** unique for this machine
+* a **GDS password** that you choose and keep: the Edge uses it to talk to the GDS
+
+The Edge ID must be exactly the identifier configured on the platform, and it must start with `Edge-` (for example `Edge-Acme-Line-1`). The same spelling is required in the configuration file below.
+
+## 1. Install Docker Desktop
+
+Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/), then start it and wait until it reports that the engine is running.
+
+Leave Docker Desktop running for every command in this procedure.
+
+## 2. Install ORAS
+
+Open **PowerShell** and run:
+
+```powershell
+winget install -e --id ORASProject.ORAS
+```
+
+Close PowerShell and open it again, so the new command is available. Check the install:
+
+```powershell
+oras version
+```
+
+The command prints a version number.
+
+## 3. Sign in to the registry
+
+Use docker command to login to registry:
+
+```powershell
+docker login -u mywai-pull -p <token> mywaiprod.azurecr.io
+```
+
+A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
+
+<Warning>
+Contact MYWAI to obtain the username and token. Keep the token private.
+</Warning>
+
+## 4. Create the folders
+
+The installation lives under `C:\mywai`. Data folders stay **outside** `C:\mywai\releases`, so an update can replace the software without deleting certificates and collected files.
+
+Create one data folder per identity. Replace the example IDs with yours:
+
+```powershell
+New-Item -ItemType Directory -Force -Path `
+  C:\mywai\releases, `
+  C:\mywai\data\Edge-Acme-Line-1\edge-io, `
+  C:\mywai\data\Edge-Acme-Line-1\edge-storage, `
+  C:\mywai\data\Gds-Acme-1\gds-storage
+```
+
+Use a GDS data folder that belongs only to this GDS ID. A folder already used by another GDS keeps that GDS certificate and the new GDS will refuse to start.
+
+## 5. Download the package
+
+Replace `<version> (with value 3.1.60)` (the same registry you used at login):<br />
+
+```powershell
+oras pull mywaiprod.azurecr.io/edge-deploy:<version> --output C:\mywai\releases\<version>
+```
+
+This creates `C:\mywai\releases\<version>\edge\`. That folder contains the configuration template and the start script. You use it in the next steps. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
+
+## 6. Create `edge.env`
+
+Copy the template to `C:\mywai\edge.env`. This file is the configuration of **this machine**. Later updates leave it in place and only write the registry and the version into it.
+
+```powershell
+Copy-Item C:\mywai\releases\<version>\edge\.env.example C:\mywai\edge.env
+notepad C:\mywai\edge.env
+```
+
+Set these values. Leave `REGISTRY` and `PLATFORM_VERSION` empty: the start script fills them.
+
+```
+EDGE_ID=Edge-Acme-Line-1
+GDS_ID=Gds-Acme-1
+GDS_PASSWORD=<password-you-choose>
+
+IOTHUB_SERVER=iothub.acme.platform.myw.ai
+IOTHUB_MQTT_PORT=8883
+BLOB_SFTP_SERVER=sftp.acme.platform.myw.ai
+BLOB_SFTP_PORT=22
+BLOB_PUBLIC_URL=https://acme.platform.myw.ai/blobs
+
+EDGE_IO_DIR=C:\mywai\data\Edge-Acme-Line-1\edge-io
+EDGE_STORAGE_DIR=C:\mywai\data\Edge-Acme-Line-1\edge-storage
+GDS_STORAGE_DIR=C:\mywai\data\Gds-Acme-1\gds-storage
+```
+
+| Field | What you enter |
+| --- | --- |
+| `EDGE_ID` | The Edge ID from the platform. It must start with `Edge-`. |
+| `GDS_ID` | A name unique for this GDS inside the tenant. |
+| `GDS_PASSWORD` | The password the Edge uses to connect to the GDS. Remember it for equipment onboarding. |
+| `IOTHUB_SERVER` | `iothub.` followed by the platform hostname. |
+| `IOTHUB_MQTT_PORT` | `8883`, unless MYWAI gave you another MQTT port. |
+| `BLOB_SFTP_SERVER` | `sftp.` followed by the platform hostname. |
+| `BLOB_SFTP_PORT` | `22`, unless MYWAI gave you another SFTP port. |
+| `BLOB_PUBLIC_URL` | `https://` + platform hostname + `/blobs`. |
+| `EDGE_IO_DIR` | The `edge-io` folder you created for this Edge ID. |
+| `EDGE_STORAGE_DIR` | The `edge-storage` folder you created for this Edge ID. |
+| `GDS_STORAGE_DIR` | The `gds-storage` folder you created for this GDS ID. |
+
+The PC must be able to reach `iothub.<platform hostname>` and `sftp.<platform hostname>` on the network.
+
+## 7. Start Edge and GDS
+
+Run the script from the package you just downloaded. Replace `<version> with value 3.1.60`:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\mywai\releases\<version>\edge\scripts\update.ps1 -Version <version> -Root C:\mywai -Up
+```
+
+You pass:
+
+* `-Version` — the same version you downloaded (3.1.60)
+* `-Root C:\mywai` — the folder that contains `edge.env`
+* `-Up` — start the containers after the check
+
+The script then:
+
+1. downloads the package again (or reuses it if it is already complete on disk)
+2. writes `REGISTRY` and `PLATFORM_VERSION` into `C:\mywai\edge.env`
+3. makes `C:\mywai\edge` point at this version
+4. checks the compose file
+5. starts the Edge and the GDS
+
+At the end it prints the container list. `edge` and `gds` are running when their state is `running`.
+
+Open the Edge dashboard at `http://localhost:8090`.
+
+The GDS OPC UA endpoint on this PC is `opc.tcp://localhost:58810/GlobalDiscoveryServer`. The local MQTT broker for field devices listens on port `1883`.
+
+## 8. Accept the GDS on the platform
+
+On the platform, open the [GDS list](/3.2/configuration/gds-v3.0). The new GDS appears as a join request. Accept it.
+
+After you accept it, the platform sends the GDS certificate. The Edge then asks that GDS for its own certificate. If the Edge stays offline, check that `EDGE_ID` in `edge.env` is identical to the Edge ID on the platform, including the `Edge-` prefix.
+
+## Update to a newer version
+
+Ask MYWAI for the new version, then run the script from the installation that is already active. You do not edit `edge.env` and you do not download the package by hand:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\mywai\edge\scripts\update.ps1 -Version <new-version> -Up
+```
+
+The previous package stays in `C:\mywai\releases`. To go back, run the same command with the previous version.
