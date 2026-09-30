@@ -15,12 +15,17 @@ MYWAY Edge runs on:
 * Linux devices with Ubuntu 22.04.
 * Raspberry PI 4
 
-The entire Edge is provided as a Docker image. Please ensure to get the proper image for the selected SO.
+Install the current release with ORAS. ORAS downloads the Edge and GDS package for the version MYWAI gave you. You create the folders, fill in `edge.env`, and run the start script. The script starts both containers.
 
-## Installation Procedures
+* [Windows 10 or 11 with ORAS](/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras)
+* [Linux (Ubuntu 22.04) with ORAS](/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras)
 
-Please following the following procedures to install the Edge software on the specific devices:
+## Previous installation procedures
+
+These procedures pull a single Edge image and start it with `docker run` or a compose file you write by hand:
 
 * [Windows 10 or 11](/edge-operations/edge-installation-v3.0/edge-installation-on-windows)
-* [Ubuntu 22.04](/edge-operations/edge-installation-v2.1/installation-on-ubuntu)
+* [Windows with Docker Compose](/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose)
+* [Ubuntu 22.04](/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu)
+* [Ubuntu with Docker Compose](/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose)
 

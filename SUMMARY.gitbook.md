@@ -61,6 +61,8 @@
     * [Configure Bluetooth on Linux](edge-operations/edge-installation-v2.1/configure-bluetooth-on-linux.md)
     * [Reduce Algorithms container size](edge-operations/edge-installation-v2.1/reduce-algorithms-container-size.md)
   * [Edge Installation (v3.0)](edge-operations/edge-installation-v3.0/README.md)
+    * [Edge Installation on Windows with ORAS](edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras.md)
+    * [Edge Installation on Linux with ORAS](edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras.md)
     * [Edge Installation on Windows](edge-operations/edge-installation-v3.0/edge-installation-on-windows.md)
     * [Edge Installation on Windows with Docker Compose](edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose.md)
     * [Edge Installation on Ubuntu](edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu.md)

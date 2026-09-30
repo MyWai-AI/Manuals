@@ -134,6 +134,8 @@
                 "group": "Edge Installation (v3.0)",
                 "pages": [
                   "edge-operations/edge-installation-v3.0/index",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
+                  "edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
                   "edge-operations/edge-installation-v3.0/edge-installation-on-windows",
                   "edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
                   "edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
