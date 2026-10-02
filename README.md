@@ -38,6 +38,8 @@ Il sito ha due versioni nello stesso branch, selezionabili dal menu Mintlify:
 | `3.1/` | 3.1 | Manuale pubblicato. È la versione di default. |
 | `3.2/` | 3.2 | Manuale in lavorazione. Le modifiche della prossima release vanno qui. |
 
+La home `/` reindirizza a `/3.1`. Il pulsante Help della piattaforma apre l’origine del sito, senza un percorso di versione.
+
 Le immagini restano in `images/` e `assets/`, condivise dalle due versioni. Un link interno a una pagina usa il prefisso della versione, per esempio `/3.2/configuration/offline-maps`.
 
 ## Struttura del progetto

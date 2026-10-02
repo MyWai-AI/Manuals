@@ -330,6 +330,7 @@
     ]
   },
   "redirects": [
+    { "source": "/", "destination": "/3.1" },
     { "source": "/index", "destination": "/3.1/index" },
     { "source": "/access-to-the-platform", "destination": "/3.1/access-to-the-platform" },
     { "source": "/administration/index", "destination": "/3.1/administration/index" },
