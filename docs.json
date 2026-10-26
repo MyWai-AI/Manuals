@@ -120,10 +120,6 @@
                   "3.2/edge-operations/edge-installation-v3.0/index",
                   "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
                   "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
-                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows",
-                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
-                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
-                  "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
                   "3.2/edge-operations/edge-installation-v3.0/advanced-installations"
                 ]
               },
@@ -279,10 +275,6 @@
                   "3.1/edge-operations/edge-installation-v3.0/index",
                   "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
                   "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
-                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows",
-                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-docker-compose",
-                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu",
-                  "3.1/edge-operations/edge-installation-v3.0/edge-installation-on-ubuntu-with-docker-compose",
                   "3.1/edge-operations/edge-installation-v3.0/advanced-installations"
                 ]
               },
