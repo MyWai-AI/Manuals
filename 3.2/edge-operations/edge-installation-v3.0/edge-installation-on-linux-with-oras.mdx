@@ -8,8 +8,8 @@ The same package also starts the **GDS** (Global Discovery Server) on this machi
 
 You need from MYWAI:
 
-* the **version** to install, for example `3.1.30` 
-* the **registry username** and **token**
+* the **version** to install, (example `3.2.17)`
+* the **registry username** (example mywaiprod.azurecr.io`)`and **token**
 * the **platform hostname**, the host in the platform address without `https://` (if the platform is `https://acme.platform.myw.ai`, the hostname is `acme.platform.myw.ai`)
 * the **Edge ID** already created on the platform
 * a **GDS ID** unique for this machine
@@ -62,7 +62,7 @@ On an ARM64 machine, download `oras_${VERSION}_linux_arm64.tar.gz` instead of th
 Use docker command to login to registry:
 
 ```bash
-sudo docker login -u mywai-pull -p <token> mywaiprod.azurecr.io
+sudo docker login -u mywai-pull -p <token> <registry>
 ```
 
 A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
@@ -92,10 +92,8 @@ Use a GDS data folder that belongs only to this GDS ID. A folder already used by
 
 ## 5. Download the package
 
-Replace `<version> (with value 3.1.60)`
-
 ```bash
-oras pull mywaiprod.azurecr.io/edge-deploy:<version> --output /opt/mywai/releases/<version>
+oras pull <registry>/edge-deploy:<version> --output /opt/mywai/releases/<version>
 ```
 
 This creates `/opt/mywai/releases/<version>/edge/`. That folder contains the configuration template and the start script. You use it in the next steps. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
@@ -153,7 +151,7 @@ bash /opt/mywai/releases/<version>/edge/scripts/update.sh <version> --root /opt/
 
 You pass:
 
-* the version — the same version you downloaded (3.1.60)
+* the version — the same version you downloaded
 * `--root /opt/mywai` — the folder that contains `edge.env`
 * `--up` — start the containers after the check
 

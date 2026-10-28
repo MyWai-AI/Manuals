@@ -8,7 +8,7 @@ The same package also starts the **GDS** (Global Discovery Server) on this PC. T
 
 You need from MYWAI:
 
-* the **version** to install, for example `3.1.30` or `3.1.30-dev`
+* the **version** to install
 * the **registry username** and **token**
 * the **platform hostname**, the host in the platform address without `https://` (if the platform is `https://acme.platform.myw.ai`, the hostname is `acme.platform.myw.ai`)
 * the **Edge ID** already created on the platform
@@ -44,7 +44,7 @@ The command prints a version number.
 Use docker command to login to registry:
 
 ```powershell
-docker login -u mywai-pull -p <token> mywaiprod.azurecr.io
+docker login -u mywai-pull -p <token> <registry>
 ```
 
 A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
@@ -71,10 +71,8 @@ Use a GDS data folder that belongs only to this GDS ID. A folder already used by
 
 ## 5. Download the package
 
-Replace `<version> (with value 3.1.60)` (the same registry you used at login):<br />
-
 ```powershell
-oras pull mywaiprod.azurecr.io/edge-deploy:<version> --output C:\mywai\releases\<version>
+oras pull <registry>/edge-deploy:<version> --output C:\mywai\releases\<version>
 ```
 
 This creates `C:\mywai\releases\<version>\edge\`. That folder contains the configuration template and the start script. You use it in the next steps. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
@@ -124,7 +122,7 @@ The PC must be able to reach `iothub.<platform hostname>` and `sftp.<platform ho
 
 ## 7. Start Edge and GDS
 
-Run the script from the package you just downloaded. Replace `<version> with value 3.1.60`:
+Run the script from the package you just downloaded:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File C:\mywai\releases\<version>\edge\scripts\update.ps1 -Version <version> -Root C:\mywai -Up
@@ -132,7 +130,7 @@ powershell -ExecutionPolicy Bypass -File C:\mywai\releases\<version>\edge\script
 
 You pass:
 
-* `-Version` — the same version you downloaded (3.1.60)
+* `-Version` — the same version you downloaded
 * `-Root C:\mywai` — the folder that contains `edge.env`
 * `-Up` — start the containers after the check
 
