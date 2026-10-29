@@ -120,6 +120,8 @@
                   "3.2/edge-operations/edge-installation-v3.0/index",
                   "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras",
                   "3.2/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras",
+                  "algo-service-edge-installation-on-windows",
+                  "algo-service-edge-installation-on-linux",
                   "3.2/edge-operations/edge-installation-v3.0/advanced-installations"
                 ]
               },
