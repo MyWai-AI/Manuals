@@ -27,6 +27,14 @@ In `edge.env` you choose a **GDS ID** (unique for this machine) and a **GDS pass
 
 When the containers are running, the GDS appears in the platform [GDS list](/3.2/configuration/gds-v3.0) as a join request. Accept it. The platform then sends the signed GDS certificate, and the Edge asks that GDS for its own certificate.
 
+## The algorithmic service
+
+The algorithmic service runs the AI algorithms on the Edge machine. It is not part of the Edge package. Install the Edge and the GDS first, then download this service with its own package and fill in `algo-service-edge.env`. The start script runs three containers on the same machine:
+
+- base
+- vision
+- neuromem These containers have no web page. They connect to the Mosquitto broker that the Edge already publishes on this machine, and they use the same storage folder as the Edge (`EDGE_STORAGE_DIR` in `edge.env`). The Mosquitto user is `edge`. The password is the one MYWAI gave you for that user: do not choose a new one. You do not accept this service on the platform. When `base`, `vision`, and `neuromem` are running, the Edge can run algorithms on this machine.
+
 ## System Requirements
 
 MYWAY Edge runs on:
@@ -39,3 +47,8 @@ Install the current release with ORAS. ORAS downloads the Edge and GDS package f
 
 * [Windows 10 or 11](/3.2/edge-operations/edge-installation-v3.0/edge-installation-on-windows-with-oras)
 * [Linux (Ubuntu 22.04)](/3.2/edge-operations/edge-installation-v3.0/edge-installation-on-linux-with-oras)
+
+The algorithmic service uses the same Windows or Linux machine, and the same version. Install it after the Edge is running. ORAS downloads a second package. You fill in `algo-service-edge.env` and run its start script. The script starts `base`, `vision`, and `neuromem`.
+
+- [Windows 10 or 11](/3.2/edge-operations/edge-installation-v3.0/algo-service-installation-on-windows-with-oras)
+- [Linux (Ubuntu 22.04)](/3.2/edge-operations/edge-installation-v3.0/algo-service-installation-on-linux-with-oras)
