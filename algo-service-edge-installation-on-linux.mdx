@@ -1,3 +1,150 @@
 ---
 title: "Algo Service (Edge) Installation on Linux"
 ---
+
+Use this procedure to install the MYWAI algorithmic service on Ubuntu 22.04 (64-bit) where MYWAI Edge is already running. ORAS is the tool that downloads the installation package for the version MYWAI gave you. You sign in to the registry, fill in one configuration file, and start the edge flavor of the package.
+
+This service has no web page and no separate certificate step. It starts three algorithm packs (`base`, `vision`, `neuromem`). Each pack connects to the Mosquitto broker that the Edge already publishes on this machine, and reads and writes the same storage folder the Edge uses. You do not install a gateway.
+
+You need from MYWAI:
+
+- the version to install, the same version as the Edge on this machine (example `3.2.17`)
+- the registry (example `mywaiprod.azurecr.io`) and token, the same ones used for the Edge
+- the path of this Edge’s storage folder, the value of `EDGE_STORAGE_DIR` in `/opt/mywai/edge.env`
+- the password of the Mosquitto user `edge` on this Edge. Do not choose a new one: the Edge broker refuses anonymous clients and refuses a different password
+
+If Docker Engine, ORAS, and the registry login are already in place from the Edge installation, continue from step 4.
+
+## **1. Install Docker Engine**
+
+Install Docker Engine with the official guide for Ubuntu: [**https://docs.docker.com/engine/install/ubuntu/**](https://docs.docker.com/engine/install/ubuntu/)
+
+Install the Compose plugin and Python 3. The start script needs both.
+
+sudo apt-get update
+
+sudo apt-get install -y docker-compose-plugin python3 ca-certificates curl
+
+Start Docker and enable it at boot:
+
+sudo systemctl start docker
+
+sudo systemctl enable docker
+
+> [!NOTE] You can apply the post-install steps so your user can run Docker without `sudo`. If you do, omit `sudo` from the `docker` commands below. Creating `/opt/mywai` still needs `sudo` the first time.
+
+## **2. Install ORAS**
+
+Open the ORAS releases page and copy the latest version number without the leading `v` (for example `1.2.3`).
+
+On a typical PC (x86_64) run the following, with that version in `VERSION`:
+
+VERSION=1.2.3
+
+curl -LO "https://github.com/oras-project/oras/releases/download/v\$\{VERSION\}/oras\_\$\{VERSION\}\_linux_amd64.tar.gz"
+
+sudo tar -zxf "oras\_\$\{VERSION\}\_linux_amd64.tar.gz" -C /usr/local/bin oras
+
+rm "oras\_\$\{VERSION\}\_linux_amd64.tar.gz"
+
+oras version
+
+On an ARM64 machine, download `oras_${VERSION}_linux_arm64.tar.gz` instead of the `linux_amd64` archive.
+
+`oras version` prints a version number.
+
+## **3. Sign in to the registry**
+
+sudo docker login -u mywai-pull -p \<token> \<registry>
+
+A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
+
+> [!WARNING] Contact MYWAI to obtain the username and token. Keep the token private. If you enabled Docker for your user, run `docker login` without `sudo`, otherwise ORAS (which runs as your user) will not see the credentials.
+
+## **4. Check the folders**
+
+The installation lives under `/opt/mywai`, next to the Edge. Do not create a new storage folder. The packs must use the folder already set as `EDGE_STORAGE_DIR` in `/opt/mywai/edge.env`. An update can replace the software without deleting that folder.
+
+`/opt/mywai/releases` already exists when the Edge is installed. If the root does not:
+
+sudo mkdir -p /opt/mywai
+
+sudo chown "\$USER":"\$USER" /opt/mywai
+
+mkdir -p /opt/mywai/releases
+
+## **5. Download the package**
+
+oras pull \<registry>/algo-service-deploy:\<version> --output /opt/mywai/releases/\<version>
+
+This creates `/opt/mywai/releases/<version>/algo-service/`. That folder contains the edge configuration template and the start script. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
+
+The package also contains a cloud flavor. This procedure does not start it.
+
+## **6. Create** `algo-service-edge.env`
+
+Copy the template to `/opt/mywai/algo-service-edge.env`. This file is the configuration of this machine. Later updates leave it in place and only write the registry and the version into it.
+
+cp /opt/mywai/releases/\<version>/algo-service/edge/.env.example /opt/mywai/algo-service-edge.env
+
+nano /opt/mywai/algo-service-edge.env
+
+Set these values. Leave `REGISTRY` and `PLATFORM_VERSION` empty: the start script fills them. `EDGE_STORAGE_DIR` must be the same path as in `/opt/mywai/edge.env`.
+
+EDGE_STORAGE_DIR=/opt/mywai/data/Edge-Acme-Line-1/edge-storage
+
+EDGE_MQTT_HOST=host.docker.internal
+
+EDGE_MQTT_PORT=1883
+
+EDGE_MQTT_USERNAME=edge
+
+EDGE_MQTT_PASSWORD=\<password-of-the-edge-mosquitto-user>
+
+EDGE_MQTT_KEEP_ALIVE=60
+
+| **Field** | **What you enter** |
+| :-- | :-- |
+| `EDGE_STORAGE_DIR` | The `EDGE_STORAGE_DIR` value from `/opt/mywai/edge.env`. The packs and the Edge share this folder. |
+| `EDGE_MQTT_HOST` | `host.docker.internal`. The containers reach Mosquitto on the host through this name. |
+| `EDGE_MQTT_PORT` | `1883`, unless `EDGE_MQTT_EXPOSED_PORT` in `edge.env` is another port. Use that port then. |
+| `EDGE_MQTT_USERNAME` | `edge`. |
+| `EDGE_MQTT_PASSWORD` | The password of the Mosquitto user `edge` on this Edge. Ask MYWAI if you do not have it. |
+| `EDGE_MQTT_KEEP_ALIVE` | `60`, unless MYWAI gave you another value. |
+
+## **7. Start the algorithm packs**
+
+Run the script from the package you just downloaded. `--target edge` is required.
+
+bash /opt/mywai/releases/\<version>/algo-service/scripts/update.sh \<version> --root /opt/mywai --target edge --up
+
+You pass:
+
+- the version — the same version you downloaded
+- `--root /opt/mywai` — the folder that contains `algo-service-edge.env`
+- `--target edge` — start only the edge packs
+- `--up` — start the containers after the check
+
+The script then:
+
+1. downloads the package again (or reuses it if it is already complete on disk)
+2. writes `REGISTRY` and `PLATFORM_VERSION` into `/opt/mywai/algo-service-edge.env`
+3. makes `/opt/mywai/algo-service` point at this version
+4. checks the compose file
+5. starts `base`, `vision`, and `neuromem`
+
+At the end it prints the container list. The three packs are running when their state is `running`.
+
+There is no local page for this service. The Edge dashboard stays at `http://localhost:8090`.
+
+`vision` asks the engine for 2 GB of shared memory. If that container stays stopped, the machine does not have enough free memory.
+
+If a pack keeps restarting, `EDGE_MQTT_PASSWORD` is not the Mosquitto password of user `edge`, or `EDGE_MQTT_PORT` is not the port the Edge publishes.
+
+## **Update to a newer version**
+
+Ask MYWAI for the new version, then run the script from the installation that is already active. You do not edit `algo-service-edge.env` and you do not download the package by hand:
+
+bash /opt/mywai/algo-service/scripts/update.sh \<new-version> --target edge --up
+
+The previous package stays in `/opt/mywai/releases`. To go back, run the same command with the previous version.

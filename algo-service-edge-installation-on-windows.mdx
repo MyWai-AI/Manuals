@@ -1,3 +1,126 @@
 ---
 title: "Algo Service (Edge) Installation on Windows"
 ---
+
+Use this procedure to install the MYWAI algorithmic service on a Windows 10 or 11 PC where MYWAI Edge is already running. ORAS is the tool that downloads the installation package for the version MYWAI gave you. You sign in to the registry, fill in one configuration file, and start the edge flavor of the package.
+
+This service has no web page and no separate certificate step. It starts three algorithm packs (`base`, `vision`, `neuromem`). Each pack connects to the Mosquitto broker that the Edge already publishes on this PC, and reads and writes the same storage folder the Edge uses. You do not install a gateway.
+
+You need from MYWAI:
+
+- the version to install, the same version as the Edge on this PC (example `3.2.17`)
+- the registry (example `mywaiprod.azurecr.io`) and token, the same ones used for the Edge
+- the path of this Edge’s storage folder, the value of `EDGE_STORAGE_DIR` in `C:\mywai\edge.env`
+- the password of the Mosquitto user `edge` on this Edge. Do not choose a new one: the Edge broker refuses anonymous clients and refuses a different password
+
+If Docker Desktop, ORAS, and the registry login are already in place from the Edge installation, continue from step 4.
+
+## **1. Install Docker Desktop**
+
+Download and install Docker Desktop, then start it and wait until it reports that the engine is running.
+
+Leave Docker Desktop running for every command in this procedure.
+
+## **2. Install ORAS**
+
+Open PowerShell and run:
+
+winget install -e --id ORASProject.ORAS
+
+Close PowerShell and open it again, so the new command is available. Check the install:
+
+oras version
+
+The command prints a version number.
+
+## **3. Sign in to the registry**
+
+docker login -u mywai-pull -p \<token> \<registry>
+
+A successful login prints `Login Succeeded`. ORAS uses this same login, so you do not sign in a second time.
+
+> [!WARNING] Contact MYWAI to obtain the username and token. Keep the token private.
+
+## **4. Check the folders**
+
+The installation lives under `C:\mywai`, next to the Edge. Do not create a new storage folder. The packs must use the folder already set as `EDGE_STORAGE_DIR` in `C:\mywai\edge.env`. An update can replace the software without deleting that folder.
+
+`C:\mywai\releases` already exists when the Edge is installed. If it does not:
+
+New-Item -ItemType Directory -Force -Path C:\\mywai\\releases
+
+## **5. Download the package**
+
+oras pull \<registry>/algo-service-deploy:\<version> --output C:\\mywai\\releases\\\<version>
+
+This creates `C:\mywai\releases\<version>\algo-service\`. That folder contains the edge configuration template and the start script. The script will download the same package again when it starts the services, and that second download checks that the package matches the version you asked for.
+
+The package also contains a cloud flavor. This procedure does not start it.
+
+## **6. Create** `algo-service-edge.env`
+
+Copy the template to `C:\mywai\algo-service-edge.env`. This file is the configuration of this machine. Later updates leave it in place and only write the registry and the version into it.
+
+Copy-Item C:\\mywai\\releases\\\<version>\\algo-service\\edge\\.env.example C:\\mywai\\algo-service-edge.env
+
+notepad C:\\mywai\\algo-service-edge.env
+
+Set these values. Leave `REGISTRY` and `PLATFORM_VERSION` empty: the start script fills them. `EDGE_STORAGE_DIR` must be the same path as in `C:\mywai\edge.env`.
+
+EDGE_STORAGE_DIR=C:\\mywai\\data\\Edge-Acme-Line-1\\edge-storage
+
+EDGE_MQTT_HOST=host.docker.internal
+
+EDGE_MQTT_PORT=1883
+
+EDGE_MQTT_USERNAME=edge
+
+EDGE_MQTT_PASSWORD=\<password-of-the-edge-mosquitto-user>
+
+EDGE_MQTT_KEEP_ALIVE=60
+
+| **Field** | **What you enter** |
+| :-- | :-- |
+| `EDGE_STORAGE_DIR` | The `EDGE_STORAGE_DIR` value from `C:\mywai\edge.env`. The packs and the Edge share this folder. |
+| `EDGE_MQTT_HOST` | `host.docker.internal`. The containers reach Mosquitto on the Windows host through this name. |
+| `EDGE_MQTT_PORT` | `1883`, unless `EDGE_MQTT_EXPOSED_PORT` in `edge.env` is another port. Use that port then. |
+| `EDGE_MQTT_USERNAME` | `edge`. |
+| `EDGE_MQTT_PASSWORD` | The password of the Mosquitto user `edge` on this Edge. Ask MYWAI if you do not have it. |
+| `EDGE_MQTT_KEEP_ALIVE` | `60`, unless MYWAI gave you another value. |
+
+## **7. Start the algorithm packs**
+
+Run the script from the package you just downloaded. `-Target edge` is required.
+
+powershell -ExecutionPolicy Bypass -File C:\\mywai\\releases\\\<version>\\algo-service\\scripts\\update.ps1 -Version \<version> -Root C:\\mywai -Target edge -Up
+
+You pass:
+
+- `-Version` — the same version you downloaded
+- `-Root C:\mywai` — the folder that contains `algo-service-edge.env`
+- `-Target edge` — start only the edge packs
+- `-Up` — start the containers after the check
+
+The script then:
+
+1. downloads the package again (or reuses it if it is already complete on disk)
+2. writes `REGISTRY` and `PLATFORM_VERSION` into `C:\mywai\algo-service-edge.env`
+3. makes `C:\mywai\algo-service` point at this version
+4. checks the compose file
+5. starts `base`, `vision`, and `neuromem`
+
+At the end it prints the container list. The three packs are running when their state is `running`.
+
+There is no local page for this service. The Edge dashboard stays at `http://localhost:8090`.
+
+`vision` asks the engine for 2 GB of shared memory. If that container stays stopped, the PC does not have enough free memory.
+
+If a pack keeps restarting, `EDGE_MQTT_PASSWORD` is not the Mosquitto password of user `edge`, or `EDGE_MQTT_PORT` is not the port the Edge publishes.
+
+## **Update to a newer version**
+
+Ask MYWAI for the new version, then run the script from the installation that is already active. You do not edit `algo-service-edge.env` and you do not download the package by hand:
+
+powershell -ExecutionPolicy Bypass -File C:\\mywai\\algo-service\\scripts\\update.ps1 -Version \<new-version> -Target edge -Up
+
+The previous package stays in `C:\mywai\releases`. To go back, run the same command with the previous version.
