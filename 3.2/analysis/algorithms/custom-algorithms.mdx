@@ -37,7 +37,7 @@ Open **Algorithms** from the Analysis menu. The page title is **Algorithms Manag
 />
 
 1. Click **Add Service**. A new row is selected. Its **HTTP(S) Endpoint** starts as the placeholder `HTTP Endpoint`. Replace that placeholder with the base URL the platform can call, for example `https://algo.example.com`.
-2. Leave the service running before you save. The platform calls it from the server, so an address that opens in your browser can still fail if the platform cannot reach it.
+2. Leave the service running before you save. The platform calls it from the server, so an address that opens in your browser can still fail if the platform cannot reach it. A hostname that contains an underscore, such as `algos_server2_b.example.com`, is accepted when the certificate is trusted and its name matches that host. A certificate from a private CA still needs `AlgorithmServices:DangerousAcceptAnyServerCertificate` on the server. Prefer a hostname without underscores.
 3. Fill the registry fields only when this image must be deployed to Edge devices. They are not required to register a service that you already host.
 4. Click **Save**.
 
