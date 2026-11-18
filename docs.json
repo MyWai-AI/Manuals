@@ -238,6 +238,7 @@
                 "group": "Algorithms",
                 "pages": [
                   "3.1/analysis/algorithms/index",
+                  "3.1/analysis/algorithms/ai-models",
                   "3.1/analysis/algorithms/custom-algorithms"
                 ]
               },
@@ -359,6 +360,7 @@
     { "source": "/3d-viewer/compose-a-full-3d-area-scene", "destination": "/3.1/3d-viewer/compose-a-full-3d-area-scene" },
     { "source": "/analysis/index", "destination": "/3.1/analysis/index" },
     { "source": "/analysis/algorithms/index", "destination": "/3.1/analysis/algorithms/index" },
+    { "source": "/analysis/algorithms/ai-models", "destination": "/3.1/analysis/algorithms/ai-models" },
     { "source": "/analysis/algorithms/custom-algorithms", "destination": "/3.1/analysis/algorithms/custom-algorithms" },
     { "source": "/analysis/data-analysis", "destination": "/3.1/analysis/data-analysis" },
     { "source": "/analysis/training", "destination": "/3.1/analysis/training" },
