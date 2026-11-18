@@ -30,9 +30,13 @@ The icons on the row are:
 
 ## Add or edit a model
 
-**Name** holds up to 100 characters. Two models cannot share a name. Saving a duplicate shows *Another model already has this name.*
+**Name** shows a counter of 100. You can type past 100 characters. The form does not treat that length as missing, so **Test** and **Add** (or **Save** on an edit) stay enabled. **Add** or **Save** then fails in the notifier with *The name is longer than 100 characters.* Two models cannot share a name. Saving a duplicate shows *Another model already has this name.*
 
-A model marked **Platform** shows the provider and the model in an info box: *Endpoint and key come from the platform configuration and cannot be changed here.* You can still change the name, the capabilities, and whether it is the default. **API** stays on the form when the provider is not Ollama.
+A model marked **Platform** shows the provider and the model in an info box: *Endpoint and key come from the platform configuration and cannot be changed here.*
+
+On a Platform LLM you can still change the name, **Tools**, **Vision**, **Context window**, **Reasoning effort**, and **Default LLM**. **API** is on that form when the provider is not Ollama.
+
+A Platform embedding model shows **Name**, **Chunk size**, **Chunk overlap**, and **Default embedding model**. It does not show **API**, **Tools**, **Vision**, **Context window**, or **Reasoning effort**.
 
 For every other model:
 
@@ -50,7 +54,7 @@ For an LLM that is not Ollama, **API** is **Responses API** or **Chat completion
 
 An embedding model also has **Chunk size** and **Chunk overlap**, both in characters. The overlap must be zero or more and smaller than the chunk size.
 
-**Missing** names whatever is still empty or invalid. **Test** and **Add** (or **Save** on an edit) stay disabled until that line is gone. **Cancel** closes the form without saving.
+**Missing** lists fields the form still needs, such as an empty name, the model or deployment, or the API base URL. **Test** and **Add** (or **Save** on an edit) stay disabled until that line is gone. A name longer than 100 characters is not listed there. **Cancel** closes the form without saving.
 
 ## Capabilities
 
@@ -68,7 +72,7 @@ With **Tools** cleared, a successful test says *The model answered.*
 
 **Vision** — *The model reads images.* Select it when the model accepts images. The list then includes **Vision**.
 
-**Context window** — tokens. The hint is *Tokens the server runs the model with. Blank when unknown.* Leave it blank when you do not know the window. When you fill it, use a whole number from 512 to 2,000,000. Any other value is listed under **Missing** as *context window*, and **Test** and **Save** stay disabled. A saved window is shown on the model line as a number of tokens.
+**Context window** — tokens. The hint is *Tokens the server runs the model with. Blank when unknown.* Leave it blank when you do not know the window. When you fill it, use a whole number from 512 to 2,000,000. Any other value is listed under **Missing** as *context window*, and **Test** and **Add** stay disabled. On an edit the button is **Save**. A saved window is shown on the model line as a number of tokens.
 
 **Reasoning effort** — **Provider default**, **None**, **Minimal**, **Low**, **Medium**, or **High**. The hint is *Sent when an agent sets none.* **Provider default** leaves the provider's own effort. Any other choice is shown on the model line, for example **effort low**.
 
@@ -86,26 +90,30 @@ The same text appears under the form while you are editing, with the time in mil
 
 With a URL, the caption is *Choose a model of this Ollama server, download one, or copy one with a larger context window.*
 
-**Installed models** reads the server. Each model is a chip with its name and its size in GB or MB. The chip of the model currently in **Model** is highlighted. Click a chip to put that name in **Model** (*Use this model*). On a **Platform** model the chips stay visible and the tooltip says *The model of a model configured by the platform cannot change.* If the server has nothing yet, the line is *No model on this server yet.*
+**Installed models** reads the server. Each model is a chip with its name and its size in GB or MB. The chip of the model currently in **Model** is highlighted. Click a chip to put that name in **Model**. On a **Platform** model the chips are faded. A click does not fill **Model**, and the panel shows no explanation. If the server has nothing yet, the line is *No model on this server yet.*
 
 **Download a model** lists a short selection. The names in the list are **Llama 3 8B**, **Llama 3.1 8B**, **Mistral 7B**, **Qwen 2.5 7B**, **Gemma 2 9B**, **MedGemma 4B (multimodal)**, and **Phi-3 Mini 3.8B**. You can also type a tag from the Ollama library. The hint under an empty field is *A tag from the Ollama library, e.g. llama3.1:8b.* After you pick a listed model, the hint is a short description and an approximate size, for example *About 4.7 GB.* The **MedGemma 4B (multimodal)** hint asks you to check the licensing and appropriate-use terms before you enable it for patient-facing use.
 
 **Download** pulls that model onto the server. A bar and a status line show the progress, for example *downloading · 52%*. When it finishes, the message names the tag, for example *llama3.1 is on the server.* **Installed models** refreshes, and **Model** is set to that tag. On a **Platform** model the download still runs, and **Model** is left as it is.
 
-For an LLM that is not marked **Platform**, a second **Context window** sits in the library, in tokens, with **Check** and **Create copy**. Both stay disabled until **Model** has a name. The hint before you check is *Ollama cuts longer prompts silently: a copy of the model runs with a larger window.* **Check** reads that model and updates the hint: the most tokens the model supports, and either the window it runs with or *runs with the Ollama default*. The hint ends with *A copy shares its weights.* If the field was empty, **Check** fills it with the maximum the model supports.
+For an LLM that is not marked **Platform**, a second **Context window** sits in the library, in tokens, with **Check** and **Create copy**. Both stay disabled until **Model** has a name. The hint before you check is *Ollama cuts longer prompts silently: a copy of the model runs with a larger window.*
 
-**Create copy** stays disabled until the window is a whole number from 512 to 2,000,000 and not above the maximum **Check** reported (*This model supports at most N tokens.*). The copy keeps the same weights and runs with the window you asked for. The message names the copy and the number of tokens, for example *Created llama3.1-ctx32768 with 32768 tokens; the form now uses it. Save to keep it.* **Model** and the capability **Context window** switch to that copy. Click **Save** to keep the change. The copy name is the original name with `-ctx` and the token count inserted before a tag, when the name has one.
+**Check** reads that model. When the server returns a context length, the hint says how many tokens the model supports and which window it runs with, or *runs with the Ollama default*, and ends with *A copy shares its weights.* If the field was empty, **Check** fills it with that maximum. When the server returns no context length, the empty field stays empty. The hint is then *The model runs with N. A copy shares its weights.* when a window is configured, or *The model runs with the Ollama default. A copy shares its weights.*
+
+**Create copy** is enabled when the window is a whole number from 512 to 2,000,000. Before **Check** has stored a maximum, a number in that range enables the button, including a window above the model's limit. After **Check** has stored a maximum, a larger window disables **Create copy**. The panel does not print that limit. The copy keeps the same weights and runs with the window you asked for. The message names the copy and the number of tokens, for example *Created llama3.1-ctx32768 with 32768 tokens; the form now uses it. Save to keep it.* **Model** and the capability **Context window** switch to that copy. On a new model click **Add**. On an edit click **Save**.
+
+The copy name is the model name plus `-ctx` and the token count. A tag after `:` stays in place: `mistral-small:24b` copied at 32768 tokens is named `mistral-small-ctx32768:24b`. A name that already ends in `-ctx` and digits is rewritten, not stacked: `llama3.1-ctx4096` copied at 8192 tokens becomes `llama3.1-ctx8192`.
 
 If the server cannot be read or the download stops, the panel shows the error. Typical lines are *Unable to read the models of the Ollama server*, *Unable to read the context window of the model*, *The Ollama server stopped without an answer*, and *The Ollama server could not be reached*.
 
 ## Change the default or delete a model
 
-The star sets the default immediately. You can also select **Default LLM** or **Default embedding model** on the form and click **Save**. Only one model in each section is the default. The first model you save in a section becomes that default even if the checkbox is clear. Clearing the checkbox on the current default does not remove it: choose another model with the star, or select the default checkbox on that other model and save.
+The star sets the default immediately. You can also select **Default LLM** or **Default embedding model** on the form and click **Add** or **Save**. Only one model in each section is the default. The first model you save in a section becomes that default even if the checkbox is clear. Clearing the checkbox on the current default does not remove it: choose another model with the star, or select the default checkbox on that other model and save.
 
 **Delete model** asks you to confirm.
 
 * If this model is the default and another complete model of the same kind exists, the panel says *Delete this default LLM?* or *Delete this default embedding model?* and *Choose the new default first.* Pick **New default**. **Delete** stays disabled until you do.
-* If this is the only LLM, the panel says *Delete the only LLM? The algorithms that need an LLM stop working until another one is added.*
+* If this is the default LLM and no other LLM is complete, the panel says *Delete the only LLM? The algorithms that need an LLM stop working until another one is added.* Incomplete LLMs in the same list do not count: a default LLM whose other LLMs are all incomplete still shows that sentence.
 * Otherwise it asks *Delete this LLM?* or *Delete this embedding model?*
 
 **Cancel** leaves the model in place.
