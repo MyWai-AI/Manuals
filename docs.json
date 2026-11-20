@@ -81,6 +81,7 @@
                 "group": "Algorithms",
                 "pages": [
                   "3.2/analysis/algorithms/index",
+                  "3.2/analysis/algorithms/document-search",
                   "3.2/analysis/algorithms/custom-algorithms"
                 ]
               },
