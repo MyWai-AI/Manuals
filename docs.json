@@ -99,6 +99,7 @@
               "3.2/automation/index",
               "3.2/automation/routines",
               "3.2/automation/agent-authorizations",
+              "3.2/automation/maicol-in-the-platform",
               "3.2/automation/orchestrator"
             ]
           },

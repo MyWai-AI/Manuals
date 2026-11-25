@@ -1,0 +1,43 @@
+---
+title: "MAICOL in the Platform"
+description: "Let MAICOL open Platform pages, prepare an inference for you and train models"
+---
+
+When you chat with MAICOL from a Platform page, MAICOL can act on the Platform for you. It only opens what you are allowed to see, and it never starts an inference by itself.
+
+## Open pages from the chat
+
+Ask MAICOL to open something, for example *"open pump 4"*, *"show me the report of the last model"* or *"go to the models page"*. MAICOL opens the page when its answer is shown. The chat stays open on the new page and keeps the conversation.
+
+When MAICOL mentions an item without being asked to open it, it adds a link under its answer. Click the link to open the page.
+
+MAICOL can open:
+
+- the analysis page or the settings page of an equipment;
+- the analysis page of an event;
+- a document, with its details, versions and preview;
+- the report of a trained model;
+- the Agents page;
+- the Models, Algorithms, Agents, Equipment, Data Repository and Background jobs sections.
+
+If you are not allowed to open a page, or the item does not exist, MAICOL tells you so and the page does not change.
+
+## Prepare an inference or a processing run
+
+Ask MAICOL to run an algorithm on an equipment, for example *"run the anomaly model of pump 4 on yesterday's data"*. MAICOL:
+
+1. picks the algorithm, the trained model and the parameters;
+2. opens the equipment analysis page with the signals and the period already selected;
+3. opens the **Inference configuration** dialog (or the processing dialog for a transformation) already filled in.
+
+Check the selection, change it if needed, and click **Run**. The run starts only when you click it, and its results appear on the page as for any run started by hand. The prepared selection can be used once and expires after 10 minutes. If it has expired, ask MAICOL again.
+
+## Train a model from the chat
+
+Ask MAICOL to train a model from a dataset version, for example *"train a random forest on dataset version 9 for pump 4 and call it Pump RF v2"*. MAICOL asks for your approval before it starts the training. After you approve, the training runs on the Platform as if you had started it from the training wizard. MAICOL can report its progress and open the model report when the training ends.
+
+## Permissions
+
+- To use MAICOL actions you need permission to view agents.
+- To prepare an inference or start a training you also need permission to execute algorithms and to see the equipment. Opening a model needs permission to view models. Training needs permission to view dataset versions.
+- Every page and every run checks your permissions again, exactly as when you use the Platform without MAICOL.
