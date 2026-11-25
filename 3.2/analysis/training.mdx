@@ -14,6 +14,14 @@ The window title depends on where you opened it:
 
 When the data is already a dataset version, the window starts at **Service**. When you still have to choose labels, tags, or categories, it starts with an extra **Data** step.
 
+## File datasets without a Data Path
+
+A dataset containing only one file type, such as images, audio, video, text files, documents, 3D files, or generic blobs, can be used for training even when its historical measurements have no Data Path. You do not need to assign a path or migrate those measurements first.
+
+The preparation and model-input controls show the collection by type, for example **Image files** or **Audio files**, and select it automatically for a single compatible input role. The original files, labels, and measurement identities are preserved. Training does not write Data Paths back to the stored data.
+
+The algorithm must still accept the selected file type and verify its contents. Generic blobs are not automatically interpreted as images or audio. This collection mode supports one native file input. Mixed input types, numeric signals, event inputs, multiple input roles, and per-signal preparation still require explicit signal selection and Data Paths.
+
 ## Data
 
 This step is shown only when the training is not already bound to a dataset version.

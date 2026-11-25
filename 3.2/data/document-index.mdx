@@ -1,0 +1,45 @@
+---
+title: "Document index"
+---
+
+The **Document index** page shows how the documents are indexed for agents and search, lets you try a search and shows the passages (chunks) each document was split into. Open it from **Data Repository → Document index** in the left menu. On **Data Repository → Documents**, a document that already has an index shows **View index**. That button opens the same window, with the file and its chunks, without leaving Data Repository.
+
+You see only the documents you can read: the same rules apply as on the Documents tab and in agent answers.
+
+### Search the indexed documents
+
+The list of documents is the page. **Search the index**, at the top right, opens the search. **Hide search** or **Clear** closes it and removes the results.
+
+1. Type a question or an exact code (an error code, a part number) in the search field.
+2. Choose how to search:
+   * **Hybrid** – meaning and exact words together. Use it by default.
+   * **Hybrid + rerank** – hybrid search, then the best passages are ordered again. It is slower and more precise.
+   * **Meaning** – passages that say the same thing in other words.
+   * **Keywords** – passages that contain the words or codes you typed.
+3. Choose how many **Results** to show and press **Search**.
+
+Each result names the document, the file, the section, the pages and where the document belongs, then a short excerpt. The score compares results of the same search. Click a result to open the document next to its chunks, with the matching passage highlighted and formatted.
+
+### See the indexing of each document
+
+The **Documents** table uses the same table as the rest of the platform. It lists the documents with:
+
+* **Indexing** – *Indexed*, *Indexing* (the file is being converted now), *Waiting* (accepted, behind the file that is being converted), *Failed* (the reason is under the status) or *Not indexed*, and the index version (v1 or v2);
+* **Chunks** – how many passages the document was split into;
+* **Updated** – when the indexing last changed.
+
+The service converts one document at a time. While any row is *Waiting* or *Indexing*, the page refreshes by itself. A file that runs too long is marked *Failed* and the next one starts. Filter the table by title, or use the refresh button next to that filter. A document is indexed again automatically when you upload a new version or make another version current. Changing its scope, tags or role restrictions updates the index without indexing it again.
+
+### See a document and its chunks
+
+Click a row or the magnifying glass. The document opens on the left and the indexed chunks on the right, the same way the chunking test of the embedder does. The window is the usual platform dialog: drag it by the title, expand it, or restore the size. **View index** on the Documents tab opens this same window.
+
+* **Original** shows the file when the browser can (PDF, image, text).
+* **Extracted text** shows the Markdown the indexing job saved.
+* The chunks list the number, the pages and the section. The passage itself is rendered as Markdown, the same way **Extracted text** is. Use **Load more** for the next chunks.
+
+The close button of the window returns to the list.
+
+<Note>
+Agents search the same index. On **Agents**, open **Chat** with an agent that can read documents and ask the same question. When an answer misses a document, search it here: if the passage is missing or ranked low, check the indexing status of the document and its chunks.
+</Note>

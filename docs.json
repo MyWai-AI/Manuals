@@ -59,6 +59,7 @@
               "3.2/data/equipments-data",
               "3.2/data/equipments-documents",
               "3.2/data/data-repository",
+              "3.2/data/document-index",
               "3.2/data/data-import",
               "3.2/data/data-export-v3.0",
               "3.2/data/data-certification-on-blockchain-v3.0",
@@ -151,6 +152,16 @@
             "pages": [
               "3.2/marketplace-tools/index",
               "3.2/marketplace-tools/tool-development-guidelines",
+              {
+                "group": "Toolkits",
+                "pages": [
+                  "3.2/marketplace-tools/toolkits/index",
+                  "3.2/marketplace-tools/toolkits/using-toolkit-views",
+                  "3.2/marketplace-tools/toolkits/building-a-toolkit",
+                  "3.2/marketplace-tools/toolkits/protocol",
+                  "3.2/marketplace-tools/toolkits/registration-and-views"
+                ]
+              },
               "3.2/marketplace-tools/platform-apis-usage-examples",
               "3.2/marketplace-tools/use-case-interact-with-sensor-and-gather-data",
               "3.2/marketplace-tools/python-low-level-apis-wrapper",

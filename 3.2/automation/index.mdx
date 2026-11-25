@@ -4,7 +4,11 @@ title: "Automation"
 
 ## Agents
 
-When MAICOL is configured, open **Automation → Agents** to find the agents available to you. Use **Search agents** to find one by name, then select **Chat** to open a conversation.
+When MAICOL is configured, open **Automation → Agents**. Use **Search agents** to find an agent, then select **Chat** to start a conversation. Use **MAICOL chat** at the top of the page to show or hide the floating widget for the current browser session.
+
+Ask MAICOL to open an equipment's analysis, a document, a model report or an agent. You can also ask MAICOL to prepare processing or inference from equipment analysis. The Platform opens the dialog with the available inputs filled in. Review them and select **Run** to start the algorithm.
+
+Use the widget's size control to switch between compact, medium and full screen. Select **Minimize** to return to the floating launcher, which uses the MAIA logo by default.
 
 ### Ask about documents
 
@@ -27,3 +31,21 @@ Each execution starts in a fresh environment. When the Python workers are busy, 
 ### Create equipment with synthetic data
 
 Ask MAICOL for an equipment name and the measurements you want to simulate. In **Ask** mode, review equipment creation and then sample import in the approval cards. MAICOL labels the import as synthetic. An import shown as pending is still processing. Ask for its status before using the samples.
+
+### Agent authorizations
+
+Under **Run and monitor**, select **Authorizations** to review background access granted to MAICOL. Select **Revoke** and confirm to stop future runs under that authorization. Agent managers can review authorizations for all users.
+
+When MAICOL scheduling is enabled, **Schedule** on an agent's row opens its recurring schedule form. **Authorizations** shows the available timing information. Select **Orchestrator** under **Run and monitor** to manage existing Platform workflows if your role allows it.
+
+Agent managers can switch between **For people** and **Helpers** in the catalogue. Helpers are available to other agents and scheduled runs. Select **Edit** to open an agent's flow or **Access** to manage its user and equipment assignments. **Edit agents and drafts** opens the full editor list.
+
+**Build** links to **Tools** for MCP servers, **Prompts** for reusable instructions and **Response cards** for chat results. **Run and monitor** also links to **Traces** and **Chat widget**. Each editor has its own URL. Select **Agents** at the top to return to the catalogue. Browser Back and Forward work within the area without reloading the Platform.
+
+### Build a flow and choose the widget default
+
+In **Agents**, select **Edit agents and drafts**. The **Drafts** filter shows in-progress work. **New agent flow** lets you pick who can talk to the agent. You can change **Who talks to it** later without republishing a published agent.
+
+Use the **Single agent** template to start with **Start → Agent → End**. Select the Agent block to choose its model, instructions and tools. To add another block, choose it from the palette. Drag from the right handle of the previous block to the new block's left handle. Select a block or connection to edit its settings. For multiple agents, connect Agent blocks in sequence or use a **Delegate** connection so an agent can call a specialist. Use a **Sub-flow** block to reuse a published flow.
+
+Select **Check** and **Publish**, then use **Test run** to try a message. The built-in **MAICOL assistant** appears in the Flows list. The **Chat widget** column shows which agent answers by default. Select **Use in chat** next to a published flow for people, or next to the built-in assistant.

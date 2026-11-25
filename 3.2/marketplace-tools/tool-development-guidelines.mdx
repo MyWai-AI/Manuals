@@ -2,6 +2,12 @@
 title: "Tool development guidelines"
 ---
 
+<Info>
+This page describes classic Marketplace tools. To show the events and signals of the
+Platform next to the chart of Historical, or to receive data without handling a token,
+build a [toolkit](/3.2/marketplace-tools/toolkits) with the `mywai.toolkit.v1` protocol.
+</Info>
+
 ## Technical requirements
 
 Here the basic requirements for a Marketplace tool:
@@ -108,7 +114,7 @@ After that, a message will be sent from the platform to your web page with the f
 {
     "message": "mywai-tool-init",
     "user": {
-        "id": "12345"
+        "id": "12345",
         "name": "Jonh",
         "surname": "Doe",
         "email": "john.doe@acme.com",
@@ -120,6 +126,15 @@ After that, a message will be sent from the platform to your web page with the f
    } 
 }
 ```
+
+<Warning>
+From Platform 3.2 the bootstrap message carries the user token only to the origin of the
+tool **webUrl**: the Platform posts it with that exact target origin, never `"*"`, and
+accepts `acknowledgment` only from the tool iframe and from that origin. A tool that
+redirects to another origin before sending `acknowledgment` no longer receives
+`mywai-tool-init`: register the final URL as **webUrl**. When you receive the message,
+check that `event.origin` is the origin of the Platform.
+</Warning>
 
 ## Consume the platform Web APIs
 
