@@ -2,3 +2,28 @@
 title: "Automation"
 ---
 
+## Agents
+
+When MAICOL is configured, open **Automation → Agents** to find the agents available to you. Use **Search agents** to find one by name, then select **Chat** to open a conversation.
+
+### Ask about documents
+
+Ask MAICOL to list the documents you can access, optionally by title or equipment. The list includes documents that are still waiting to be indexed. Questions about the contents of Platform documents use the indexed text. When you open chat from an equipment or a selected document, MAICOL uses that selection.
+
+To ask about a PDF from your computer, attach it in chat and ask your question. MAICOL cites the pages it reads. For scanned pages, it uses text recognition in English, Italian and German when the OCR tools are available. If a page cannot be read, share a clearer scan or a PDF with selectable text.
+
+### View equipment, sensors and charts
+
+Ask MAICOL for a table of equipment, sensors and measurements. The results follow your Platform permissions and the equipment selected in the chat.
+
+Ask for a chart by sensor name, for example “Plot DG1”. Include a signal and dates when you want a specific measurement or period. With no dates, the chart shows the latest hour containing observations. If several sensors match, provide the full name. The charts use the units of the measurements and appear in the conversation.
+
+### Analyze data with Python
+
+When Python analysis is enabled, attach a data file and ask MAICOL to calculate a result, make a statistical comparison, or generate a custom plot. For example, ask for the median and a box plot of a column in a CSV or Excel workbook. Plots appear in the conversation and generated PNG, CSV, JSON and TXT files can be downloaded from the result.
+
+Each execution starts in a fresh environment. When the Python workers are busy, the result card shows whether the analysis is waiting or running. It updates when the result is ready, including when you reopen the conversation. To continue an analysis, ask MAICOL to use a previous output from the same conversation while the file is still available.
+
+### Create equipment with synthetic data
+
+Ask MAICOL for an equipment name and the measurements you want to simulate. In **Ask** mode, review equipment creation and then sample import in the approval cards. MAICOL labels the import as synthetic. An import shown as pending is still processing. Ask for its status before using the samples.
