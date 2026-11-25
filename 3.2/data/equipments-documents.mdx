@@ -1,28 +1,26 @@
 ---
-title: "Equipments Documents"
+title: "Documents"
 ---
 
-Equipment Documents are standard [**PDF, TXT** or **M**](#user-content-fn-1)[^1]**icrosoft Word** files that provide information about a specific Equipment, such as:
+Open **Data Repository > Documents** to browse the document library. Use the **Site**, **Area**, and **Equipment** filters to narrow the list. **More filters** includes title, tags, author, date, file type and search text.
 
-* User manuals
-* Maintenance manuals
-* Security documentation
-* Technical notes
+You can also open **Documents** on an equipment's details panel. **Show inherited** includes documents from the equipment's parent scopes that your roles let you read.
 
-Documents can be accessed in two ways:
+## Upload and organize
 
-1. **Data Repository → Documents tab**
-2. **Equipment Details panel → Documents button** for a specific Equipment
+With **Manage documents**, click **Upload**, choose a file, and fill in the title, description and any comma-separated tags. Set **Scope** to the organization, a site, an area, or an equipment. The scope determines where the document belongs. Your roles and document rules determine who can read it.
 
-<Warning>
-PDF, TXT, and Microsoft Word files are the officially supported document formats. However, the system allows uploading virtually any type of file as a document.
+Use the magnifying glass in the list to open the document. PDF, image and text files can be previewed. Use **Download** to save a copy locally.
 
-Files in supported formats are indexed for both RAG functionality and full-text search, can be downloaded, and fully support version history management. Unsupported file types are not indexed for RAG or full-text search and cannot be previewed in the browser, but they can still be stored in the repository, downloaded, and managed through the document version history.
+To edit a document, change the title, description, tags or scope and click **Save metadata**. To restrict access, choose **Selected roles** under **Visible to**, select the roles and click **Save visibility**. Choosing roles by name also requires permission to view roles. Those roles must still be able to reach the document's scope.
 
-Microsoft Word documents are indexed for RAG and full-text search, but browser preview is not supported for this format. For this reason, using PDF files is strongly recommended to ensure consistent in-browser preview and rendering.
-</Warning>
+## Versions and deletion
 
-### Supported Features
+- Under **New version**, choose the file, pick **Minor** or **Major**, and click **Upload version**.
+- Under **Versions**, use **Preview** to inspect a version and **Make current** to switch the one shown by default.
+- To remove a document from the library, use **Delete**. Administrators with **Manage documents** can find it again using **More filters > Include deleted**.
+
+For how agent retrieval is configured, see [Document search and the Embedder](/3.2/analysis/algorithms/document-search).
 
 The platform allows you to:
 

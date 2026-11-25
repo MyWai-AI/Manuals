@@ -1,0 +1,26 @@
+---
+title: "Document search and the Embedder"
+---
+
+The Embedder prepares documents for agent search. A v2 index combines search by meaning with keyword search for exact identifiers such as error codes and part numbers. Search results can cite pages and sections when the source provides them.
+
+## Configure models and chunking
+
+1. Open **Analysis > Algorithms > AI models** with **Manage algorithms** permission. Add and test an embedding model, then make it the default.
+2. In the embedding model form, set the v1 chunk size and overlap in characters or the v2 values in tokens. The overlap must be smaller than the chunk size.
+3. If the v2 embedding model expects instruction prefixes, choose its preset under **Instruction prefixes** or enter the provider's **Document prefix** and **Query prefix**. Reindex documents after changing the document prefix so that existing and new embeddings use the same settings.
+4. To add an optional reranker, use **Rerankers > Add**, choose **TEI** or **Cohere-compatible**, enter the endpoint and model details, click **Test**, then mark it as the default. It reorders results from the v2 search.
+
+## Build the v2 index
+
+1. Open **Analysis > Algorithms** and select **Embedder**. **Document index** shows the active index, its search version and the document and chunk counts.
+2. Choose **Rebuild to v2** and confirm with **Rebuild**. Use **Refresh** to check the build. Searches continue to use the existing index while the new one builds.
+3. When the **Active** index shows **v2**, agents can search by meaning and keyword and receive page and section citations. Check the document counts and any indexing failures shown here.
+
+The log analysis algorithm's equipment manual search requires a text service that supports v2. Update the text service before relying on that lookup after the switch.
+
+Use **Test chunking** to preview how a file is split. **Index documents again** applies the active index's model settings to existing documents. Saving new chunk settings by itself applies them to subsequent indexing jobs.
+
+## Read a search evaluation
+
+In **Search evaluation**, select the JSON report from the retrieval evaluation tool and click **Upload**. The table shows how many queries were evaluated per mode, recall at 5 and 10 results, mean reciprocal rank and the 95th percentile response time. The Platform keeps the summary and evaluation set identifiers.

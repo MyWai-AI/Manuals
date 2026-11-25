@@ -87,3 +87,11 @@ This is the complete list of Permissions that can be assigned to Roles:
 ## **In Conclusion**
 
 Effective role management is fundamental for maintaining a structured and secure environment within the MYWAI platform. By understanding how roles, permissions, sites, and areas interplay, administrators can ensure that users have precise access levels tailored to their responsibilities. Always review and update roles periodically to align with the organization's evolving hierarchy.
+
+## Document access
+
+**View documents** lets a role read documents within its permitted scope. **Manage documents** lets it upload, edit, version and remove documents within its permitted scope.
+
+In the role's **Documents** section, add an **Allow** or **Deny** rule for the relevant action and select a scope or tag to match. On a scope rule, **Include below** applies the rule to its descendants. Within a role, deny rules take precedence. If a role has allow rules for an action, matching documents must satisfy those rules. A user's access includes the access granted by their roles, subject to each document's **Visible to** setting.
+
+Use **Check access** to select a user and inspect the document scopes visible to them.
