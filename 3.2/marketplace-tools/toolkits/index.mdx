@@ -33,8 +33,14 @@ narrows the period to that event and the toolkit shows it directly.
 
 ![The toolkit shows the event chosen in the Events panel](/images/toolkits/historical-selected-event.png)
 
-The **Chart** button always brings back the native chart: a toolkit is an alternative view,
-never the only way to see the data.
+The **Chart** button always brings back the native chart. With ThreeD signals selected,
+Historical starts with the chart and native 3D viewer even if a view has **Open by default**.
+Choose a view and then **Both** to keep the chart visible below the toolkit. For a ThreeD
+file, **Both** places the native viewer and toolkit side by side, stacked on narrow screens.
+
+The browser remembers the choice for each user and 3D place; that choice takes precedence
+on the next visit. A toolkit failure restores the native content for the current page
+without changing the remembered choice. See [Configuring views](/3.2/marketplace-tools/toolkits/registration-and-views#3-how-users-see-the-view).
 
 ![The native chart remains available from the switch](/images/toolkits/historical-chart-switch.png)
 
@@ -105,7 +111,7 @@ integration outside this list is refused. The Platform returns the current list 
 | | Classic tool | Toolkit |
 | --- | --- | --- |
 | Where | Marketplace only | Marketplace, Historical, and the places of declared integrations |
-| Data | the tool calls the Platform API with the user token | the Platform pushes events, signal rows and files; only `standalone` receives a token |
+| Data | the tool calls the Platform API with the user token | the Platform pushes events, signal rows and files; `standalone` receives a token, as does any view with **Send the user's access token** enabled |
 | Registration | metadata typed by hand | Web URL; the routes are read from the manifest |
 | Hosting | the browser opens the tool URL | the Platform can serve the files through its API, so the browser never reaches the algo network |
 | Messages | `mywai-tool-init` bootstrap | `mywai.toolkit.v1` protocol |

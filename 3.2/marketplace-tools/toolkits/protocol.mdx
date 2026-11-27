@@ -34,8 +34,14 @@ The host:
 - posts only to the **exact origin** of the toolkit, never to `"*"`;
 - accepts a message only if it comes from its own iframe (`event.source`) **and** from the
   toolkit origin (`event.origin`) **and** carries `protocol: "mywai.toolkit.v1"`;
-- gives the user token only in `standalone`; elsewhere it sends data, never credentials;
+- gives the user token in `standalone`; elsewhere it sends data, never credentials, unless
+  the administrator turns on **Send the user's access token** for that view (off by default);
 - sends a file only when the toolkit asks for it, and only if the host listed it before.
+
+<Warning>
+Enable token sharing only for trusted toolkits. A toolkit that receives the token can call
+the Platform APIs as the user viewing it, with that user's permissions.
+</Warning>
 
 The toolkit must:
 
@@ -93,6 +99,7 @@ sequenceDiagram
 | `ready` | `versions`: protocol versions supported, `capabilities`: features of the page (e.g. `paginated`, `select`, `standalone`, `files`) | the host sends `init`, then the first page of events. The first valid `ready` starts the session; repeated `ready` messages are ignored |
 | `page.request` | `page`: integer from 1 | the host sends `events` for that page |
 | `context.request` | `equipmentId`, `from`, `to` (UTC milliseconds, or both `null` for every event of the equipment) | `standalone` only: the host sends `context.changed` and `events` |
+| `cursor` | `timeMs`: finite UTC milliseconds | in Historical: highlight a nearby recorded position on the location map; invalid or out-of-period times are ignored |
 | `select` | `factId` | in Historical: the same as **go to** in the Events panel (the event is selected and the period moves to it) |
 | `file.request` | `path`: a file listed in a `files` signal | the host answers with `file` |
 | `error` | `message` | the host shows the reason and returns to the native chart in Historical; standalone shows the error |
@@ -116,15 +123,25 @@ its own hash routing; `navigate` reports that change to the host.
 
 | Type | Payload | When |
 | --- | --- | --- |
-| `init` | integration, route, label, theme, context, paging; equipments and api in `standalone` | after each `ready` |
-| `events` | a page of events, or the selected events, with their signals | after `init`, `page.request`, `context.request`, a change of the selection or period; event views marked Live refresh every 30 seconds |
-| `context.changed` | `context` | when the period, the selection or the equipment changes. Clear what you show and wait for the next `events` |
+| `init` | integration, route, label, theme, context, paging; equipments in `standalone`; user and api in `standalone` and in views that share the token | after the first valid `ready` |
+| `events` | a page of events, or the selected events, with their signals | after `init`, `page.request`, `context.request`, a change of the selection or period; event views marked Live also refresh after relevant WebApi changes |
+| `context.changed` | `context` | when the period, selection, equipment or measured location track changes. Clear what you show and wait for the next `events` |
 | `file` | `path` with `mime` and `bytes`, or `path` with `error` | after `file.request` |
-| `token.refreshed` | `token`, `expiry` (UTC milliseconds) | standalone only, when the Platform refreshes the access token |
+| `cursor` | `timeMs`, `source: "platform"` | the Historical chart cursor moves within the current period |
+| `token.refreshed` | `token`, `expiry` (UTC milliseconds) | when the toolkit received a token (standalone or a view that shares it) and the Platform refreshes it |
 
 The messages `events.added`, `events.updated` and `events.removed` are
 part of the standard but are not sent yet. An event view with the **Live** option receives
-its first page again as `events` every 30 seconds. The separate `live` integration uses
+its first page again as `events` after a relevant Platform change, notified through
+SignalR. This includes event labels, fact edits and deletions, imports and completed saved
+algorithm outputs linked to the events. Selected-event views match notified event IDs or
+the loaded period; a batch without either hint also refreshes the equipment view.
+
+While page 1 is open, the host polls every **60 seconds** as a safety refresh. Events
+acquired from the Edge through Azure Functions or IoT Hub send no notification and are
+picked up by this poll. If the hub subscription is unavailable, page 1 polls every
+**30 seconds**; reconnecting also reloads page 1. A push can return a paginated view to
+page 1 even while a later page is open. The separate `live` integration uses
 `rows`/`rows.added`, described below.
 
 ### `init`
@@ -163,22 +180,50 @@ its first page again as `events` every 30 seconds. The separate `live` integrati
 | `label` | the label of the view configured in the Platform (the tool name in the Marketplace) |
 | `theme` | `dark` or `light` |
 | `locale` | the browser language of the user |
-| `context.equipment` | `{ id, name }`, or `null` in `standalone` before a `context.request` |
+| `context.equipment` | `{ id, name }`, with optional measured `location` and `track` (below), or `null` in `standalone` before a `context.request` |
+| `capabilities.cursor` | `true` when the host handles toolkit replay cursors, as in Historical |
 | `context.signals` | the signals selected in the Platform: `sensorMeasureId`, `dataPath`, `measureType` |
 | `context.from`, `context.to` | the period, in UTC milliseconds |
 | `context.eventSpanMs` | how long after its timestamp an event owns signal rows (set in the view) |
 | `context.selectedFactIds`, `context.focusFactId` | `selected-events`: the events chosen in the Platform and the one the user acted on last |
 | `paging` | `page`, `pageSize`, `total` (0 until the first `events`), `paginated` |
-| `x-limits` | `maxEvents` (500), `maxEventOutputs` (2,000), `maxInlineOutputBytes` (4,194,304), `maxFileBytes` (67,108,864) |
-| `user` | `standalone` only: `id`, `name`, `surname`, `email` of the signed-in user |
+| `x-limits` | `maxEvents` (500), `maxEventOutputs` (2,000), `maxTrackPoints` (500), `maxInlineOutputBytes` (4,194,304), `maxFileBytes` (67,108,864) |
+| `user` | `standalone`, and views with **Send the user's access token**: `id`, `name`, `surname`, `email` of the signed-in user |
 | `equipments` | `standalone` only: `[{ id, name }]` the user can choose from |
-| `api` | `standalone` only: `{ endpoint, token, expiry }`, the Platform Web API base URL, user access token and its expiry in UTC milliseconds |
+| `api` | `standalone`, and views with **Send the user's access token**: `{ endpoint, token, expiry }`, the Platform Web API base URL, user access token and its expiry in UTC milliseconds |
 
-In `standalone` the page may call the [Platform APIs](/3.2/marketplace-tools/platform-apis-usage-examples)
+In `standalone`, and in a view that shares the token, the page may call the [Platform APIs](/3.2/marketplace-tools/platform-apis-usage-examples)
 with `Authorization: Bearer <token>`. Store the initial token and expiry, then replace them
 when `token.refreshed` arrives. The host starts refreshing 60 seconds before expiry and
 retries if the session has no newer token yet. If a token expires before renewal succeeds,
 pause API calls and ask the user to sign in again when necessary; do not reuse an expired token.
+
+### Location and cursor
+
+When a measured location is configured and the Historical host has its track,
+`context.equipment` also contains:
+
+- `location`: the last fix in the loaded period, or `null` if there is none;
+- `track`: chronological fixes in that period, each `{ lat, lng, timeMs }`; an empty array
+  means no fixes were found. Without a configured measured location these fields are omitted.
+
+Long tracks are sampled across the period up to `init["x-limits"].maxTrackPoints` (500),
+keeping the first and last fix. Read updated location data from `context.changed` as well
+as `init`. This limit applies to the shared track, not to event signal rows.
+
+The cursor works in both directions:
+
+- **Chart to toolkit:** the host sends `cursor` with `{ timeMs, source: "platform" }` at
+  most once every 150 ms. Use it to move your replay to that time when it is in your recording.
+- **Toolkit to map:** when `init.capabilities.cursor` is true, send `cursor` with
+  `{ timeMs }` as the user moves the replay. Historical highlights a nearby recorded fix
+  on its location map; a gap without a nearby fix has no highlight. This does not move
+  the Platform chart cursor.
+
+Keep received cursor changes separate from your own user input: do not echo them back.
+Throttle replay updates too. The host ignores non-finite times and times outside the
+loaded period, allowing a one-second tolerance at either boundary. A malformed cursor
+message is ignored without closing the view.
 
 ### `events`
 
@@ -338,7 +383,7 @@ does not silently omit outputs.
 ## Other hosted integrations
 
 These integrations use the same envelope, exact-origin checks and lazy `file.request`/
-`file` exchange. They receive no token. A registered route must declare the integration.
+`file` exchange. They receive no token unless the view shares it. A registered route must declare the integration.
 
 | Integration | Host message | Payload |
 | --- | --- | --- |
@@ -494,10 +539,10 @@ P.ready({ paginated: true, select: true, standalone: true, files: true });
 
 - `ready.versions` must include `mywai.toolkit.v1`; `capabilities`, when present, must be an
   object. Send valid envelopes with a string `id` and an object `payload`. A toolkit that does
-  not send `ready` within 20 seconds, sends an invalid message or reports `error` falls back
+  not send `ready` within 20 seconds, sends an invalid message (except an ignored cursor) or reports `error` falls back
   to the native chart in Historical, with an explanation.
 - Toolkit clients should ignore host payload fields they do not use. Send only the
-  toolkit-to-host message types listed on this page; invalid messages trigger fallback.
+  toolkit-to-host message types listed on this page; invalid messages other than cursor updates trigger fallback.
 - Use `item.labels` and each `item.signals`. Transitional `item.label` and page-level
   `payload.signals` aliases remain for older clients; they are not the canonical event
   contract. An explicitly empty per-event `signals` array is empty: never fall back to

@@ -6,7 +6,14 @@ description: "Twelve complete paths to open toolkit views, choose the right sour
 A toolkit view appears beside the Platform's usual chart, player or result viewer. Choose
 the view's named button to open it; choose **Chart**, **Player**, **Image viewer** or
 **Results** to return to the native view. The gear configures the shared views and is
-available only with the corresponding administration permission.
+available only with the corresponding administration permission, after the views have loaded.
+
+For ThreeD files and Historical selections containing ThreeD signals, the native viewer
+opens first even when a toolkit has **Open by default**, unless you have a remembered
+choice. Choose a toolkit, then **Both**, to compare them: file viewers are side by side
+(stacked on narrow screens), while Historical
+keeps the chart below the toolkit. Your browser remembers your choice for each user and
+3D place. A failure restores the native view for that page without changing this preference.
 
 <Info>
 The examples below use datasets, models and equipment already present in the local
@@ -25,9 +32,30 @@ On 10 November 2026, 11:20 in Europe/Rome is 10:20 UTC.
 5. Use its **go to** or **highlight** action, then choose **Tactical display** beside **Chart**.
 
 The view receives the selected event. Its replay controls move through the recording;
-the map and contact cards follow the chosen moment. An empty event selection remains empty.
+the map and contact cards follow the chosen moment. When the equipment has a measured
+location, the tactical map shows the array coordinates and fix time. Playing or dragging
+the replay also highlights a nearby fix on the Historical location map. When the chart
+and toolkit are both visible, moving the chart cursor within the open replay seeks to
+that instant. An empty event selection remains empty.
 
 ![The selected event, its replay and contacts](/images/toolkits/historical-selected-event.png)
+
+### Follow the location and cursor
+
+1. In the same equipment, keep **contacts** selected and add a signal of type **ThreeD**
+   to make **Both** available. Load **10/11/2026 11:00** for **30 Minutes** (Europe/Rome,
+   **10:00-10:30 UTC**). A [measured location](/3.2/configuration/equipments#measured-location)
+   must be configured and have positions in this period.
+2. Highlight **harbour_watch_10min** in the Events panel, choose **Tactical display**,
+   then choose **Both**.
+3. Move the chart cursor to a time inside the event's replay. A toolkit that supports the
+   cursor follows that time. Play or drag the toolkit replay to highlight the nearby fix
+   on the Historical location map; try **11:21-11:23** in the local example.
+
+The map shows recorded positions for the loaded period and marks its last fix. Use
+**Expand map** for more space. A gap without a nearby recorded position has no highlight.
+If the map is absent, check the equipment's Latitude and Longitude configuration; if it
+says **No positions in the selected time range**, choose a period with location data.
 
 ## 2. Inspect an audio file
 
@@ -164,6 +192,12 @@ The full viewer provides its own equipment selector, event list and replay contr
 The configured view lists the acquired events in that interval without requiring a
 highlighted event. This differs from **Tactical display**, which follows the events
 selected in the Platform's Events panel.
+
+If the administrator enables **Live** for the view, changes saved in the Platform
+(event labels, edits, imports and saved algorithm outputs) refresh the first page promptly.
+Keep page 1 open to see Edge-acquired events within the 60-second safety refresh; while
+disconnected from event notifications, it polls every 30 seconds. **Live** here updates
+events; **Live signals** in the realtime path above shows a rolling window of signal rows.
 
 ![An event-period view with the installation's configured data](/images/toolkits/historical-default-view.png)
 

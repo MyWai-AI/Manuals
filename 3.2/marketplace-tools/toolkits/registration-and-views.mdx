@@ -61,7 +61,7 @@ shown.
 1. Open the **Equipment Analysis** page of an equipment, select its signals and load a
    period in **Historical Data**.
 2. Press the gear next to the **Chart** switch (**Toolkit views**). The gear is visible to
-   users with the EditMarketplaceTools permission, as soon as signals are selected.
+   users with the EditMarketplaceTools permission after the views have loaded.
 3. Press **Add view** and fill the fields below, then **Save**.
 
 ![The Toolkit views dialog](/images/toolkits/toolkit-views-dialog.png)
@@ -70,24 +70,50 @@ shown.
 | --- | --- |
 | **Label shown in the switch** | the text of the button next to **Chart** (1 to 60 characters). The toolkit receives it as its title |
 | **Toolkit**, **Route** | the registered toolkit and the page to open |
-| **Integration** | what the view shows: `period-events` (the events of the period, listed by the toolkit) or `selected-events` (the events chosen in the Events panel). Only the integrations declared by the route are offered |
+| **Integration** | where the view appears and what it receives. Historical uses `period-events` or `selected-events`; other places use their corresponding [integration](/3.2/marketplace-tools/toolkits#integrations). Only hosted integrations declared by the route are offered |
 | **Equipment types** | the view appears only for these equipment types (any if empty) |
 | **Signal data types** | at least one selected signal must be of one of these data types (any if empty) |
 | **Signal data paths** | at least one selected signal must match one of these paths; `*` matches any text, e.g. `*/contact tracker/*` (any if empty) |
 | **Minimum signals** | the view appears only with at least this number of selected signals |
-| **Paginated**, **Events per page** | send the events page by page (1 to 500 per page). When off, up to 500 events are sent at once |
-| **Live** | refresh the first page every 30 seconds while the view is open |
-| **Open by default** | open this view instead of the chart when it matches |
-| **Event span (s)** | how long after its timestamp an event owns signal rows (default 300 s) |
+| **Paginated**, **Events per page** | `period-events`, `equipment-tab`, `dataset-version` and the image integrations: send the items page by page (1 to 500 per page). When off, up to 500 are sent at once |
+| **Live** | `period-events`, `selected-events`: refresh the first page right after relevant event changes made in the Platform. While page 1 is open, a safety refresh every 60 seconds picks up events acquired from the Edge, which send no notification. If the event subscription is unavailable, poll page 1 every 30 seconds |
+| **Open by default** | open this view instead of the chart when it matches. 3D data is an exception: see below |
+| **Send the user's access token** | besides the data, the toolkit receives the access token of the user viewing it and may call the Platform APIs as that user. Off by default; turn it on only for toolkits you trust |
+| **Event span (s)** | `period-events`, `selected-events`, `equipment-tab`, `dashboard-widget`: how long after its timestamp an event owns signal rows (default 300 s) |
+| **Window of rows (s)** | `live` only: the length of the rolling window of signal rows (default 300 s) |
+| **Replace the viewer of** | `file-viewer`: the data types whose native viewer the view replaces |
 
-Every rule that is filled must match. Views are saved for the whole installation and apply
-to every equipment that matches their rules.
+The dialog shows only the fields the chosen integration uses. **Events per page** is disabled
+when **Paginated** is off. Every rule that is filled must match. Views are saved for the whole
+installation and apply to every equipment that matches their rules.
+
+With **Live** on, event label changes, event edits or deletions, imports and saved algorithm
+outputs refresh the event view after the change is saved in the Platform. A selected-events
+view refreshes when a notification identifies a selected event or a change in the loaded
+period; a broad batch notification can also refresh it. Reconnecting refreshes page 1.
+This option is separate from the `live` integration used for realtime signal rows.
+
+**Send the user's access token** is available for every view integration and is off by
+default. When enabled, the toolkit also receives the viewing user's identity and API
+connection details; the Platform renews the shared token before expiry. Enable it only for
+trusted toolkits: they can call the Platform APIs with the viewing user's permissions.
+Marketplace standalone toolkits already receive this access without a view setting.
 
 ## 3. How users see the view
 
 When the selected signals match a view, Historical shows the switch **Chart | label**. With
 **Open by default** the view opens directly; otherwise the user presses its button. Several
 matching views give several buttons.
+
+**3D data opens in the native viewer unless the user has already chosen a view.** For a
+ThreeD file, and in Historical when ThreeD signals are selected, **Open by default** does
+not override this native starting view. The switch adds **Both**: in a file viewer it shows
+the native 3D viewer and the toolkit side by side, stacked on narrow screens; in Historical
+the chart and its native viewers stay visible below the toolkit. To compare a particular
+view, choose its button and then **Both**. The browser remembers native, a view or **Both**
+for each user and 3D place; a remembered choice takes precedence over the starting view.
+If the toolkit fails, the native viewer is shown for that page and the remembered choice does
+not change.
 
 ![The view opened by default, listing the events of the period](/images/toolkits/historical-default-view.png)
 
@@ -113,7 +139,7 @@ All twelve integrations are hosted in the 3.2 source. A view is available only w
 integration is hosted, the registered route declares it and the view rules match:
 
 - **Realtime:** `live`, beside the native signal charts.
-- **File viewers and Historical audio:** `file-viewer`; use **Viewer measure types** to choose
+- **File viewers and Historical audio:** `file-viewer`; use **Replace the viewer of** to choose
   which native data-type viewers it replaces.
 - **Processing results:** `processing-result`, beside the native run preview. Data-path rules
   match the output keys, not the source equipment’s signal paths.
@@ -128,8 +154,9 @@ integration is hosted, the registered route declares it and the view rules match
 - **Dataset versions:** `dataset-version`, beside the native item table. Data-path rules match
   the dataset name.
 
-Use the **Toolkit views** gear to edit the installation’s shared views. New views can remain
-optional (**Open by default** off) while validating them. Pages that have a native alternative
+Once the views have loaded, use the **Toolkit views** gear, where available, to edit the
+installation’s shared views. New views can remain optional (**Open by default** off) while
+validating them. Pages that have a native alternative
 return to it on toolkit failure; a standalone toolkit-only tab/widget shows its error.
 
 The example image views are **Spectrogram classes**, **Anomaly inspection** and
@@ -161,7 +188,7 @@ review unsaved results and why **All periods** still requires the correct equipm
 | File (Platform blob storage) | Content |
 | --- | --- |
 | `config/tools.json` | the Marketplace tools; a toolkit has a `toolkit` object with `protocol`, `proxied` and the `routes` read from the manifest |
-| `config/toolkit-views.json` | the views: label, toolkit, route, integration, rules, paging, live, default, event span |
+| `config/toolkit-views.json` | the views: label, toolkit, route, integration, rules, paging, live, default, event span, viewer data types, token sharing (`ShareToken`) |
 
 `tools.json` can also be downloaded and uploaded from **Edit Tools**; the views are changed
 from the **Toolkit views** dialog. Example of a registered toolkit:

@@ -16,11 +16,29 @@ After the loading is complete, the results will be displayed in timeline-style g
 
 ### Toolkit views
 
-When a [toolkit](/3.2/marketplace-tools/toolkits) view is configured for the selected signals, a switch appears above the graphs: **Chart** and one button per view. A view shows the events of the period, or the events selected in the **Events** panel, in the interactive page of the toolkit. A view marked as default opens instead of the graphs; **Chart** always brings them back.
+When a [toolkit](/3.2/marketplace-tools/toolkits) view is configured for the selected signals, a switch appears above the graphs: **Chart** and one button per view. A view shows the events of the period, or the events selected in the **Events** panel, in the interactive page of the toolkit. A view marked as default opens instead of the graphs, except when ThreeD signals are selected: the chart and native 3D viewer open first. Choose a view and then **Both** to keep the chart below the toolkit. The browser remembers the choice per user for this 3D place, and restores it on the next visit. **Chart** brings back the graphs; a toolkit failure also restores them for that page without changing the remembered choice.
 
 ![A toolkit view next to the chart](/images/toolkits/historical-chart-switch.png)
 
-Users with the permission to edit Marketplace tools configure the views with the gear next to the switch. See [Registering a toolkit and configuring views](/3.2/marketplace-tools/toolkits/registration-and-views).
+Users with the permission to edit Marketplace tools configure the views with the gear next to the switch, which appears after the views have loaded. See [Registering a toolkit and configuring views](/3.2/marketplace-tools/toolkits/registration-and-views).
+
+With **Live** enabled for an event view, saved Platform changes refresh the first page.
+While page 1 is open, Edge-acquired events appear through a 60-second safety refresh;
+when event notifications are disconnected, polling runs every 30 seconds.
+
+### Location map and toolkit replay
+
+If the equipment has a [measured location](/3.2/configuration/equipments#measured-location),
+Historical shows its recorded route for the selected period, with a marker at the last fix.
+**Expand map** increases the map's height. Moving the chart cursor highlights a nearby fix.
+When a toolkit supports replay cursors, the chart also sends that time to the toolkit;
+moving the toolkit replay highlights a nearby fix on the Historical map. Cursor updates
+are not echoed back. Invalid replay times are ignored, and gaps without a nearby fix
+have no map highlight.
+
+See the [location and cursor path](/3.2/marketplace-tools/toolkits/using-toolkit-views#follow-the-location-and-cursor)
+for an example. **No positions in the selected time range** means the location is configured
+but no positions were found in that period.
 
 ## Understanding Labels
 

@@ -25,7 +25,26 @@ Within the MYWAI platform, Equipments are pivotal, representing tangible devices
    * **Site:** Denote the site, whether physical or conceptual, that hosts the equipment.
    * **Area:** Demarcate the specific zone within the denoted site accommodating the equipment.
    * **Image:** Offer a pictorial representation, like a photo or diagram, of the equipment.
-   * **Location on the map:** Anchor the equipment's geographical position for enhanced logistics and planning.
+   * **Location on the map:** View the equipment's position and configure its measured latitude and longitude in the **Location** tab (below).
 3. **Incorporating** [**Sensors**](/3.2/configuration/sensors)**:** Beyond its intrinsic attributes, equipments often operate in tandem with sensors, capturing vital data, monitoring statuses, or initiating actions. Through the management page, sensors can be seamlessly linked to equipment, cementing a symbiotic relationship.
 4. **Associating fields to OPC nodes**: Fields related to the Equipment Type are displayed under the respective '**Information**,' '**Monitoring**,' or '**Production**' tab. To link any of these fields to a specific OPC node, activate the '**Read from OPC**' toggle and input the Node ID.\
    Please note that the tabs are not shown in case no fields are available for the specific type.
+
+## Measured location
+
+An administrator with permission to edit equipment can associate recorded latitude and
+longitude measures with a top-level equipment. The **Location** tab is not shown for
+child equipment.
+
+1. Open **Equipments**, open the equipment's details and press the pencil (**Edit equipment**).
+2. Open **Location**. Beneath the map, choose a measure in **Latitude** and one in **Longitude**.
+   The searchable lists include measures from the equipment's **Sensors** and **Custom fields**.
+3. Select both coordinates, then press **Save**. Choosing the measures alone does not save
+   the configuration. To remove an existing measured-location configuration, clear both
+   fields and save.
+4. Open **Analyze → Historical data**, choose a period with recorded coordinates and press
+   **Retrieve data**. The location map shows the route and its last recorded position.
+
+If no coordinates were recorded in the period, Historical shows **No positions in the
+selected time range**. A configured toolkit can receive the period's positions and exchange
+replay cursors with Historical; see [Location map and toolkit replay](/3.2/analysis/data-analysis#location-map-and-toolkit-replay).

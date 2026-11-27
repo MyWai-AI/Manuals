@@ -138,7 +138,10 @@ read the hash at startup or wait for `init`.
 
 In every integration the events come with the rows and files of the signals selected in the
 Platform. See the [protocol](/3.2/marketplace-tools/toolkits/protocol) for the exact
-payloads.
+payloads. When a measured location is configured and available in Historical, the context
+also includes the equipment's last position and track for the period. Handle
+[`cursor`](/3.2/marketplace-tools/toolkits/protocol#location-and-cursor) to follow the chart
+cursor and to highlight a recorded position on the Historical map during toolkit replay.
 
 The other hosted integrations are `live`, `file-viewer`, `processing-result`,
 `dashboard-widget`, `equipment-tab`, `dataset-version` and the three `image-*` viewers.
@@ -149,6 +152,9 @@ when declaring those integrations. Do not interpret them as an `events` message.
 
 - **Size**: the iframe fills its hosted viewer area or the whole
   Marketplace area. It changes with the window and the side menu: use a fluid layout.
+  For ThreeD files, **Both** shares the width with the native viewer and stacks the panels
+  on narrow screens. In Historical, **Both** keeps the chart below the toolkit. The native
+  3D view opens first unless the user has a remembered choice or opens a link to a view.
 - **Theme**: `init.theme` is `dark` or `light`. Apply it at startup.
 - **Locale**: `init.locale` is the language of the user's browser (e.g. `it-IT`); format
   dates and numbers with it. Event times are UTC milliseconds.
@@ -160,7 +166,13 @@ when declaring those integrations. Do not interpret them as an `events` message.
 - **Errors**: when your page cannot show the data, send an `error` message. In Historical,
   the Platform returns to the native chart and explains why; the toolkit view remains
   available in the switch so the user can retry. Standalone shows the reason.
-- **Session**: in standalone, replace the token and expiry when `token.refreshed` arrives.
+- **Session**: `init.api` and `init.user` are sent in standalone and in any view with
+  **Send the user's access token** enabled. Token sharing for views is off by default and
+  should be enabled only for trusted toolkits, which can call APIs as the viewing user.
+  When `init.api` is present, replace its token and expiry when `token.refreshed` arrives.
+- **Live events**: handle a fresh first page of `events` after Platform changes. With
+  **Live** enabled, page 1 also polls every 60 seconds for Edge-acquired events, or every
+  30 seconds while disconnected. The separate `live` integration sends incremental rows.
 - **Navigation**: send `navigate` with a route declared in your manifest to mirror it in the
   Platform URL.
 
