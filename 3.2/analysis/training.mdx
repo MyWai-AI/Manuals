@@ -104,6 +104,10 @@ Three switches sit under the ratios:
 
 ## Training
 
+For Object Detection, select the images in **Data Repository**, choose **Open in an image workspace**, and open **Object Detection**. Click **Train** and choose the classes under **Data**. The wizard lists the bounding boxes on those images. If you check images in Object Detection, the checked images set the scope. Otherwise the workspace uses the images currently shown in its list.
+
+You can also start **Train** from an image dataset version. Choose the label classes under **Data**, then choose an algorithm that accepts those annotations. Object Detection uses bounding boxes and image classification uses image-level labels.
+
 Set **Model name**. A name is filled in for you from the dataset (or the word `model`), the version, and the current date and time. You can replace it. The name is required.
 
 Open **Algorithm** and pick one entry. You can search by name, task, or family, and filter the list with the family chips. The list only contains algorithms compatible with the data type produced by data preparation (or with the dataset type, when preprocessing is reused).
